@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>존재와 무 · 생각학교 ASK</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;} body{margin:0;background:#0d0b09;} button{-webkit-tap-highlight-color:transparent;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const CONCEPTS = [
+  { id: "ensoi", term: "즉자-존재", latin: "l'être-en-soi", keyword: "그냥 있는 것",
+    desc: "돌, 나무, 산처럼 자기가 무엇인지 묻지 않고 그냥 있는 존재. 자기 자신과 완전히 일치한다. 내부에 어떠한 균열도 없다.",
+    example: "돌은 자신이 돌임을 모른다. 그냥 있다. 그것이 즉자의 전부다.", accent: "#6aaa82" },
+  { id: "poursoi", term: "대자-존재", latin: "l'être-pour-soi", keyword: "자기를 향한 존재",
+    desc: "의식. 항상 '나는 무엇인가?'를 묻는 존재. 자기와 완전히 일치하지 못한다—그 사이의 틈이 대자의 본질이다.",
+    example: "거울을 볼 때: 보는 나와 보이는 나. 이 분열이 대자의 특징이다.", accent: "#9a7abd" },
+  { id: "neant", term: "무", latin: "néant", keyword: "단순한 없음이 아니다",
+    desc: "사르트르에게 무는 대자가 자기 자신과 즉자 사이에 도입하는 '거리'이자 '틈'이다. 대자는 스스로를 즉자로부터 떼어내면서 자기 안에 무를 도입한다—그 무가 바로 대자 자신이다.",
+    example: "카메라 렌즈의 빈 공간처럼—비어있기 때문에 세계를 담을 수 있다.", accent: "#c4a35a" },
+  { id: "connaissance", term: "인식", latin: "connaissance", keyword: "존재론적 구조",
+    desc: "인식은 별도의 사건이 아니다. 대자가 즉자 앞에 현전하는 방식 자체가 인식이다. 욕망, 행위, 실천보다 앞선 원초적 구조—대자와 즉자 사이의 전형적 관계다.",
+    example: "무언가를 '안다'는 것은 그것 앞에 어떤 방식으로 존재한다는 것이다. 정보를 처리하는 게 아니라 존재론적으로 마주하는 것이다.", accent: "#5a9abc" },
+  { id: "presence", term: "현전", latin: "présence", keyword: "아니-있음의 구조",
+    desc: "대자가 즉자 곁에 있음. 그러나 현전은 동일함이 아니다. 현전은 아니-있음(non-être)을 본질적 구조로 갖는다—대자는 즉자가 아닌 것으로 즉자 곁에 있다.",
+    example: "두 음이 완전히 같다면 구분이 사라진다. 화음은 차이로 성립한다. 현전도 그렇다—차이 속의 함께 있음이다.", accent: "#aaba5a" },
+  { id: "negation", term: "내적 부정", latin: "négation interne", keyword: "'아님'이 존재를 구성한다",
+    desc: "'나는 저 돌이 아니다'—이 부정이 나라는 존재를 만든다. 대자는 자신이 아닌 것들을 통해 자신이 무엇인지 드러낸다.",
+    example: "시인은 쓰지 않을 말들을 지워나감으로써 시를 완성한다.", accent: "#c47a7a" },
+];
+
+const PASSAGES = [
+  { title: "논점 1 · 아니-있음은 현전의 본질적 구조이다",
+    note: "책에서 '현전(présence)'과 '아니-있음(non-être)'이 함께 나오는 단락을 찾아보세요. 사르트르는 두 존재가 완전히 동일하다면 현전 자체가 불가능하다고 논증합니다. '순수한 현전' '아니-있음' '간격'이 키워드입니다.",
+    layers: [
+      { label: "핵심 주장", text: "대자가 즉자에 현전한다는 것은, 대자가 즉자와 다른 것으로—아니-있음(non-être)으로—즉자 곁에 있다는 것이다. 아니-있음은 현전의 부수적 조건이 아니라 본질적 구조다." },
+      { label: "왜 그런가", text: "두 존재가 완전히 동일하다면, 하나가 다른 것에 '현전'한다고 말할 수 없다. 현전은 반드시 간격을 전제한다. 그 간격이 아니-있음이다. 대자는 즉자 곁에 있으면서 즉자가 아닌 것으로 있다—이것이 현전이다." },
+      { label: "비유로", text: "두 음이 완전히 같다면 하나로 합쳐져 구분이 사라진다. 화음은 두 음이 서로 다름으로써만 성립한다. 현전도 마찬가지다—'함께 있음'은 결코 '같음'이 아니다. 그 차이의 구조가 아니-있음이다." },
+    ] },
+  { title: "논점 2 · 오직 대자만이 내적 부정으로 규정된다",
+    note: "\"단지 대자만이 그 존재에 있어 자신이 그것으로 있지 않은 하나의 존재에 의해 규정될 수 있을 뿐이다\"—이 문장이 있는 단락을 찾아보세요. 외적 부정과 내적 부정을 대비하는 부분입니다.",
+    layers: [
+      { label: "핵심 주장", text: "외적 부정: '이 잉크병은 저 컵이 아니다.' 이 부정은 두 항 모두에 외재적이다. 어느 쪽의 존재도 이 부정으로 구성되지 않는다.\n\n내적 부정: 대자는 즉자가 '아님'으로써 자신의 존재가 구성된다. 오직 대자만이 자신이 그것으로 있지 않은 존재에 의해 규정될 수 있다." },
+      { label: "왜 중요한가", text: "즉자에게는 내적 부정이 없다. 돌은 나무가 아니지만, 이 '아님'이 돌의 존재를 만들지 않는다. 대자는 다르다. 대자는 즉자가 아님으로써 비로소 대자다. 이 '아님'이 대자의 존재 방식 자체다. 즉자는 있고, 대자는 아니-있음으로 있다." },
+      { label: "비유로", text: "조각가는 돌을 깎아낸다. 사라진 부분—없어진 것—이 형상을 만든다. 대자는 자신이 아닌 것들을 부정함으로써만 자신의 형태를 갖는다. 형태는 배제로 이루어진다." },
+    ] },
+  { title: "논점 3 · 초월(transcendance)의 정의",
+    note: "절의 마지막 문단. '초월'이라는 이름이 붙는 순간입니다. \"우리는 대자를 그 존재에서 규정함으로써 즉자를 드러내 보이는 이 내적이고 실재화하는 이 부정을 초월이라고 명명할 것이다\"—이 문장을 직접 찾아 여러 번 읽어보세요.",
+    layers: [
+      { label: "핵심 주장", text: "초월 = 내적이고 실재화하는(réalisante) 부정. 이 부정은 두 가지를 동시에 수행한다: ① 대자를 그 존재에서 규정한다. ② 즉자를 드러내 보인다(révéler). '실재화하는'—이 부정이 즉자를 대상으로 실재화시킨다는 뜻이다." },
+      { label: "왜 중요한가", text: "초월은 '저편으로 건너감'이 아니다. 대자가 자신을 넘어 즉자를 향해 나아가는—그러나 결코 즉자와 합일될 수 없는—운동이다. 이 운동 자체가 인식이고, 이 운동 자체가 초월이다. 인식과 초월은 같은 것의 두 이름이다." },
+      { label: "비유로", text: "지평선을 향해 걷는다. 걸을수록 지평선은 같은 거리를 유지한다. 도달할 수 없지만, 이 '도달할 수 없는 향함' 자체가 내가 걷는 자임을 규정한다. 대자의 즉자를 향한 운동이 그렇다." },
+    ] },
+];
+
+const QUIZ = [
+  { q: "즉자-존재(en-soi)를 가장 잘 설명한 것은?",
+    opts: ["자신의 존재에 대해 끊임없이 묻는 존재", "자기 자신과 완전히 일치하는, 균열 없는 존재", "타인을 인식하는 의식", "무(無)를 자기 안에 품은 존재"],
+    ans: 1, exp: "즉자는 '충만한 존재'입니다. 자기와의 완전한 일치, 내부의 균열 없음이 즉자의 특징이에요. 반면 무를 품은 것은 대자(pour-soi)입니다." },
+  { q: "사르트르가 인식을 '전형적 관계'라고 부른 이유는?",
+    opts: ["인식이 가장 복잡한 관계이기 때문에", "인식이 가장 쾌락적이기 때문에", "인식이 욕망·행위 등 모든 관계에 앞서는 원초적 구조이기 때문에", "인식이 과학적으로 증명 가능하기 때문에"],
+    ans: 2, exp: "'전형적'은 여기서 '원초적, 근원적'을 뜻합니다. 대자가 즉자에 현전한다는 것 자체가 인식이며, 이것이 욕망이나 실천보다 먼저입니다." },
+  { q: "'내적 부정(négation interne)'이란 무엇인가?",
+    opts: ["자신을 부정하는 내면의 상태", "두 사물 사이의 외부적 차이", "대자가 즉자와 다름으로써 자신의 존재를 구성하는 방식", "의식이 소멸하는 것"],
+    ans: 2, exp: "내적 부정은 '나는 저것이 아니다'라는 부정이 대자의 존재를 구성한다는 의미입니다. 외적 부정(잉크병은 컵이 아니다)과 달리, 이 부정이 '나'를 만들어요." },
+  { q: "사르트르가 관념론과 실재론을 동시에 비판한 이유는?",
+    opts: ["둘 다 의식의 역할을 완전히 부정하기 때문에", "관념론은 즉자의 독립적 존재를 지우고, 실재론은 의식의 자유를 지우기 때문에", "둘 다 하이데거의 영향을 받았기 때문에", "둘 다 인식 문제를 다루지 않기 때문에"],
+    ans: 1, exp: "관념론: 세계를 의식의 구성물로 만들어 사물의 독립적 존재를 지웁니다. 실재론: 의식을 수동적 수용기로 만들어 의식의 자유를 지웁니다. 사르트르는 현상학적 존재론으로 이 둘을 넘어섭니다." },
+];
+
+const ARG_STEPS = [
+  { num: "전제 1", color: "#6aaa82", title: "두 가지 존재 방식이 있다",
+    body: "즉자(en-soi): 자기 자신과 완전히 일치한다. 내부에 균열이 없다. 자기에 대해 묻지 않는다.\n\n대자(pour-soi): 자기와 일치하지 못한다. 자기 안에 무(néant)를 품는다. 이 무가 대자 자신이다.",
+    key: "이 두 존재는 근본적으로 다른 방식으로 있다." },
+  { num: "전제 2", color: "#5a9abc", title: "아니-있음은 현전의 본질적 구조다",
+    body: "대자가 즉자에 현전한다는 것은—즉자와 다른 것으로(아니-있음으로) 즉자 곁에 있다는 것이다. 두 존재가 완전히 동일하다면 현전이 불가능하다. 현전은 반드시 간격을, 아니-있음을 전제한다.",
+    key: "아니-있음(non-être)은 현전의 부수물이 아니라 본질적 구조다." },
+  { num: "추론", color: "#c4a35a", title: "오직 대자만이 내적 부정으로 규정된다",
+    body: "즉자에는 내적 부정이 없다. 돌은 나무가 아니지만, 이 '아님'이 돌의 존재를 구성하지 않는다.\n\n대자는 즉자가 '아님'으로써만 자신의 존재가 규정된다. \"단지 대자만이 그 존재에 있어 자신이 그것으로 있지 않은 하나의 존재에 의해 규정될 수 있을 뿐이다.\"",
+    key: "대자 = 즉자에 대한 내적 부정(négation interne)" },
+  { num: "결론", color: "#9a7abd", title: "이 내적 부정 자체가 인식이다",
+    body: "대자가 즉자에 대해 내적 부정으로 존재하는 것 자체가 이미 인식이다. 인식은 별도의 사건이 아니다. 대자가 즉자에 현전하는 방식—그 아니-있음의 구조—이 인식이다.",
+    key: "인식 = 대자가 즉자에 현전하는 존재론적 구조" },
+  { num: "명명", color: "#c47a7a", title: "이 부정을 초월이라 명명한다",
+    body: "대자를 그 존재에서 규정하면서 동시에 즉자를 드러내 보이는 이 내적이고 실재화하는(réalisante) 부정—이것을 사르트르는 초월(transcendance)이라 명명한다.\n\n인식과 초월은 같은 것의 두 이름이다.",
+    key: "초월 = 내적이고 실재화하는 부정 = 인식의 존재론적 이름" },
+];
+
+const POSITIONS = [
+  { label: "관념론", sub: "Berkeley · Kant", color: "#5a7abc",
+    claim: "세계는 의식이 구성한다. 사물은 의식의 내용이다.",
+    problem: "즉자의 독립적 존재를 지워버린다. 우리가 경험하는 사물의 '낯섦'과 '저항'은 의식이 만들어낸 것이 아니다.",
+    quote: "현상의 존재는 현상으로 환원되지 않는다." },
+  { label: "사르트르", sub: "현상학적 존재론", color: "#c4a35a",
+    claim: "즉자는 대자와 독립하여 존재한다. 그러나 '대상'으로는 대자의 무화를 통해서만 출현한다.",
+    problem: "즉자의 실재성과 대자의 능동성을 동시에 보존한다.",
+    quote: "의식은 항상 ~에 대한 의식이다." },
+  { label: "실재론", sub: "상식적 입장", color: "#7aaa6a",
+    claim: "세계가 감각을 통해 의식에 인과적으로 작용한다. 의식은 세계의 수용기다.",
+    problem: "의식의 자유와 지향성(intentionnalité)을 지워버린다. 의식은 수동적 수용기가 아니라 항상 무언가를 '향해' 있다.",
+    quote: "" },
+];
+
+const LOGIC_QS = [
+  { q: "이 논증에서 가장 설득력 있는 부분은 어디인가?",
+    hint: "아니-있음이 현전의 본질적 구조라는 주장—이것이 당신의 경험과 맞닿는 지점이 있는가?" },
+  { q: "가장 납득하기 어려운 부분은 어디인가?",
+    hint: "'대자가 무(無)이다'라는 명제—의식이 '없음'이라는 게 말이 되는가? 어디서 막히는가?" },
+  { q: "동물은 즉자인가, 대자인가? 동물이 인식한다면 사르트르의 논증은 어떻게 되는가?",
+    hint: "사르트르는 의식의 특수성을 어디에서 찾는가? 동물의 지각은 인식인가?" },
+  { q: "예술 창작이나 글쓰기에서 이 논증은 어떻게 작동하는가?",
+    hint: "작가가 글을 쓸 때 즉자(종이·언어·재료)와 대자(의식·의도)의 관계를 이 틀로 설명할 수 있는가?" },
+];
+
+const SEMINAR_QS = [
+  { q: "사르트르는 인식을 별도의 사건이 아닌 존재론적 구조로 봅니다. 이것이 우리가 '배움'을 이해하는 방식에 어떤 함의를 가질까요?",
+    hint: "배운다는 것이 정보를 머릿속에 넣는 것이라면, 사르트르의 설명과 어떻게 다른가?" },
+  { q: "대자는 항상 자기 자신과 '일치하지 못한다.' 이것이 인간의 불안, 자유, 창조와 어떻게 연결될까요?",
+    hint: "돌멩이는 불안하지 않다. 왜인가?" },
+  { q: "인식이 '내적 부정'이라면, 나는 항상 내가 아닌 것들을 통해 나를 정의합니다. 이것이 정체성, 편견, 타자에 대한 태도와 어떤 관계인가요?",
+    hint: "우리가 어떤 집단을 부정함으로써 우리 자신을 정의할 때 어떤 일이 일어나는가?" },
+  { q: "관념론(마음이 세계를 만든다)과 실재론(세계가 마음에 작용한다)—사르트르의 비판 이후에도 여러분은 어느 쪽이 더 설득력 있다고 느끼나요?",
+    hint: "눈을 감아도 벽은 거기 있는가?" },
+  { q: "하이데거는 실천(도구 사용)이 인식보다 더 원초적이라 봅니다. 사르트르는 인식이 먼저라고 합니다. 여러분의 일상에서는 어느 쪽이 먼저인 것 같나요?",
+    hint: "우리는 먼저 보고 생각하는가, 먼저 손에 쥐고 사용하는가?" },
+];
+
+const STAGES = {
+  grammar: { label: "문법", latin: "Grammatica", sub: "텍스트가 무엇을 말하는가", color: "#c4a35a", bg: "#1a160a" },
+  logic:   { label: "논리", latin: "Dialectica",  sub: "논증이 어떻게 작동하는가", color: "#5a9abc", bg: "#0a121a" },
+  rhetoric:{ label: "수사", latin: "Rhetorica",   sub: "함께 탐구하고 설득하는가", color: "#bc7a7a", bg: "#1a0f0f" },
+};
+const PAGE_STAGE = {2:"grammar",3:"grammar",4:"grammar",5:"grammar",6:"grammar",7:"logic",8:"logic",9:"rhetoric"};
+
+function App() {
+  const [page, setPage] = useState(0);
+  const [fading, setFading] = useState(false);
+  const [flipped, setFlipped] = useState(new Set());
+  const [pLayers, setPLayers] = useState([0,0,0]);
+  const [qSel, setQSel] = useState([null,null,null,null]);
+  const [qDone, setQDone] = useState([false,false,false,false]);
+  const [argStep, setArgStep] = useState(0);
+  const [posOpen, setPosOpen] = useState(null);
+  const [logicOpen, setLogicOpen] = useState(new Set());
+  const [seminHints, setSeminHints] = useState(new Set());
+
+  const TOTAL = 11;
+  const go = (n) => { setFading(true); setTimeout(() => { setPage(n); setFading(false); window.scrollTo(0,0); }, 280); };
+  const next = () => { if (page < TOTAL-1) go(page+1); };
+  const prev = () => { if (page > 0) go(page-1); };
+
+  const C = { bg:"#0d0b09", surf:"#18140e", surfUp:"#221d15", txt:"#e8e2d5", muted:"#7a7060", gold:"#c4a35a", goldBr:"#deb96a", line:"#2a2418" };
+  const F = { h:"'Cormorant Garamond', Georgia, serif", b:"'Noto Serif KR', Georgia, serif" };
+  const W = { maxWidth:720, margin:"0 auto", padding:"52px 28px", color:C.txt, fontFamily:F.b };
+  const SL = { fontFamily:F.b, fontSize:11, letterSpacing:4, color:C.gold, marginBottom:18, display:"block" };
+  const BT = { fontFamily:F.h, fontSize:32, fontWeight:400, color:C.txt, lineHeight:1.25, marginBottom:8 };
+  const DIV = { width:36, height:1, background:C.gold, marginBottom:28 };
+  const BD = { fontSize:15, lineHeight:1.95, color:C.txt, fontWeight:300, fontFamily:F.b };
+  const MT = { fontSize:15, lineHeight:1.95, color:C.muted, fontWeight:300, fontFamily:F.b };
+
+  const stageKey = PAGE_STAGE[page];
+  const stage = stageKey ? STAGES[stageKey] : null;
+
+  const StageBadge = () => {
+    if (!stage) return null;
+    return (
+      <div style={{ display:"flex", gap:10, alignItems:"center", marginBottom:28, padding:"10px 16px", background:stage.bg, border:`1px solid ${stage.color}33`, width:"fit-content" }}>
+        <div style={{ width:6, height:6, borderRadius:"50%", background:stage.color }} />
+        <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:4, color:stage.color }}>{stage.label}</span>
+        <span style={{ fontFamily:F.h, fontSize:13, color:C.muted, fontStyle:"italic" }}>{stage.latin}</span>
+        <span style={{ fontFamily:F.b, fontSize:11, color:C.muted }}>· {stage.sub}</span>
+      </div>
+    );
+  };
+
+  const renderPage = () => {
+    switch(page) {
+
+    case 0:
+      return (
+        <div style={{ minHeight:"100vh", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", textAlign:"center", padding:"48px 28px", background:C.bg, position:"relative", overflow:"hidden" }}>
+          <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:`linear-gradient(90deg, transparent, ${C.gold}, transparent)` }} />
+          <div style={{ position:"absolute", bottom:0, left:0, right:0, height:1, background:`linear-gradient(90deg, transparent, ${C.gold}44, transparent)` }} />
+          <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(ellipse at 50% 55%, #1a160e 0%, transparent 65%)`, pointerEvents:"none" }} />
+          <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:6, color:C.muted, marginBottom:48, display:"block" }}>생각학교 ASK</span>
+          <h1 style={{ fontFamily:F.h, fontSize:"clamp(40px,8vw,60px)", fontWeight:300, color:C.txt, lineHeight:1.1, marginBottom:10 }}>존재와 무</h1>
+          <p style={{ fontFamily:F.h, fontSize:20, color:C.muted, fontStyle:"italic", marginBottom:6 }}>L'Être et le Néant</p>
+          <p style={{ fontFamily:F.b, fontSize:12, color:C.muted, letterSpacing:2 }}>Jean-Paul Sartre, 1943</p>
+          <div style={{ width:1, height:52, background:`linear-gradient(${C.gold}88, transparent)`, margin:"36px auto" }} />
+          <p style={{ fontFamily:F.b, fontSize:13, letterSpacing:5, color:C.gold, marginBottom:10 }}>소크라테스식 고전 탐구 세미나</p>
+          <p style={{ fontFamily:F.h, fontSize:17, color:C.muted, fontStyle:"italic", marginBottom:16 }}>2부 3장 1절 · 대자와 즉자 사이의</p>
+          <p style={{ fontFamily:F.h, fontSize:17, color:C.muted, fontStyle:"italic", marginBottom:52 }}>전형적 관계로서의 인식</p>
+          <button onClick={next}
+            onMouseEnter={e=>{e.currentTarget.style.background=C.gold;e.currentTarget.style.color=C.bg;}}
+            onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=C.gold;}}
+            style={{ background:"transparent", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:F.b, fontSize:12, letterSpacing:4, padding:"15px 48px", cursor:"pointer", transition:"all 0.3s" }}>
+            시작하기
+          </button>
+          <div style={{ display:"flex", gap:24, marginTop:40, justifyContent:"center" }}>
+            {[["문법","#c4a35a"],["논리","#5a9abc"],["수사","#bc7a7a"]].map(([l,col]) => (
+              <div key={l} style={{ textAlign:"center" }}>
+                <div style={{ width:5, height:5, borderRadius:"50%", background:col, margin:"0 auto 6px" }} />
+                <span style={{ fontFamily:F.b, fontSize:10, color:col, letterSpacing:3 }}>{l}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+
+    case 1:
+      return (
+        <div style={W}>
+          <span style={SL}>안내 · 트리비움으로 읽다</span>
+          <h2 style={BT}>세 단계로 고전을 읽는 법</h2>
+          <div style={DIV} />
+          <p style={{ ...BD, marginBottom:32 }}>
+            이 세미나는 생각을 이끄는 도구, <strong style={{color:C.goldBr}}>트리비움</strong>으로 텍스트를 읽습니다—<strong style={{color:C.goldBr}}>문법, 논리, 수사</strong>. 각 단계는 텍스트를 다른 깊이로 만나는 방법입니다.
+          </p>
+          {[
+            { key:"grammar", n:"01", label:"문법 — Grammatica", pages:"5섹션",
+              desc:"텍스트가 무엇을 말하는지 파악합니다. 사르트르가 사용하는 언어와 개념을 내 것으로 만드는 단계입니다.",
+              items:["즉자·대자·무·인식·현전·내적 부정 개념 카드 (6종)","핵심 논점 3개 단계별 독해","이해 확인 퀴즈 4문항"] },
+            { key:"logic", n:"02", label:"논리 — Dialectica", pages:"2섹션",
+              desc:"사르트르의 논증 구조를 단계별로 분해합니다. 관념론·실재론 비판의 논리를 파악하고, 이 논증의 강점과 약점을 스스로 찾아봅니다.",
+              items:["논증 구조 5단계 시각화","관념론 vs 사르트르 vs 실재론 비교","비판적 탐구 질문 4개"] },
+            { key:"rhetoric", n:"03", label:"수사 — Rhetorica", pages:"세미나에서 함께",
+              desc:"이 단계는 세미나 현장에서 함께 합니다. 가이드에서는 토론 질문을 미리 확인합니다.",
+              items:["소크라테스식 세미나 토론 질문 5개","힌트와 함께 입장 준비"] },
+          ].map((item) => {
+            const s = STAGES[item.key];
+            return (
+              <div key={item.key} style={{ marginBottom:20, background:C.surf, padding:"22px 24px", borderLeft:`3px solid ${s.color}` }}>
+                <div style={{ display:"flex", gap:14, alignItems:"flex-start", marginBottom:14 }}>
+                  <span style={{ fontFamily:F.h, fontSize:30, color:s.color, lineHeight:1, minWidth:32 }}>{item.n}</span>
+                  <div>
+                    <div style={{ display:"flex", gap:10, alignItems:"center", marginBottom:6 }}>
+                      <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:4, color:s.color }}>{item.label}</span>
+                      <span style={{ fontFamily:F.b, fontSize:11, color:C.muted }}>· {item.pages}</span>
+                    </div>
+                    <p style={{ ...BD, fontSize:13, margin:0, lineHeight:1.8 }}>{item.desc}</p>
+                  </div>
+                </div>
+                <div style={{ paddingLeft:46 }}>
+                  {item.items.map((it,j) => (
+                    <div key={j} style={{ display:"flex", gap:10, alignItems:"flex-start", padding:"4px 0" }}>
+                      <div style={{ width:4, height:4, borderRadius:"50%", background:s.color+"88", flexShrink:0, marginTop:7 }} />
+                      <span style={{ ...MT, fontSize:13 }}>{it}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+
+    case 2:
+      return (
+        <div style={W}>
+          <StageBadge />
+          <span style={SL}>문법 1/5 · 핵심 개념</span>
+          <h2 style={BT}>카드를 눌러 개념을 확인하세요</h2>
+          <div style={DIV} />
+          <p style={{ ...MT, marginBottom:36, fontSize:14 }}>6개 모두 열어보시길 권합니다. 지금 완전히 이해하지 않아도 됩니다—이후 독해와 퀴즈를 통해 다시 만납니다.</p>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+            {CONCEPTS.map((c) => {
+              const open = flipped.has(c.id);
+              return (
+                <div key={c.id}
+                  onClick={()=>{const n=new Set(flipped);if(n.has(c.id))n.delete(c.id);else n.add(c.id);setFlipped(n);}}
+                  style={{ background:open?C.surfUp:C.surf, border:`1px solid ${open?c.accent+"66":C.line}`, padding:"18px 20px", cursor:"pointer", transition:"all 0.25s" }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                    <div>
+                      <p style={{ fontFamily:F.h, fontSize:19, color:open?c.accent:C.goldBr, fontWeight:500, margin:"0 0 2px" }}>{c.term}</p>
+                      <p style={{ fontSize:11, color:C.muted, fontStyle:"italic", margin:0, letterSpacing:1 }}>{c.latin}</p>
+                    </div>
+                    <span style={{ color:open?C.gold:C.muted, fontSize:20, lineHeight:1, display:"block", transform:open?"rotate(45deg)":"none", transition:"transform 0.25s" }}>+</span>
+                  </div>
+                  {open && (
+                    <div style={{ marginTop:16 }}>
+                      <p style={{ fontSize:11, color:c.accent, letterSpacing:3, marginBottom:10, fontWeight:500 }}>{c.keyword}</p>
+                      <p style={{ ...BD, fontSize:13, marginBottom:14, lineHeight:1.85 }}>{c.desc}</p>
+                      <div style={{ background:C.surf, padding:"12px 14px" }}>
+                        <p style={{ ...MT, fontSize:12, margin:0, lineHeight:1.8 }}>✦ {c.example}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <div style={{ textAlign:"center", marginTop:28 }}>
+            <span style={{ ...MT, fontSize:12, letterSpacing:2 }}>{flipped.size} / {CONCEPTS.length} 확인</span>
+            <div style={{ display:"flex", justifyContent:"center", gap:6, marginTop:10 }}>
+              {CONCEPTS.map((c,i)=><div key={i} style={{ width:6, height:6, borderRadius:"50%", background:flipped.has(c.id)?C.gold:C.line, transition:"background 0.3s" }} />)}
+            </div>
+          </div>
+        </div>
+      );
+
+    case 3: case 4: case 5: {
+      const pIdx = page-3;
+      const p = PASSAGES[pIdx];
+      const layer = pLayers[pIdx];
+      return (
+        <div style={W}>
+          <StageBadge />
+          <span style={SL}>문법 {pIdx+2}/5 · 핵심 논점 {pIdx+1}/3</span>
+          <h2 style={BT}>{p.title}</h2>
+          <div style={DIV} />
+          <div style={{ background:"#111a10", border:`1px solid #2a4a2a`, padding:"18px 22px", marginBottom:28 }}>
+            <p style={{ fontSize:11, color:"#4a8a4a", letterSpacing:3, marginBottom:8 }}>책에서 찾아보기</p>
+            <p style={{ ...BD, fontSize:13, margin:0, color:"#8abb8a", lineHeight:1.85 }}>{p.note}</p>
+          </div>
+          <p style={{ ...MT, fontSize:12, marginBottom:16, letterSpacing:1 }}>아래 탭을 순서대로 눌러 이해의 층을 쌓아보세요</p>
+          <div style={{ display:"flex" }}>
+            {p.layers.map((l,i)=>(
+              <button key={i} onClick={()=>setPLayers(prev=>{const n=[...prev];n[pIdx]=i;return n;})}
+                style={{ flex:1, padding:"12px 8px", background:layer===i?C.surfUp:C.surf, border:"none", borderBottom:`2px solid ${layer===i?C.gold:C.line}`, color:layer===i?C.gold:C.muted, fontFamily:F.b, fontSize:12, letterSpacing:2, cursor:"pointer", transition:"all 0.2s" }}>
+                {l.label}
+              </button>
+            ))}
+          </div>
+          <div style={{ background:C.surfUp, padding:"28px 26px", minHeight:148, borderTop:`1px solid ${C.line}`, marginBottom:32 }}>
+            <p style={{ ...BD, margin:0, lineHeight:2.1, whiteSpace:"pre-line" }}>{p.layers[layer].text}</p>
+          </div>
+          {pIdx < 2 && (
+            <div style={{ display:"flex", justifyContent:"center" }}>
+              <button onClick={next} style={{ background:"transparent", border:`1px solid ${C.line}`, color:C.muted, fontFamily:F.b, fontSize:12, letterSpacing:3, padding:"10px 28px", cursor:"pointer" }}>
+                다음 논점으로 →
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    case 6:
+      return (
+        <div style={W}>
+          <StageBadge />
+          <span style={SL}>문법 5/5 · 이해 확인</span>
+          <h2 style={BT}>이해 확인 퀴즈</h2>
+          <div style={DIV} />
+          <p style={{ ...MT, marginBottom:40, fontSize:14 }}>정답을 선택하고 '확인'을 누르면 해설이 나옵니다.</p>
+          {QUIZ.map((q,qi)=>(
+            <div key={qi} style={{ marginBottom:40 }}>
+              <div style={{ display:"flex", gap:14, marginBottom:16, alignItems:"flex-start" }}>
+                <span style={{ fontFamily:F.h, fontSize:26, color:C.gold, lineHeight:1, minWidth:32 }}>Q{qi+1}</span>
+                <p style={{ ...BD, fontWeight:400, lineHeight:1.75, margin:0 }}>{q.q}</p>
+              </div>
+              {q.opts.map((opt,oi)=>{
+                const sel=qSel[qi]===oi,done=qDone[qi],correct=oi===q.ans;
+                let bg=C.surf,border=C.line,color=C.txt;
+                if(done){if(correct){bg="#192819";border="#3a7a3a";color="#8acd8a";}else if(sel){bg="#281919";border="#7a3a3a";color="#cd8a8a";}else{color=C.muted;}}
+                else if(sel){bg=C.surfUp;border=C.gold+"88";}
+                return (
+                  <div key={oi} onClick={()=>{if(!done){const n=[...qSel];n[qi]=oi;setQSel(n);}}}
+                    style={{ background:bg, border:`1px solid ${border}`, padding:"13px 18px", marginBottom:8, cursor:done?"default":"pointer", display:"flex", gap:14, alignItems:"flex-start", transition:"all 0.2s" }}>
+                    <span style={{ fontFamily:F.h, fontSize:16, color:done&&correct?"#3a7a3a":(done&&sel?"#7a3a3a":C.muted), minWidth:20, lineHeight:1.6 }}>{String.fromCharCode(65+oi)}</span>
+                    <span style={{ ...BD, fontSize:14, color, margin:0, lineHeight:1.7 }}>{opt}</span>
+                    {done&&correct&&<span style={{ marginLeft:"auto", color:"#3a7a3a", fontSize:16, flexShrink:0 }}>✓</span>}
+                  </div>
+                );
+              })}
+              {!qDone[qi]&&qSel[qi]!==null&&(
+                <button onClick={()=>{const n=[...qDone];n[qi]=true;setQDone(n);}}
+                  style={{ marginTop:8, padding:"10px 28px", background:"transparent", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer" }}>
+                  확인
+                </button>
+              )}
+              {qDone[qi]&&(
+                <div style={{ background:"#101910", border:`1px solid #1e3a1e`, padding:"16px 20px", marginTop:12 }}>
+                  <p style={{ fontSize:11, color:"#4a8a4a", letterSpacing:3, marginBottom:8 }}>해설</p>
+                  <p style={{ ...BD, fontSize:13, color:"#90bb90", margin:0, lineHeight:1.85 }}>{q.exp}</p>
+                </div>
+              )}
+            </div>
+          ))}
+          <div style={{ textAlign:"center", padding:"16px 0", borderTop:`1px solid ${C.line}` }}>
+            <span style={{ ...MT, fontSize:12, letterSpacing:2 }}>{qDone.filter(Boolean).length} / {QUIZ.length} 완료</span>
+          </div>
+        </div>
+      );
+
+    case 7:
+      return (
+        <div style={W}>
+          <StageBadge />
+          <span style={SL}>논리 1/2 · 논증 구조</span>
+          <h2 style={BT}>사르트르의 논증을 분해한다</h2>
+          <div style={DIV} />
+          <p style={{ ...MT, marginBottom:36, fontSize:14, lineHeight:1.9 }}>
+            '다음 단계' 버튼을 눌러 사르트르의 논증을 단계적으로 따라가보세요.
+          </p>
+          {ARG_STEPS.slice(0, argStep+1).map((step,i)=>(
+            <div key={i} style={{ marginBottom:14, opacity:i===argStep?1:0.55, transition:"opacity 0.3s" }}>
+              <div style={{ display:"flex", alignItems:"stretch" }}>
+                <div style={{ width:4, background:step.color, flexShrink:0 }} />
+                <div style={{ background:i===argStep?C.surfUp:C.surf, padding:"20px 24px", flex:1 }}>
+                  <div style={{ display:"flex", gap:12, alignItems:"center", marginBottom:10 }}>
+                    <span style={{ fontFamily:F.b, fontSize:10, letterSpacing:4, color:step.color }}>{step.num}</span>
+                    <span style={{ fontFamily:F.h, fontSize:18, color:i===argStep?C.txt:C.muted }}>{step.title}</span>
+                  </div>
+                  <p style={{ ...BD, fontSize:14, lineHeight:1.9, marginBottom:12, whiteSpace:"pre-line" }}>{step.body}</p>
+                  <div style={{ padding:"10px 14px", background:C.bg, borderLeft:`2px solid ${step.color}44` }}>
+                    <p style={{ ...MT, fontSize:12, margin:0, color:step.color }}>✦ {step.key}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          <div style={{ display:"flex", gap:14, marginTop:24, alignItems:"center" }}>
+            {argStep < ARG_STEPS.length-1 ? (
+              <button onClick={()=>setArgStep(s=>s+1)}
+                onMouseEnter={e=>{e.currentTarget.style.background=ARG_STEPS[argStep+1].color;e.currentTarget.style.color=C.bg;}}
+                onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=ARG_STEPS[argStep+1].color;}}
+                style={{ padding:"12px 28px", background:"transparent", border:`1px solid ${ARG_STEPS[argStep+1].color}`, color:ARG_STEPS[argStep+1].color, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer", transition:"all 0.3s" }}>
+                다음 단계 →
+              </button>
+            ) : (
+              <span style={{ ...MT, fontSize:12, letterSpacing:2 }}>논증 완료</span>
+            )}
+            {argStep > 0 && (
+              <button onClick={()=>setArgStep(0)} style={{ background:"transparent", border:"none", color:C.muted, fontFamily:F.b, fontSize:11, letterSpacing:2, cursor:"pointer" }}>
+                처음부터
+              </button>
+            )}
+            <span style={{ marginLeft:"auto", ...MT, fontSize:11 }}>{argStep+1} / {ARG_STEPS.length}</span>
+          </div>
+        </div>
+      );
+
+    case 8:
+      return (
+        <div style={W}>
+          <StageBadge />
+          <span style={SL}>논리 2/2 · 비판적 분석</span>
+          <h2 style={BT}>사르트르가 넘어서려는 것</h2>
+          <div style={DIV} />
+          <p style={{ ...MT, marginBottom:24, fontSize:14 }}>각 입장을 눌러 비교해보세요.</p>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, marginBottom:36 }}>
+            {POSITIONS.map((pos,i)=>{
+              const open = posOpen===i;
+              return (
+                <div key={i} onClick={()=>setPosOpen(open?null:i)}
+                  style={{ background:open?C.surfUp:C.surf, border:`1px solid ${open?pos.color+"88":C.line}`, padding:"16px 14px", cursor:"pointer", transition:"all 0.25s" }}>
+                  <p style={{ fontFamily:F.h, fontSize:17, color:open?pos.color:C.muted, margin:"0 0 4px", textAlign:"center" }}>{pos.label}</p>
+                  <p style={{ fontSize:10, color:C.muted, fontStyle:"italic", margin:0, textAlign:"center", letterSpacing:1 }}>{pos.sub}</p>
+                  {open && (
+                    <div style={{ marginTop:14 }}>
+                      <div style={{ marginBottom:10, paddingBottom:10, borderBottom:`1px solid ${C.line}` }}>
+                        <p style={{ fontSize:10, color:pos.color, letterSpacing:3, marginBottom:6 }}>주장</p>
+                        <p style={{ ...BD, fontSize:12, margin:0, lineHeight:1.75 }}>{pos.claim}</p>
+                      </div>
+                      <div style={{ marginBottom:pos.quote?10:0 }}>
+                        <p style={{ fontSize:10, color:i===1?"#5a8a5a":"#8a4a4a", letterSpacing:3, marginBottom:6 }}>{i===1?"특징":"문제점"}</p>
+                        <p style={{ ...BD, fontSize:12, margin:0, lineHeight:1.75, color:i===1?"#8abb8a":"#c48a8a" }}>{pos.problem}</p>
+                      </div>
+                      {pos.quote && (
+                        <div style={{ marginTop:10, padding:"8px 12px", background:C.surf, borderLeft:`2px solid ${pos.color}44` }}>
+                          <p style={{ fontSize:11, color:pos.color, margin:0, fontStyle:"italic" }}>"{pos.quote}"</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <p style={{ fontFamily:F.b, fontSize:11, color:STAGES.logic.color, letterSpacing:4, marginBottom:16 }}>비판적 탐구 질문</p>
+          {LOGIC_QS.map((item,i)=>{
+            const open = logicOpen.has(i);
+            return (
+              <div key={i} style={{ marginBottom:12, background:C.surf, padding:"18px 22px" }}>
+                <div style={{ display:"flex", gap:14, alignItems:"flex-start" }}>
+                  <span style={{ fontFamily:F.h, fontSize:22, color:STAGES.logic.color, lineHeight:1, minWidth:28 }}>L{i+1}</span>
+                  <p style={{ ...BD, fontWeight:400, lineHeight:1.75, margin:0, flex:1 }}>{item.q}</p>
+                  <button onClick={()=>{const n=new Set(logicOpen);if(n.has(i))n.delete(i);else n.add(i);setLogicOpen(n);}}
+                    style={{ background:"transparent", border:"none", color:C.muted, cursor:"pointer", padding:0, fontSize:16, flexShrink:0 }}>
+                    {open?"↑":"↓"}
+                  </button>
+                </div>
+                {open && (
+                  <div style={{ paddingLeft:42, paddingTop:12 }}>
+                    <p style={{ ...MT, fontSize:13, fontStyle:"italic", margin:0, lineHeight:1.8 }}>💡 {item.hint}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      );
+
+    case 9:
+      return (
+        <div style={W}>
+          <StageBadge />
+          <span style={SL}>수사 · 세미나 준비</span>
+          <h2 style={BT}>이제 함께 탐구합니다</h2>
+          <div style={DIV} />
+          <div style={{ background:"#1a0f0f", border:`1px solid ${STAGES.rhetoric.color}33`, padding:"20px 24px", marginBottom:36 }}>
+            <p style={{ fontFamily:F.b, fontSize:11, color:STAGES.rhetoric.color, letterSpacing:4, marginBottom:10 }}>수사 단계에 대하여</p>
+            <p style={{ ...BD, fontSize:14, margin:0, lineHeight:1.9 }}>
+              문법으로 텍스트를 읽고, 논리로 논증을 분석했습니다. 수사는 그것을 <strong style={{color:C.txt}}>함께 말하는 단계</strong>입니다. 소크라테스식 세미나는 정답을 향해 가는 것이 아닙니다—질문이 질문을 낳고, 생각이 생각을 밀어올리는 과정입니다.
+            </p>
+          </div>
+          <p style={{ fontFamily:F.b, fontSize:11, color:STAGES.rhetoric.color, letterSpacing:4, marginBottom:20 }}>세미나 토론 질문</p>
+          {SEMINAR_QS.map((item,i)=>(
+            <div key={i} style={{ marginBottom:20, background:C.surf, padding:"22px 26px", borderLeft:`3px solid ${STAGES.rhetoric.color}${i%2===0?"cc":"44"}` }}>
+              <div style={{ display:"flex", gap:16, alignItems:"flex-start", marginBottom:12 }}>
+                <span style={{ fontFamily:F.h, fontSize:28, color:STAGES.rhetoric.color, lineHeight:1, minWidth:34 }}>S{i+1}</span>
+                <p style={{ ...BD, fontWeight:400, lineHeight:1.8, margin:0, flex:1 }}>{item.q}</p>
+              </div>
+              <div style={{ paddingLeft:50 }}>
+                <button onClick={()=>{const n=new Set(seminHints);if(n.has(i))n.delete(i);else n.add(i);setSeminHints(n);}}
+                  style={{ background:"transparent", border:"none", color:C.muted, fontFamily:F.b, fontSize:11, letterSpacing:3, cursor:"pointer", padding:0 }}>
+                  {seminHints.has(i)?"힌트 접기 ↑":"힌트 보기 ↓"}
+                </button>
+                {seminHints.has(i) && (
+                  <div style={{ marginTop:10, padding:"12px 16px", background:C.surfUp, borderLeft:`2px solid ${STAGES.rhetoric.color}33` }}>
+                    <p style={{ ...MT, fontSize:13, fontStyle:"italic", margin:0, lineHeight:1.8 }}>💡 {item.hint}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+
+    case 10:
+      return (
+        <div style={{ minHeight:"100vh", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", textAlign:"center", padding:"48px 28px", background:C.bg, position:"relative" }}>
+          <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:`linear-gradient(90deg, transparent, ${C.gold}44, transparent)` }} />
+          <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:6, color:C.muted, marginBottom:48, display:"block" }}>생각학교 ASK · 존재와 무 클래스</span>
+          <div style={{ width:1, height:64, background:`linear-gradient(${C.gold}88, transparent)`, margin:"0 auto 44px" }} />
+          <div style={{ background:C.surf, padding:"36px 40px", maxWidth:600, textAlign:"left", borderLeft:`3px solid ${C.gold}`, marginBottom:52 }}>
+            <p style={{ fontSize:11, color:C.gold, letterSpacing:4, marginBottom:20 }}>오늘의 마지막 문장 · Jean-Paul Sartre</p>
+            <p style={{ fontFamily:F.h, fontSize:"clamp(16px,2.5vw,20px)", fontStyle:"italic", color:C.txt, lineHeight:2.1, margin:0 }}>
+              "우리는 대자를 그 존재에서 규정함으로써 즉자를 드러내 보이는 이 내적이고 실재화하는 이 부정을 초월
+              <span style={{ fontFamily:F.b, fontSize:14, letterSpacing:1, fontStyle:"normal", color:C.muted }}> transcendance</span>
+              이라고 명명할 것이다"
+            </p>
+            <p style={{ ...MT, fontSize:12, marginTop:20, marginBottom:0, letterSpacing:2 }}>— 『존재와 무』 2부 3장 1절</p>
+          </div>
+          <div style={{ display:"flex", gap:32, marginBottom:52, justifyContent:"center" }}>
+            {[["문법","Grammar","#c4a35a"],["논리","Logic","#5a9abc"],["수사","Rhetoric","#bc7a7a"]].map(([l,e,col])=>(
+              <div key={l} style={{ textAlign:"center" }}>
+                <div style={{ width:5, height:5, borderRadius:"50%", background:col, margin:"0 auto 8px" }} />
+                <p style={{ fontFamily:F.b, fontSize:11, color:col, letterSpacing:3, marginBottom:5 }}>{l}</p>
+                <p style={{ fontFamily:F.h, fontSize:13, color:C.muted, margin:0, fontStyle:"italic" }}>{e}</p>
+              </div>
+            ))}
+          </div>
+          <button onClick={()=>go(0)} style={{ background:"transparent", border:`1px solid ${C.line}`, color:C.muted, fontFamily:F.b, fontSize:11, letterSpacing:4, padding:"12px 32px", cursor:"pointer" }}>
+            처음으로
+          </button>
+        </div>
+      );
+
+    default: return null;
+    }
+  };
+
+  const navVisible = page > 0 && page < 10;
+  return (
+    <div style={{ background:C.bg, minHeight:"100vh" }}>
+      {navVisible && (
+        <div style={{ position:"fixed", top:0, left:0, right:0, height:2, background:C.line, zIndex:100 }}>
+          <div style={{ height:"100%", width:`${((page-1)/8)*100}%`, background:stage?stage.color:C.gold, transition:"width 0.4s ease, background 0.4s ease" }} />
+        </div>
+      )}
+      <div style={{ opacity:fading?0:1, transition:"opacity 0.28s ease", paddingTop:navVisible?2:0 }}>
+        {renderPage()}
+      </div>
+      {navVisible && (
+        <div style={{ maxWidth:720, margin:"0 auto", padding:"0 28px 52px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <button onClick={prev} style={{ background:"transparent", border:"none", color:C.muted, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer", padding:"12px 0" }}>← 이전</button>
+          <div style={{ display:"flex", gap:4, alignItems:"center" }}>
+            {Array.from({length:9},(_,i)=>{
+              const ps = PAGE_STAGE[i+2];
+              const col = ps ? STAGES[ps].color : C.gold;
+              const active = i===page-2;
+              const done = i<page-2;
+              return <div key={i} style={{ width:active?8:5, height:active?8:5, borderRadius:"50%", background:done||active?col:C.line, transition:"all 0.3s" }} />;
+            })}
+          </div>
+          {page < 9 ? (
+            <button onClick={next} style={{ background:"transparent", border:"none", color:stage?stage.color:C.gold, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer", padding:"12px 0" }}>다음 →</button>
+          ) : (
+            <button onClick={next}
+              onMouseEnter={e=>{e.currentTarget.style.background=STAGES.rhetoric.color;e.currentTarget.style.color=C.bg;}}
+              onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=STAGES.rhetoric.color;}}
+              style={{ background:"transparent", border:`1px solid ${STAGES.rhetoric.color}`, color:STAGES.rhetoric.color, fontFamily:F.b, fontSize:11, letterSpacing:3, padding:"10px 24px", cursor:"pointer", transition:"all 0.3s" }}>
+              마무리
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
