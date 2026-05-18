@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>존재와 무 3절 전반부 · 생각학교 ASK</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>* { box-sizing: border-box; } body { margin: 0; background: #0d0b09; } button { -webkit-tap-highlight-color: transparent; }</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+const CONCEPTS = [
+  { id:"qualite", term:"성질", latin:"qualité", keyword:"'거기에 있다(il y a)'의 한계 내에서 자기를 드러내는 존재 전부",
+    desc:"성질(qualité)은, 이것이 세계 또는 다른 이것들과 맺는 모든 외적 관계의 밖에서 고려할 때의 이것의 존재 외에 아무것도 아니다(p.417). 성질은 결코 존재의 외부가 아니다. 성질은 전적으로 존재이다(p.418). 오히려 성질은 '거기에 있다(il y a)'가 지닌 한계 내에서 자기를 드러내 보이는 그 존재 전부이다.",
+    example:"레몬의 노란색은 우리가 레몬을 파악할 때의 주관적인 하나의 방법이 아니다. 그 노란색은 레몬이다. 노란 것은 레몬의 신맛이고, 신 것은 레몬의 노란색이다—성질들은 서로를 통해 남김없이 퍼져 있다(p.417).", accent:"#6aaa82" },
+
+  { id:"etrequalite", term:"성질-존재", latin:"être-qualité", keyword:"심리적 주관성과 혼동되어선 안 되는 위상",
+    desc:"성질이 존재의 한 양상으로서 가지는 위상. 사람들은 성질을 너무 자주 하나의 단순한 주관적인 규정이라고 생각했고, 그때 성질-존재(être-qualité)는 심리적인 것의 주관성과 혼동되었다(p.417). 사르트르가 거부하는 잘못된 출발점이다. 성질을 성질-존재라고 부르는 것은 성질에 실체와 유사한 신비한 버팀목을 마련해 주는 것이 아니라, 성질의 존재 방식이 '대자'의 존재 방식과 근본적으로 다르다는 점을 지적하기 위함이다(p.420).",
+    example:"사람들은 흔히 \"내가 레몬을 노랗게 본다\"고 표현한다. 이때 노란색은 마치 내 안에 있는 인상처럼 들린다. 사르트르는 이 통념을 거부한다—노란색은 내 머릿속이 아니라 레몬 자체로서 존재한다.", accent:"#9a7abd" },
+
+  { id:"alimentaire", term:"식품 직관", latin:"intuition alimentaire", keyword:"성질들이 서로를 통해 한꺼번에 주어지는 직관",
+    desc:"사르트르가 p.417-418에서 직접 사용하는 표현. 성질이 서로를 통해 단번에 통합적으로 주어지는 직관 방식. 잼 병에 손가락을 넣으면 잼의 끈적거리는 차가움은 내 손가락에 대한 그 단맛의 열어 보임이다. 한 수영장의 물의 유동성, 미지근함, 푸르스름한 색깔, 파동성 등은 서로를 통해 단번에 주어진다. 그리고 이것이라 불리는 것은 바로 이 전적인 상호 침투이다. 이것이 화가들, 특히 세잔이 경험을 통해 잘 보여 주고 있다.",
+    example:"잼 병에 손가락을 넣으면 그 끈적거리는 차가움은 곧 단맛의 열어 보임이다. 차가움/끈적임/단맛이 분리되어 차례로 주어지지 않고, 하나의 사건으로 단번에 주어진다(p.418).", accent:"#c4a35a" },
+
+  { id:"etreodeur", term:"향기-존재 / 빛-존재", latin:"être-odeur / être-lumière", keyword:"성질은 주관적 인상이 아니라 존재로 우리에게 옴",
+    desc:"내가 눈을 감고서 갑자기 들이마신 향기는, 심지어 내가 그것을 향기를 풍기는 하나의 대상과 연관 짓기도 전에, 이미 하나의 향기-존재(un être-odeur)이지, 하나의 주관적인 인상이 아니다. 아침에 감겨 있던 나의 눈꺼풀을 통해 나의 눈을 자극하는 빛은 이미 하나의 빛-존재(un être-lumière)이다(p.420). 성질의 실재론적 위상을 보여주는 사르트르의 결정적 사례.",
+    example:"잠에서 깨기 직전, 눈꺼풀 너머로 들어오는 빛—그것은 내가 '아침이다'라고 의식하기 전에 이미 하나의 '빛-존재'다. 의식이 그것을 빛으로 해석하기 이전에 그것은 이미 거기에 존재로서 있다.", accent:"#5a9abc" },
+
+  { id:"erfullung", term:"충족", latin:"remplissement, Erfüllung", keyword:"사르트르가 거부하는 후설의 인식 모델",
+    desc:"후설 현상학의 핵심 개념. 의향(noesis)이 직관에 의해 채워지는 사태—인식이 그 대상을 완전히 채워 갖는 모델. 사르트르는 p.419에서 거부한다: \"성질의 파악은, 후설이 원한 바와 같이 '충족(remplissement, Erfüllung)'이 아니라, 이 성질에 대한 한정된 텅 빔으로서의 하나의 텅 빔에 대한 알림이다.\" 인식은 결코 완전한 채움이 될 수 없으며, 항상 갈증을 동반한다. 성질은 끊임없이 손이 미치지 않는 곳에서 현전한다.",
+    example:"빨강을 본다는 것은 후설에게는 의식이 빨강에 의해 충족되는 사건이다. 사르트르에게는 다르다—나는 빨강을 '갖는' 게 아니라, 빨강이 거기에 있고 나는 그것이 아님을, 내가 그것에 결여되어 있음을 통보받을 뿐이다.", accent:"#aaba5a" },
+
+  { id:"tantalos", term:"탄탈로스의 갈증", latin:"Tantalos", keyword:"인식은 갈증이며, 성질은 손이 닿지 않는 곳에서 현전한다",
+    desc:"사르트르가 p.419에서 인식론 전체에 던지는 비유. \"인식에 대한 설명은 너무 자주 음식을 섭취하는 식으로 이루어졌다. 인식론적 철학에는 아직도 전 논리적 사유가 너무 많이 남아 있다. 이 착각에 따르면, 인식한다는 것은 먹는 것이다.\" 사르트르는 이를 시원적 착각이라고 부른다. 진실은 정반대다—\"마치 손이 닿을 수 없는 곳의 음식을 보고 탄탈로스의 허기가 더 심해지는 것처럼, 성질을 관조하는 것은 우리의 존재에 대한 갈증을 더욱더 증대시킬 뿐이다.\"",
+    example:"신화의 탄탈로스는 손을 내밀면 과일이 공중으로 솟구쳐 영원히 굶주린다(각주 95). 우리가 빨강을 본다는 것은 빨강을 '먹는' 것이 아니라, 우리 자신이 빨강이 아님을—우리가 빨강에 결여되어 있음을—통보받는 일이다.", accent:"#c47a7a" },
+
+  { id:"profil", term:"음영", latin:"profil", keyword:"한 관점에서 일그러진 채로 드러나는, 그러나 전체를 담고 있는 부분",
+    desc:"컵을 바라볼 때 반드시 어느 한 방향에서 볼 수밖에 없고, 컵은 일그러진 모양으로 나타난다—이 일그러진 모양이 음영이다(각주 96). 사르트르의 결정적 입장: 우리는 컵의 '부분적인' 한 음영을 보고서 컵 전체를 지각한다(각주 97). 후설의 노에시스-노에마 모델에 대한 사르트르의 실재론적 응답. 후설은 부분적 음영의 연속을 인식적 질료(Hyle)로 보고, 의식작용(Noesis)이 가해져 전체가 노에마(Noema)로 나타난다고 본다. 사르트르는 종합 과정 없이, 음영에 컵 전체가 직관적으로 반영되어 한꺼번에 지각된다고 본다.",
+    example:"옆에서 본 컵은 타원형이지만 우리는 그것을 '원형 컵'으로 본다. 후설은 의식이 여러 음영을 종합해 컵을 구성한다고 한다. 사르트르는 다르다—이 일그러진 모양 자체에 이미 컵 전체가 들어 있다.", accent:"#6aaa82" },
+
+  { id:"qualitececi", term:"성질-이것", latin:"qualité-ceci", keyword:"추상되었으나 존재적 밀도를 잃지 않은 성질",
+    desc:"추상은 \"공중에 떠 있는\" 하나의 성질을 파악하는 것이 아니다. 거기에서는 내적 배경의 무차별화가 절대적인 균형을 향하는 하나의 성질-이것(une qualité-ceci)을 파악하기 때문이다(p.422). 각주 99: '이것인 컵의 이 하얀색'을 지시해 말할 때 그 하얀색을 따로 '이것'이라 말할 수 있다. 결정적인 점: 추상적인 초록은 그 존재적인 밀도(densité)를 상실하지 않는다. 만일 상실한다면 이 추상적인 초록은 대자의 하나의 주관적인 양식에 불과할 것이다(p.422). 사르트르 추상론이 관념론과 갈라지는 지점.",
+    example:"화가가 \"이 사과의 빨강\"이라고 말할 때, 그 '빨강'은 사과에서 떨어진 추상이 아니다. 그 빨강은 여전히 존재로서 거기에 있고, 다만 우리가 그것을 따로 '이것'으로 부를 뿐이다.", accent:"#9a7abd" },
+
+  { id:"abstraction", term:"추상", latin:"abstraction / l'abstrait", keyword:"대자의 근원적 존재 방식—사물의 나타남에 필수적인 세계의 구조",
+    desc:"사르트르의 추상은 심리적 조작이 아니다. \"대자는 '추상을 하는 자(abstracteur)'이다. 이것은 대자가 추상작용의 심리적 조작을 실현하기 때문이 아니라, 대자가 하나의 장래, 다시 말해 하나의 존재 저편과 함께 존재에 대한 현전으로 나타나기 때문이다\"(p.424). \"추상적인 것은 구체적인 것의 나타남에 필수적인 세계의 하나의 구조이다\"(p.433). 추상은 미래로부터 온다—구체적인 이것이 \"거칠고-빛나는-초록\"으로 나에게 드러날 때, 추상적 초록은 그 이것의 와야-할-의미다(p.423).",
+    example:"우리는 사물에서 '빨강'을 떼어내 추상하는 것이 아니다. 반대로, '빨강'이라는 미래의 의미가 사물에 미리 가 있어야만 우리는 이 사과를 '빨간 사과'로 볼 수 있다. 추상이 먼저고, 사물의 나타남이 그 다음이다.", accent:"#c4a35a" },
+
+  { id:"negext", term:"외적 부정", latin:"négation externe", keyword:"이것-저것 사이의 근원적 관계, 즉자적으로 존재하는 부정",
+    desc:"이것과 저것의 근원적인 관계는 하나의 외적 부정이다(p.425). 저것은 이것이 아닌 것으로서 나타난다. 이 외적 부정은 대자에게 하나의 초월적인 것으로 자기를 드러내 보인다. 이 외적 부정은 바깥에 존재하며, 즉자적으로 존재한다. \"이것은 저것이 아니다\"는 \"이것과 저것\"으로 표기된다. 외적 부정은 즉자존재와 순수한 이상성이라는 이중적 성격을 드러낸다(p.426). 양과 공간의 토대.",
+    example:"이 책상과 저 의자 사이의 '아님'—그 부정 관계 자체는 책상에도, 의자에도, 내 머릿속에도 있지 않다. 그러나 그것은 분명히 거기에 있고, 즉자적으로 존재한다.", accent:"#5a9abc" },
+
+  { id:"quantite", term:"양", latin:"quantité", keyword:"관념적이고 즉자적인 무—순수한 외면성",
+    desc:"존재의 무차별은 그저 이것들을 분리하는 하나의 즉자적인 무이다. 그리고 이 무는 의식이 존재를 특징짓는 동일성의 응집을 실현할 수 있는 유일한 방식이다. 이 관념적이고 즉자적인 무가 바로 양(quantité)이다(p.427). 사실상 양은 순수한 외면성이다. 양은 부가되는 항들에 결코 의존하지 않으며, 그 항들의 독립성의 긍정일 뿐이다. 헤아린다는 것(compter)은 이미 분해할 수 있는 것으로 주어져 있는 하나의 총체 내부에서의 관념적인 식별을 수행하는 것이다.",
+    example:"내 앞에서 얘기를 하고 있는 이 세 사람을 내가 헤아릴 때, '세 사람'이라는 것은 그룹의 속성도 아니고 구성원의 속성도 아니다. 그들 중 누구에게도 \"당신은 세 사람이다\"라고 말할 수 없으며 \"당신이 세 번째다\"라고도 말할 수 없다—세 번째라는 성질은 헤아리는 대자의 자유의 반영일 뿐이다(p.428).", accent:"#aaba5a" },
+
+  { id:"negcomp", term:"보완적 부정", latin:"négation complémentaire", keyword:"사물 차원의 부정—내가 신체로서 그 이것이 아니라는 것",
+    desc:"각주 101에서 사르트르는 세 가지 부정을 구별한다. **최초의 부정**: 대자로서 내가 지각되는 '이것'이 아니다. **보완적 부정**: 신체를 가진 사물로서의 내가 그 '이것'이 아니다—마치 '이것(이 책상)'이 '저것(저 선풍기)'이 아닌 것과 같은 차원에서. **가능적 부정**: 보완적 부정이 작동할 가능성으로서, 최초의 부정에서 벗어날 수 있는 길. \"나는 하나의 보완적인 부정을 향해 이 부정을 피한다. 이 보완적인 부정과 최초의 부정의 융합은 내가 그것으로 있는 즉자를 나타나게 해야 할 것이다\"(p.430).",
+    example:"내가 이 컵을 볼 때 (1) 대자로서 나는 컵이 아니다(최초의 부정), (2) 내 신체도 컵이 아니다—책상이 선풍기가 아닌 것처럼(보완적 부정), (3) 이 두 부정이 합쳐지면 나는 즉자가 될 수도 있을 가능성을 갖는다(가능적 부정).", accent:"#c47a7a" },
+
+  { id:"negpres", term:"부정-현전", latin:"négation-présence", keyword:"대자의 보충적 부정의 존재 구조",
+    desc:"대자가 자신의 고유한 가능성으로서 그것으로 있는 이 보충적인 부정은 부정-현전(négation-présence)이다(p.430). 대자는 자기(에 대한) 비정립적 의식으로서, 또 존재-저편의-존재에 대한 정립적 의식으로서 보충적 부정으로 있어야 한다. 그리고 존재-저편의-존재는 어떤 외면적인 관계에 의해서가 아니라, 대자와 그 장래의 관계와 더불어 상관관계에 있는 보완성이라는 하나의 정확한 결합에 의해 현전적인 이것과 연결되어 있다.",
+    example:"내가 이 책상에 현전한다는 것은—내가 책상이 아님을 알면서(부정) 동시에 책상이 거기에 있음을 알리는 것(현전). 부정과 현전이 하나의 구조로 결합된 사태가 부정-현전이다.", accent:"#6aaa82" },
+
+  { id:"potentialite", term:"잠재성·항상성", latin:"potentialité, permanence", keyword:"본질은 미래에서 온다—항상성과 추상은 하나다",
+    desc:"구속의 상관자로서의 부정의 존재론적 구조인 대상의 첫 번째 잠재성은 바로 장래의 배경에서 대상에게 끊임없이 오는 항상성(permanence)이다. 이 책상이 책상으로 드러나는 데는 이 책상의 항상성이 요구되는데, 이 항상성은 미래로부터 이 책상에게 온다. 이 항상성은 순수하게 확립된 하나의 소여가 결코 아니라 하나의 잠재성이다(p.431-432). 잠재성은 그저 미래의 차원을 나타나게 한다(p.432). 결정적 결론: \"항상성과 추상적인 것은 하나일 뿐\"(p.433).",
+    example:"이 책상이 1초 후에도 책상으로 남아 있을 것이라는 항상성—그것은 책상이라는 현재적 소여가 아니다. 그것은 미래로부터 와서 지금의 책상을 책상으로 만든다. 본질은 미래에서 거꾸로 흘러온다.", accent:"#9a7abd" },
+];
+
+const PASSAGES = [
+  { title:"논점 1 · 성질은 \"거기에 있다(il y a)\"가 지닌 한계 내에서 자기를 드러내 보이는 그 존재 전부이다",
+    note:"p.417 절 도입부 '성질(qualité)은…'부터 p.420 '성질이 존재한다는 점을 우리가 조금만 반성해 보아도…'까지. '성질-존재' '식품 직관' '충족(Erfüllung)' '향기-존재' '탄탈로스'가 키워드입니다. 사르트르가 두 가지 잘못된 입장—성질이 주관적 인상이라는 입장과 성질이 외적 양상이라는 입장—을 모두 거부하는 방식을 따라가 보세요.",
+    layers:[
+      { label:"핵심 주장", text:"성질은 주관적 인상도 아니고 외적 양상도 아니다. \"오히려 성질은 '거기에 있다(il y a)'가 지닌 한계 내에서 자기를 드러내 보이는 그 존재 전부이다\"(p.418).\n\n\"노란 것은 레몬의 신맛이고, 신 것은 레몬의 노란색이다\"(p.417). \"사실 레몬은 자신의 성질들을 통해 모두 퍼져 있고, 또 그 성질들 하나하나는 다른 성질들 하나하나를 통해 남김없이 퍼져 있다\"(p.417). 그래서 \"이 의미에서 존재의 모든 성질은 그대로 그 존재이다\"(p.418).\n\n\"성질은 결코 존재의 외부가 아니다\"(p.418)—\"왜냐하면 '안'을 갖지 않은 존재는 '밖'을 가질 수 없을 것이기 때문이다\"(p.418)." },
+      { label:"왜 그런가", text:"사르트르는 두 가지 잘못된 입장을 모두 거부한다.\n\n(1) 성질이 주관적이라는 입장: \"하지만 레몬의 노란색은 우리가 레몬을 파악할 때의 주관적인 하나의 방법이 아니다. 그 노란색은 레몬이다\"(p.417).\n\n(2) 성질이 외적 양상이라는 입장: \"그리고 대상-x가 잡다한 성질 전체를 지탱하는 텅 빈 형식으로 나타난다는 것도 또한 사실이 아니다\"(p.417).\n\n그리고 후설의 충족 모델도 거부된다: \"성질의 파악은, 후설이 원한 바와 같이 '충족(remplissement, Erfüllung)'이 아니라, 이 성질에 대한 한정된 텅 빔으로서의 하나의 텅 빔에 대한 알림이다\"(p.419). 인식은 채움이 아니라 텅 빔의 통보이다." },
+      { label:"비유로", text:"탄탈로스. 손을 내밀면 과일이 공중으로 솟구쳐 영원히 굶주리는 형벌(각주 95). 사르트르는 인식론 전통의 시원적 착각을 비판한다—\"이 착각에 따르면, 인식한다는 것은 먹는 것이다\"(p.419).\n\n그러나 진실은 정반대다. \"마치 손이 닿을 수 없는 곳의 음식을 보고 탄탈로스의 허기가 더 심해지는 것처럼, 성질을 관조하는 것은 우리의 존재에 대한 갈증을 더욱더 증대시킬 뿐이다\"(p.419-420).\n\n그렇다고 성질이 주관적 인상인 것은 아니다: \"아침에 감겨 있던 나의 눈꺼풀을 통해 나의 눈을 자극하는 빛은 이미 하나의 빛-존재(un être-lumière)이다\"(p.420). 빛은 의식이 그것을 빛으로 해석하기 전에 이미 존재로서 거기에 있다." },
+    ]},
+  { title:"논점 2 · 음영·양·공간은 사물에 속하지 않는다 — 대자에 의해서만 세계에 오는 부정의 유형들이다",
+    note:"p.421 '계의 배경 위에서 총체로서 자기를 해방하고…'부터 p.429 후설 범주 비판 끝부분까지. '음영(profil)' '성질-이것' '외적 부정' '양(quantité)' '세 사람의 그룹'이 키워드입니다. 사르트르가 후설의 노에시스-노에마 모델과 칸트적 범주를 어떻게 한꺼번에 비판하는지 주목하세요.",
+    layers:[
+      { label:"핵심 주장", text:"먼저 음영(profil)이 어떻게 출현하는가. \"대자의 자유가 자발적으로 자신의 존재를 구성하는 각각의 부정적 행위에 '하나의 음영에 의한(par un profil)' 존재의 전적인 드러남이 상응한다\"(p.421). 음영은 대자의 부정적 행위에 호응하여 사물이 한 관점에서 드러나는 방식이다.\n\n여기서 사르트르는 후설과 결정적으로 갈라진다(각주 97). 후설은 \"부분적인 음영의 연속을 컵을 지각할 때의 인식적인 질료(Hyle)로 보고, 이 질료의 흐름에 지각하는 의식작용(Noesis)이 가해짐으로써 전체인 컵이 노에마(Noema)로 나타난다\"고 본다. 사르트르의 입장은 정반대다—\"하나의 부분적인 음영으로서의 일그러진 컵의 모양에 컵 전체가 바로 직관적으로 반영되어 나타나 한꺼번에 지각된다.\" 종합 과정 없이, 부분 안에 전체가 이미 들어 있다.\n\n그리고 이것-저것의 관계는 외적 부정이다: \"이것과 저것의 근원적인 관계는 하나의 외적 부정이다… 이 외적 부정은 바깥에 존재하며, 즉자적으로 존재한다\"(p.425).\n\n이 외적 부정이 한 유형으로 자기를 드러낸 것이 양이다: \"이 관념적이고 즉자적인 무가 바로 양(quantité)이다\"(p.427). 그리고 마침내: \"공간과 양은 부정의 하나의 유일하고 동일한 유형일 뿐이다… 공간과 양은 세계에 온다\"(p.428)." },
+      { label:"왜 중요한가", text:"\"양은 부가되는 항들에 결코 의존하지 않으며, 그 항들의 독립성의 긍정일 뿐이다\"(p.427). 양은 사물에 깃들지 않는다.\n\n사르트르는 결정적으로 후설 범주들을 강등시킨다—\"바로 이것을 통해 우리는 후설과 함께 범주들(전체와 부분의 단일성-다수성-관계 — 더 많음과 더 적음—주위에 —옆에 —뒤따라—첫 번째, 두 번째 등 —1, 2, 3 등 —안과 밖에 —등)로 명명된 것이 사물들에 대한 관념적인 혼합에 불과함을 알 수 있다\"(p.428-429).\n\n\"이 관념적인 혼합은 사물들을 전혀 건드리지 않고 그대로 두고, 그것을 풍부하게 하거나 조금도 빈곤하게 하지 않는다\"(p.429). 양·공간은 사물의 안이 아니라 그 사이의 외면성이다." },
+      { label:"비유로", text:"\"내 앞에서 얘기를 하고 있는 이 세 사람을 내가 헤아리는 것은, 내가 먼저 그들을 '대화 중인 그룹'으로서 파악했기 때문이 아니다\"(p.427).\n\n\"'세 사람의 그룹'으로 있다는 것은 이 그룹의 구체적인 속성이 아니다. 그렇다고 해서 그것이 이 그룹의 구성원이 갖는 하나의 속성도 아니다\"(p.428).\n\n\"그들 중 누구에게도 그가 세 사람이라고 말할 수는 없으며, 그가 세 번째라고조차 말할 수도 없다. 왜냐하면 세 번째라는 성질은 헤아리는 대자의 자유의 반영일 뿐이기 때문이다. 그들 중 누구라도 세 번째일 수도 있고, 그들 중 누구도 세 번째가 아닐 수도 있다\"(p.428)." },
+    ]},
+  { title:"논점 3 · 본질은 미래로부터 사물에게 온다 — 항상성과 추상은 하나다",
+    note:"p.429 '우리는 마치 대자가 데카르트의 코기토에 드러날 수 있는 것과 같은…'부터 p.433 '항상성은 하나의 이것에 있어 이 이것이 자신의 본질과 합치할 수 있다는 단순한 가능성이다'까지. '보완적 부정' '부정-현전' '잠재성(potentialité)' '항상성(permanence)' '항상성=추상'이 키워드입니다. 사르트르가 어떻게 양·공간 분석에서 시간성으로 도약하는지, 그리고 본질을 어떻게 재정의하는지 따라가 보세요.",
+    layers:[
+      { label:"핵심 주장", text:"\"모든 부정은 탈자적이다\"(p.431). 사르트르는 p.430과 각주 101에서 세 가지 부정을 구별한다.\n\n**최초의 부정** — 대자로서의 내가 그 '이것'이 아니라는 부정: \"내가 지각되는 '이것'이 아니라는 것이 '최초의 부정'이다. 이 부정은 대자로서의 나, 즉 지각되는 '이것'을 의식하는 나를 향한 것이다.\"\n\n**보완적 부정** — 신체를 가진 사물로서의 내가 그 '이것'이 아니라는 부정: \"내가 지각되는 '이것'이 아니라고 할 때, 나는 신체를 지닌 하나의 사물로서의 '이것'이 아니다. 이 부정은 '이것'과 같은 존재 차원에서, 마치 '이것(이 책상)'이 '저것(저 선풍기)'이 아닌 것과 같은 방식으로 지각되는 '이것'이 아닌 데서 이루어진다.\"\n\n**가능적 부정** — 최초의 부정에서 벗어남을 가능하게 하는 부정: \"'가능적인 부정'이라 일컫는 것은 '최초의 부정', 즉 대자로서의 내가 지각된 '이것'이 아니라는 부정에서 벗어날 수 있기 때문이다.\" 보완적 부정이 있기에 최초의 부정에서 벗어날 수 있다." },
+      { label:"왜 중요한가", text:"세 부정이 모두 미래로부터 의미를 받는다는 것이 핵심이다. \"대자가 무엇인가를 부정할 때, 대자는 '장래의 차원과 함께' 그것을 부정한다\"(p.431). \"이 두 경우에 의미는 미래에서 출발해 부정에게로 온다\"(p.431).\n\n같은 구조가 항상성에도 적용된다. \"이 책상이 책상으로 드러나는 데는 이 책상의 항상성이 요구되는데, 이 항상성은 미래로부터 이 책상에게 온다. 이 항상성은 순수하게 확립된 하나의 소여가 결코 아니라 하나의 잠재성이다\"(p.431-432). 그래서 \"잠재성은 그저 미래의 차원을 나타나게 한다\"(p.432).\n\n본질도 같은 구조다: \"본질은 장래의 배경으로부터 존재자에게, 결코 주어져 있지 않지만 이 존재자에 항상 붙어 다니는 하나의 의미로 온다\"(p.433).\n\n추상도 마찬가지다: \"대자의 근원적인 존재 방식으로서의 추상은 일반적으로 사물들과 하나의 세계가 존재하는 데 필수적임을 알아야 한다\"(p.433). 추상은 심리적 조작이 아니라 세계가 존재하기 위한 구조다.\n\n그래서 사르트르는 단언한다: \"항상성과 추상적인 것은 하나일 뿐이라는 사실을 알 수 있다\"(p.433)." },
+      { label:"비유로", text:"이 책상이 책상으로 드러나는 데는 무엇이 필요한가. \"이 책상의 항상성이 요구되는데, 이 항상성은 미래로부터 이 책상에게 온다\"(p.431-432).\n\n본질도 마찬가지다: \"본질은 장래의 배경으로부터 존재자에게… 항상 붙어 다니는 하나의 의미로 온다\"(p.433).\n\n사르트르가 이 진리에 가장 시적으로 도달하는 순간이 이 절에 있다: \"이렇듯 순수한 초록은 장래의 배경으로부터 '밝음-거침-초록'에로 그것의 의미로서 온다\"(p.432).\n\n책상도, 초록도, 의미도—모두 장래의 배경에서 지금에게 온다." },
+    ]},
+];
+
+const QUIZ = [
+  { q:"사르트르가 성질(qualité)에 대해 주장하는 것으로 가장 정확한 것은?",
+    opts:["성질은 우리가 사물을 파악하는 주관적 방법이다","대상-x라는 텅 빈 형식이 잡다한 성질들을 지탱한다","성질은 \"거기에 있다(il y a)\"의 한계 내에서 자기를 드러내 보이는 존재 전부다","성질은 후설의 노에마(Noema)와 일치한다"],
+    ans:2, exp:"p.418. 사르트르는 두 가지 잘못된 입장을 모두 거부한다. 성질이 주관적 규정이라는 입장(A)도, 대상-x가 성질들을 지탱하는 텅 빈 형식이라는 입장(B)도 사실이 아니다. 노란 것은 레몬의 신맛이고, 신 것은 레몬의 노란색이다—성질은 결코 존재의 외부가 아니며, 전적으로 존재이다." },
+  { q:"사르트르가 후설의 \"충족(Erfüllung)\" 개념을 비판하는 핵심 이유는?",
+    opts:["후설이 사용한 독일어를 프랑스어로 옮길 수 없기 때문에","인식이 결코 완전한 채움이 될 수 없고, 성질은 항상 한정된 텅 빔에 대한 알림이기 때문에","후설이 양과 공간의 차이를 구별하지 못했기 때문에","후설이 시간성을 다루지 않았기 때문에"],
+    ans:1, exp:"p.419. 사르트르는 \"성질의 파악은, 후설이 원한 바와 같이 '충족'이 아니라, 이 성질에 대한 한정된 텅 빔으로서의 하나의 텅 빔에 대한 알림이다\"라고 명시한다. 인식은 채움이 아니라 갈증의 증대—탄탈로스의 비유가 이를 보여준다." },
+  { q:"음영(profil)에 대한 사르트르의 입장으로 가장 정확한 것은?",
+    opts:["음영은 대자의 주관적 인상이고 실재성이 없다","후설처럼 여러 음영의 연속이 의식작용(Noesis)에 의해 종합되어야 노에마가 된다","일그러진 한 음영 안에 사물 전체가 직관적으로 반영되어 한꺼번에 지각된다","음영은 칸트적 선험적 형식이다"],
+    ans:2, exp:"각주 97. 사르트르는 후설의 노에시스-노에마 종합 모델을 거부하고, 부분적인 한 음영(예: 일그러진 컵의 모양)에 컵 전체가 이미 직관적으로 반영되어 있다는 실재론적 입장을 취한다. 종합 과정 없이 한꺼번에 지각된다는 것이 사르트르의 결정적 주장이다." },
+  { q:"양(quantité)에 대한 사르트르의 분석에서 \"세 사람의 그룹\" 예시가 보여주는 것은?",
+    opts:["그룹에는 '세 사람'이라는 객관적 속성이 깃들어 있다","각 구성원은 자신이 '세 번째'라고 의식한다","'세 사람'이라는 양은 그룹의 속성도 구성원의 속성도 아니며, 헤아리는 대자의 자유의 반영이다","양적 관계는 사물들 사이의 인과적 관계다"],
+    ans:2, exp:"p.428. 사르트르는 양이 사물에 깃들지 않는다는 점을 강조한다. \"그들 중 누구에게도 그가 세 사람이라고 말할 수는 없으며, 그가 세 번째라고조차 말할 수도 없다. 왜냐하면 세 번째라는 성질은 헤아리는 대자의 자유의 반영일 뿐이기 때문이다.\" 양은 관념적이고 즉자적인 무이며, 대자가 세계에 가져오는 외면성의 관계다." },
+];
+
+const ARG_STEPS = [
+  { num:"전제 1", color:"#6aaa82", title:"성질은 주관적 규정이 아니다",
+    body:"사람들은 성질을 너무 자주 주관적 규정으로 생각했다. 그러면 '성질-존재(être-qualité)'는 심리적 주관성과 혼동된다(p.417). 그러나 레몬의 노란색은 우리가 레몬을 파악할 때의 주관적인 하나의 방법이 아니다. 그 노란색은 레몬이다. 만일 성질이 주관적이라면, 객관화되지 않는다.\n\n성질은 내 안에 있는 인상이 아니다.",
+    key:"노란 것은 분명히 레몬이다—성질은 객관적이다." },
+  { num:"전제 2", color:"#5a9abc", title:"성질은 외적 양상도 아니다",
+    body:"그렇다고 대상-x라는 텅 빈 형식이 잡다한 성질들을 지탱한다는 입장도 사실이 아니다. 사실 레몬은 자신의 성질들을 통해 모두 퍼져 있고, 그 성질들 하나하나는 다른 성질들 하나하나를 통해 남김없이 퍼져 있다(p.417). 노란 것은 레몬의 신맛이고, 신 것은 레몬의 노란색이다. \"안\"을 갖지 않은 존재는 \"밖\"을 가질 수 없을 것이다(p.418).\n\n성질과 존재 사이에 \"안과 밖\"의 거리는 없다.",
+    key:"성질이 곧 존재 전부다—\"거기에 있다(il y a)\"의 한계 내에서 드러나는 존재." },
+  { num:"추론", color:"#c4a35a", title:"음영·양·공간은 대자가 세계에 가져오는 부정이다",
+    body:"성질이 그 자체로 존재라면, 사물들 사이의 차이는 어디서 오는가? 음영(profil)은 대자가 사물에 현전할 때 한 관점에서 사물이 드러나는 방식이고, 그 부분에 전체가 직관적으로 반영된다(각주 97). 이것-저것의 근원적 관계인 외적 부정은 즉자적으로 존재하지만 대자에게는 초월적인 것으로 드러난다(p.425). 그리고 이 외적 부정의 한 유형으로 양과 공간이 출현한다—관념적이고 즉자적인 무이며, 헤아리는 대자의 자유의 반영이다(p.427-428).",
+    key:"양과 공간은 사물에 깃들지 않는다—대자가 세계에 가져오는 외면성의 관계다." },
+  { num:"결론", color:"#9a7abd", title:"본질은 미래에서 온다",
+    body:"모든 부정은 탈자적이다(p.431). 대자가 이것을 부정할 때 그 부정은 \"장래의 차원과 함께\" 작동한다. 보완적 부정·가능적 부정·부정-현전의 3중 구조는 모두 대자의 미래성에 뿌리박혀 있다(각주 101). 잠재성(potentialité)은 그저 미래의 차원을 나타나게 한다(p.432). 항상성(permanence)은 미래로부터 사물에게 끊임없이 오는 잠재성이다—확립된 소여가 아니다.\n\n본질은 장래의 배경으로부터 존재자에게 결코 주어져 있지 않으면서 항상 붙어 다니는 하나의 의미로 온다(p.433).",
+    key:"본질은 뒤에서 미는 것이 아니라 앞에서 끌어당긴다." },
+  { num:"함의", color:"#c47a7a", title:"추상은 대자의 근원적 존재 방식—항상성과 하나",
+    body:"사르트르가 명시적으로 결론짓는다: \"항상성과 추상적인 것은 하나일 뿐\"(p.433). 추상은 사물에서 성질을 떼어내는 심리적 조작이 아니다. 반대로, 대자의 근원적 존재 방식으로서의 추상은 일반적으로 사물들과 하나의 세계가 존재하는 데 필수적이다. 추상적인 것은 구체적인 것의 나타남에 필수적인 세계의 하나의 구조다(p.433).\n\n\"대자는 자신의 존재 속에서 추상하면서-드러내 보이면서 존재한다.\"",
+    key:"추상이 먼저 일어나고 사물의 나타남이 그 다음이다—세계 자체가 추상의 구조 위에서 가능하다." },
+];
+
+const POSITIONS = [
+  { label:"후설", sub:"현상학 (Erfüllung / Noesis-Noema)", color:"#5a7abc",
+    claim:"인식은 의향(Noesis)이 직관에 의해 채워지는 '충족(Erfüllung)' 과정이다. 부분적 음영들이 인식적 질료(Hyle)의 흐름으로 주어지고, 의식작용이 가해져 전체인 노에마(Noema)로 종합된다. 사물의 항상성과 본질은 의식의 종합 작업이 산출한다.",
+    problem:"사르트르는 단호히 거부한다(p.419). 인식은 채움이 아니라 한정된 텅 빔에 대한 알림이고, 음영은 종합되지 않은 채 한 부분 안에 전체가 이미 들어 있다. 후설의 범주들(전체-부분, 단일성-다수성, 1·2·3 등)도 '사물들에 대한 관념적 혼합에 불과'하다(p.429).",
+    quote:"성질의 파악은, 후설이 원한 바와 같이 '충족(remplissement, Erfüllung)'이 아니라, 이 성질에 대한 한정된 텅 빔으로서의 하나의 텅 빔에 대한 알림이다." },
+  { label:"인식론적 전통", sub:"인식 = 음식 섭취·동화", color:"#7aaa6a",
+    claim:"인식한다는 것은 먹는 것이다. 인식된 대상을 집어삼키고, 그것으로 배를 채우고(충족), 그것을 소화('동화')하는 것이다(p.419). 사르트르가 보기에 이는 인식론적 철학에 여전히 남아 있는 \"전 논리적 사유\"의 잔재이며, 후설의 충족 개념도 이 시원적 착각의 한 변종이다.",
+    problem:"진실은 정반대다. 성질은 우리에게 자기를 주지도 거부하지도 않은 채 절대적 근접 관계—성질은 \"그곳에 존재한다\", 우리에게 붙어 다닌다—속에 머무른다. 하지만 이 근접성에는 거리가 함축되어 있다(p.419). 성질을 관조하는 것은 우리의 존재에 대한 갈증을 증대시킬 뿐이다.",
+    quote:"마치 손이 닿을 수 없는 곳의 음식을 보고 탄탈로스의 허기가 더 심해지는 것처럼, 성질을 관조하는 것은 우리의 존재에 대한 갈증을 더욱더 증대시킬 뿐이다." },
+  { label:"사르트르", sub:"현상학적 존재론", color:"#c4a35a",
+    claim:"성질은 \"거기에 있다(il y a)\"의 한계 내에서 자기를 드러내는 존재 전부다. 양·공간은 대자가 세계에 가져오는 부정의 유형(관념적이고 즉자적인 무)이고, 잠재성·항상성·추상은 미래로부터 사물에게 오는 의미다. 인식은 채움이 아니라 갈증이며, 본질은 뒤에서가 아니라 앞에서 우리를 끌어당긴다.",
+    problem:"이 입장은 인식론의 시원적 착각(인식=먹기), 후설의 충족·범주 분석, 양과 공간을 사물의 속성으로 보는 통념을 한꺼번에 거부한다. 그 대가는 무겁다—세계의 모든 구조(양·공간·시간·항상성·본질)가 대자의 부정과 자유에 뿌리박혀 있다는 결론.",
+    quote:"이렇듯 순수한 초록은 장래의 배경으로부터 '밝음-거침-초록'에로 그것의 의미로서 온다." },
+];
+
+const SEMINAR_QS = [
+  { q:"어떤 사람·풍경·시기는 그 결을 하나씩 나누어 말하려 하면 사라지지만, 통째로는 분명히 우리에게 있습니다. 우리가 그것을 '안다'고 할 때 우리는 무엇을 아는 것입니까? 분석하면 사라지는 것을 분석하지 않고 간직한다는 것은 우리에게 어떤 일이며, 그것은 어떻게 가능한 일입니까?",
+    hint:"지금 머릿속에 떠오르는 그 한 사람·한 시기를 누군가에게 말로 설명할 수 있습니까? 설명하지 못한다고 해서 모르는 것입니까? 설명할 수 있는 앎과 설명할 수 없는 앎은 같은 종류의 앎입니까?",
+    source:"본문 통찰 · 성질의 상호 침투 — 논점 1, p.417" },
+  { q:"우리는 가까이 갈수록 더 멀어지는 것들을 가지고 살아갑니다 — 사랑하는 사람, 자기 자신, 진리, 예술 같은 것들. 이 멀어짐은 우리의 실패입니까, 그 대상의 깊이입니까, 인간의 본성입니까? 만약 채워지지 않는 갈증이 인간의 조건이라면, 우리는 그 조건과 무엇을 하며 살아가야 합니까?",
+    hint:"끝내 알지 못한 채로 죽는 것과, 다 알았다고 만족하며 죽는 것 — 무엇이 더 잘 산 삶입니까? 그 판단의 근거는 어디에 있습니까?",
+    source:"본문 통찰 · 인식은 갈증의 증대, 탄탈로스 — 논점 1, p.419" },
+  { q:"우리는 살면서 끊임없이 헤아려지고 또 헤아립니다 — '몇 등' '몇 번째' '몇 살'로. 이 헤아림이 만든 자리 중에 우리가 끝내 벗어나지 못하는 것이 있다면, 우리는 그 자리와 어떻게 살아가야 합니까? 그 자리는 우리의 것입니까, 우리에게 주어진 것입니까, 우리가 그 자리에서 만들어가는 무엇입니까?",
+    hint:"헤아림에서 완전히 자유로워지는 것은 가능한 일입니까? 가능하지 않다면, 헤아림 안에서 새로운 자유를 발명하는 것은 어떤 일일 수 있습니까?",
+    source:"본문 통찰 · 양은 헤아리는 대자의 자유의 반영 — 논점 2, p.428" },
+  { q:"\"나는 이러이러한 사람\"이라고 말할 때 우리는 살아온 것을 인용하는 것입니까, 살고자 하는 것을 약속하는 것입니까? 그 둘이 충돌할 때 어느 쪽이 더 우리의 진실에 가깝습니까? 아직 일어나지 않은 무엇이 지금의 우리를 결정한다는 것이 가능한 일이라면, 우리는 어떻게 그것을 책임질 수 있습니까?",
+    hint:"당신이 가장 깊이 후회하는 일과 가장 간절히 기대하는 일 중 — 지금의 당신을 더 강하게 만드는 것은 어느 쪽입니까? 그 답이 당신에 관해 무엇을 말해줍니까?",
+    source:"본문 통찰 · 본질은 장래의 배경으로부터 의미로 온다 — 논점 3, p.433" },
+  { q:"우리가 사물에 이름을 붙이고 범주를 만들고 개념으로 부르지 않는다면, 세계는 우리에게 어떻게 나타날까요? 추상이 사라진 세계와 추상으로 가득 찬 세계 사이에서 — 우리가 더 살아 있다고 느끼는 쪽은 어디입니까? 그리고 그 답이 우리에 관해 무엇을 말해줍니까?",
+    hint:"어린아이가 처음 단어를 배울 때 세계는 그에게 열리는 것입니까, 닫히는 것입니까? 시인이 한 단어로 풍경을 부를 때, 그 단어는 풍경에 가까워진 것입니까 멀어진 것입니까?",
+    source:"본문 통찰 · 추상은 세계가 존재하기 위한 필수 구조 — 논점 3, p.433" },
+];
+
+const STAGES = {
+  grammar:{ label:"문법", latin:"Grammatica", sub:"텍스트가 무엇을 말하는가", color:"#c4a35a", bg:"#1a160a" },
+  logic:  { label:"논리", latin:"Dialectica",  sub:"논증이 어떻게 작동하는가", color:"#5a9abc", bg:"#0a121a" },
+  rhetoric:{ label:"수사", latin:"Rhetorica",  sub:"함께 탐구하고 설득하는가", color:"#bc7a7a", bg:"#1a0f0f" },
+};
+const PAGE_STAGE = {2:"grammar",3:"grammar",4:"grammar",5:"grammar",6:"grammar",7:"logic",8:"logic",9:"rhetoric"};
+
+function App() {
+  const [page, setPage] = useState(0);
+  const [fading, setFading] = useState(false);
+  const [flipped, setFlipped] = useState(new Set());
+  const [pLayers, setPLayers] = useState([0,0,0]);
+  const [qSel, setQSel] = useState([null,null,null,null]);
+  const [qDone, setQDone] = useState([false,false,false,false]);
+  const [argStep, setArgStep] = useState(0);
+  const [posOpen, setPosOpen] = useState(null);
+  const [seminHints, setSeminHints] = useState(new Set());
+
+  const TOTAL = 11;
+  const go = n => { setFading(true); setTimeout(()=>{ setPage(n); setFading(false); window.scrollTo(0,0); },280); };
+  const next = () => { if(page<TOTAL-1) go(page+1); };
+  const prev = () => { if(page>0) go(page-1); };
+
+  const C = { bg:"#0d0b09", surf:"#1d1812", surfUp:"#2a2418", txt:"#f5efe0", muted:"#b8a888", gold:"#d4b46a", goldBr:"#e8c878", line:"#3a3424" };
+  const F = { h:"'Cormorant Garamond', Georgia, serif", b:"'Noto Serif KR', Georgia, serif" };
+  const W = { maxWidth:720, margin:"0 auto", padding:"52px 28px", color:C.txt, fontFamily:F.b };
+  const SL = { fontFamily:F.b, fontSize:11, letterSpacing:4, color:C.gold, marginBottom:18, display:"block" };
+  const BT = { fontFamily:F.h, fontSize:32, fontWeight:400, color:C.txt, lineHeight:1.25, marginBottom:8 };
+  const DIV = { width:36, height:1, background:C.gold, marginBottom:28 };
+  const BD = { fontSize:15, lineHeight:1.95, color:C.txt, fontWeight:400, fontFamily:F.b };
+  const MT = { fontSize:15, lineHeight:1.95, color:C.muted, fontWeight:400, fontFamily:F.b };
+
+  const stageKey = PAGE_STAGE[page];
+  const stage = stageKey ? STAGES[stageKey] : null;
+
+  const StageBadge = () => !stage ? null : (
+    <div style={{ display:"flex", gap:10, alignItems:"center", marginBottom:28, padding:"10px 16px", background:stage.bg, border:`1px solid ${stage.color}33`, width:"fit-content" }}>
+      <div style={{ width:6, height:6, borderRadius:"50%", background:stage.color }} />
+      <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:4, color:stage.color }}>{stage.label}</span>
+      <span style={{ fontFamily:F.h, fontSize:13, color:C.muted, fontStyle:"italic" }}>{stage.latin}</span>
+      <span style={{ fontFamily:F.b, fontSize:11, color:C.muted }}>· {stage.sub}</span>
+    </div>
+  );
+
+  const renderPage = () => { switch(page) {
+
+  case 0: return (
+    <div style={{ minHeight:"100vh", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", textAlign:"center", padding:"48px 28px", background:C.bg, position:"relative", overflow:"hidden" }}>
+      <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${C.gold},transparent)` }} />
+      <div style={{ position:"absolute", bottom:0, left:0, right:0, height:1, background:`linear-gradient(90deg,transparent,${C.gold}44,transparent)` }} />
+      <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(ellipse at 50% 55%,#1a160e 0%,transparent 65%)`, pointerEvents:"none" }} />
+      <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:6, color:"#d4b46a", marginBottom:48, display:"block", fontWeight:500 }}>생각학교 ASK · 존재와 무 클래스</span>
+      <h1 style={{ fontFamily:F.h, fontSize:"clamp(40px,8vw,60px)", fontWeight:300, color:C.txt, lineHeight:1.1, marginBottom:10 }}>존재와 무</h1>
+      <p style={{ fontFamily:F.h, fontSize:22, color:"#f0e4c8", fontStyle:"italic", marginBottom:8, fontWeight:400 }}>L'Être et le Néant</p>
+      <p style={{ fontFamily:F.b, fontSize:13, color:"#d4c4a0", letterSpacing:2, fontWeight:500 }}>Jean-Paul Sartre, 1943</p>
+      <div style={{ width:1, height:52, background:`linear-gradient(${C.gold}88,transparent)`, margin:"36px auto" }} />
+      <p style={{ fontFamily:F.b, fontSize:13, letterSpacing:5, color:C.gold, marginBottom:10 }}>소크라테스식 고전 탐구 세미나</p>
+      <p style={{ fontFamily:F.h, fontSize:19, color:"#f0e4c8", fontStyle:"italic", marginBottom:8, fontWeight:500 }}>2부 3장 3절</p>
+      <p style={{ fontFamily:F.h, fontSize:19, color:"#f0e4c8", fontStyle:"italic", marginBottom:52, fontWeight:500 }}>성질과 양, 잠재성, 도구성 (전반부)</p>
+      <button onClick={next} onMouseEnter={e=>{e.currentTarget.style.background=C.gold;e.currentTarget.style.color=C.bg;}} onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=C.gold;}}
+        style={{ background:"transparent", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:F.b, fontSize:12, letterSpacing:4, padding:"15px 48px", cursor:"pointer", transition:"all 0.3s" }}>
+        시작하기
+      </button>
+      <div style={{ display:"flex", gap:24, marginTop:40, justifyContent:"center" }}>
+        {[["문법","#c4a35a"],["논리","#5a9abc"],["수사","#bc7a7a"]].map(([l,col])=>(
+          <div key={l} style={{ textAlign:"center" }}>
+            <div style={{ width:5, height:5, borderRadius:"50%", background:col, margin:"0 auto 6px" }} />
+            <span style={{ fontFamily:F.b, fontSize:10, color:col, letterSpacing:3 }}>{l}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  case 1: return (
+    <div style={W}>
+      <span style={SL}>안내 · 트리비움으로 읽다</span>
+      <h2 style={BT}>세 단계로 고전을 읽는 법</h2>
+      <div style={DIV} />
+      <p style={{ ...BD, marginBottom:32 }}>이 세미나는 생각을 이끄는 도구, <strong style={{color:C.goldBr}}>트리비움</strong>으로 텍스트를 읽습니다—<strong style={{color:C.goldBr}}>문법, 논리, 수사</strong>. 각 단계는 텍스트를 다른 깊이로 만나는 방법입니다.</p>
+      {[
+        { key:"grammar", n:"01", label:"문법 — Grammatica", pages:"5섹션", desc:"텍스트가 무엇을 말하는지 파악합니다. 사르트르가 사용하는 언어와 개념을 내 것으로 만드는 단계입니다.", items:["성질·성질-존재·식품 직관·향기-존재/빛-존재·충족·탄탈로스·음영·성질-이것·추상·외적 부정·양·보완적 부정·부정-현전·잠재성/항상성 개념 카드 (14종)","핵심 논점 3개 단계별 독해","이해 확인 퀴즈 4문항"] },
+        { key:"logic", n:"02", label:"논리 — Dialectica", pages:"2섹션", desc:"사르트르의 논증 구조를 단계별로 분해합니다. 후설·인식론 전통과의 대결을 통해 논증의 결정적 지점을 찾아봅니다.", items:["논증 구조 5단계 시각화","후설 vs 인식론 전통 vs 사르트르 비교 분석"] },
+        { key:"rhetoric", n:"03", label:"수사 — Rhetorica", pages:"세미나에서 함께", desc:"이 단계는 세미나 현장에서 함께 합니다. 가이드에서는 토론 질문을 미리 확인합니다.", items:["소크라테스식 세미나 토론 질문 5개","힌트와 함께 입장 준비"] },
+      ].map(item=>{
+        const s=STAGES[item.key];
+        return (
+          <div key={item.key} style={{ marginBottom:20, background:C.surf, padding:"22px 24px", borderLeft:`3px solid ${s.color}` }}>
+            <div style={{ display:"flex", gap:14, alignItems:"flex-start", marginBottom:14 }}>
+              <span style={{ fontFamily:F.h, fontSize:30, color:s.color, lineHeight:1, minWidth:32 }}>{item.n}</span>
+              <div>
+                <div style={{ display:"flex", gap:10, alignItems:"center", marginBottom:6 }}>
+                  <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:4, color:s.color }}>{item.label}</span>
+                  <span style={{ fontFamily:F.b, fontSize:11, color:C.muted }}>· {item.pages}</span>
+                </div>
+                <p style={{ ...BD, fontSize:13, margin:0, lineHeight:1.8 }}>{item.desc}</p>
+              </div>
+            </div>
+            <div style={{ paddingLeft:46 }}>
+              {item.items.map((it,j)=>(
+                <div key={j} style={{ display:"flex", gap:10, alignItems:"flex-start", padding:"4px 0" }}>
+                  <div style={{ width:4, height:4, borderRadius:"50%", background:s.color+"88", flexShrink:0, marginTop:7 }} />
+                  <span style={{ ...MT, fontSize:13 }}>{it}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  case 2: return (
+    <div style={W}>
+      <StageBadge />
+      <span style={SL}>문법 1/5 · 핵심 개념</span>
+      <h2 style={BT}>카드를 눌러 개념을 확인하세요</h2>
+      <div style={DIV} />
+      <p style={{ ...MT, marginBottom:36, fontSize:14 }}>14개 모두 열어보시길 권합니다. 지금 완전히 이해하지 않아도 됩니다—이후 독해와 퀴즈를 통해 다시 만납니다.</p>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+        {CONCEPTS.map(c=>{
+          const open=flipped.has(c.id);
+          return (
+            <div key={c.id} onClick={()=>{const n=new Set(flipped);if(n.has(c.id))n.delete(c.id);else n.add(c.id);setFlipped(n);}}
+              style={{ background:open?C.surfUp:C.surf, border:`1px solid ${open?c.accent+"66":C.line}`, padding:"18px 20px", cursor:"pointer", transition:"all 0.25s" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                <div style={{ flex:1, paddingRight:8 }}>
+                  <p style={{ fontFamily:F.h, fontSize:17, color:open?c.accent:C.goldBr, fontWeight:500, margin:"0 0 2px", lineHeight:1.25 }}>{c.term}</p>
+                  <p style={{ fontSize:10, color:C.muted, fontStyle:"italic", margin:0 }}>{c.latin}</p>
+                </div>
+                <span style={{ color:open?C.gold:C.muted, fontSize:20, lineHeight:1, transform:open?"rotate(45deg)":"none", transition:"transform 0.25s", flexShrink:0 }}>+</span>
+              </div>
+              {open && (
+                <div style={{ marginTop:16 }}>
+                  <p style={{ fontSize:11, color:c.accent, letterSpacing:3, marginBottom:10, fontWeight:500 }}>{c.keyword}</p>
+                  <p style={{ ...BD, fontSize:13, marginBottom:14, lineHeight:1.85, whiteSpace:"pre-line" }}>{c.desc}</p>
+                  <div style={{ background:C.surf, padding:"12px 14px" }}>
+                    <p style={{ ...MT, fontSize:12, margin:0, lineHeight:1.8 }}>✦ {c.example}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ textAlign:"center", marginTop:28 }}>
+        <span style={{ ...MT, fontSize:12, letterSpacing:2 }}>{flipped.size} / {CONCEPTS.length} 확인</span>
+        <div style={{ display:"flex", justifyContent:"center", gap:5, marginTop:10, flexWrap:"wrap" }}>
+          {CONCEPTS.map((c,i)=><div key={i} style={{ width:6, height:6, borderRadius:"50%", background:flipped.has(c.id)?C.gold:C.line, transition:"background 0.3s" }} />)}
+        </div>
+      </div>
+    </div>
+  );
+
+  case 3: case 4: case 5: {
+    const pIdx=page-3, p=PASSAGES[pIdx], layer=pLayers[pIdx];
+    return (
+      <div style={W}>
+        <StageBadge />
+        <span style={SL}>문법 {pIdx+2}/5 · 핵심 논점 {pIdx+1}/3</span>
+        <h2 style={BT}>{p.title}</h2>
+        <div style={DIV} />
+        <div style={{ background:"#111a10", border:`1px solid #2a4a2a`, padding:"18px 22px", marginBottom:28 }}>
+          <p style={{ fontSize:11, color:"#4a8a4a", letterSpacing:3, marginBottom:8 }}>책에서 찾아보기</p>
+          <p style={{ ...BD, fontSize:13, margin:0, color:"#8abb8a", lineHeight:1.85 }}>{p.note}</p>
+        </div>
+        <p style={{ ...MT, fontSize:12, marginBottom:16, letterSpacing:1 }}>아래 탭을 순서대로 눌러 이해의 층을 쌓아보세요</p>
+        <div style={{ display:"flex" }}>
+          {p.layers.map((l,i)=>(
+            <button key={i} onClick={()=>setPLayers(prev=>{const n=[...prev];n[pIdx]=i;return n;})}
+              style={{ flex:1, padding:"12px 8px", background:layer===i?C.surfUp:C.surf, border:"none", borderBottom:`2px solid ${layer===i?C.gold:C.line}`, color:layer===i?C.gold:C.muted, fontFamily:F.b, fontSize:12, letterSpacing:2, cursor:"pointer", transition:"all 0.2s" }}>
+              {l.label}
+            </button>
+          ))}
+        </div>
+        <div style={{ background:C.surfUp, padding:"28px 26px", minHeight:148, borderTop:`1px solid ${C.line}`, marginBottom:32 }}>
+          <p style={{ ...BD, margin:0, lineHeight:2.1, whiteSpace:"pre-line" }}>{p.layers[layer].text}</p>
+        </div>
+        {pIdx<2 && (
+          <div style={{ display:"flex", justifyContent:"center" }}>
+            <button onClick={next} style={{ background:"transparent", border:`1px solid ${C.line}`, color:C.muted, fontFamily:F.b, fontSize:12, letterSpacing:3, padding:"10px 28px", cursor:"pointer" }}>
+              다음 논점으로 →
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  case 6: return (
+    <div style={W}>
+      <StageBadge />
+      <span style={SL}>문법 5/5 · 이해 확인</span>
+      <h2 style={BT}>이해 확인 퀴즈</h2>
+      <div style={DIV} />
+      <p style={{ ...MT, marginBottom:40, fontSize:14 }}>정답을 선택하고 '확인'을 누르면 해설이 나옵니다.</p>
+      {QUIZ.map((q,qi)=>(
+        <div key={qi} style={{ marginBottom:40 }}>
+          <div style={{ display:"flex", gap:14, marginBottom:16, alignItems:"flex-start" }}>
+            <span style={{ fontFamily:F.h, fontSize:26, color:C.gold, lineHeight:1, minWidth:32 }}>Q{qi+1}</span>
+            <p style={{ ...BD, fontWeight:400, lineHeight:1.75, margin:0 }}>{q.q}</p>
+          </div>
+          {q.opts.map((opt,oi)=>{
+            const sel=qSel[qi]===oi, done=qDone[qi], correct=oi===q.ans;
+            let bg=C.surf, border=C.line, color=C.txt;
+            if(done){ if(correct){bg="#192819";border="#3a7a3a";color="#8acd8a";}else if(sel){bg="#281919";border="#7a3a3a";color="#cd8a8a";}else{color=C.muted;} }
+            else if(sel){ bg=C.surfUp; border=C.gold+"88"; }
+            return (
+              <div key={oi} onClick={()=>{if(!done){const n=[...qSel];n[qi]=oi;setQSel(n);}}}
+                style={{ background:bg, border:`1px solid ${border}`, padding:"13px 18px", marginBottom:8, cursor:done?"default":"pointer", display:"flex", gap:14, alignItems:"flex-start", transition:"all 0.2s" }}>
+                <span style={{ fontFamily:F.h, fontSize:16, color:done&&correct?"#3a7a3a":(done&&sel?"#7a3a3a":C.muted), minWidth:20, lineHeight:1.6 }}>{String.fromCharCode(65+oi)}</span>
+                <span style={{ ...BD, fontSize:14, color, margin:0, lineHeight:1.7 }}>{opt}</span>
+                {done&&correct&&<span style={{ marginLeft:"auto", color:"#3a7a3a", fontSize:16, flexShrink:0 }}>✓</span>}
+              </div>
+            );
+          })}
+          {!qDone[qi]&&qSel[qi]!==null&&(
+            <button onClick={()=>{const n=[...qDone];n[qi]=true;setQDone(n);}}
+              style={{ marginTop:8, padding:"10px 28px", background:"transparent", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer" }}>
+              확인
+            </button>
+          )}
+          {qDone[qi]&&(
+            <div style={{ background:"#101910", border:`1px solid #1e3a1e`, padding:"16px 20px", marginTop:12 }}>
+              <p style={{ fontSize:11, color:"#4a8a4a", letterSpacing:3, marginBottom:8 }}>해설</p>
+              <p style={{ ...BD, fontSize:13, color:"#90bb90", margin:0, lineHeight:1.85 }}>{q.exp}</p>
+            </div>
+          )}
+        </div>
+      ))}
+      <div style={{ textAlign:"center", padding:"16px 0", borderTop:`1px solid ${C.line}` }}>
+        <span style={{ ...MT, fontSize:12, letterSpacing:2 }}>{qDone.filter(Boolean).length} / {QUIZ.length} 완료</span>
+      </div>
+    </div>
+  );
+
+  case 7: return (
+    <div style={W}>
+      <StageBadge />
+      <span style={SL}>논리 1/2 · 논증 구조</span>
+      <h2 style={BT}>사르트르의 논증을 분해한다</h2>
+      <div style={DIV} />
+      <p style={{ ...MT, marginBottom:36, fontSize:14, lineHeight:1.9 }}>'다음 단계' 버튼을 눌러 사르트르의 논증을 단계적으로 따라가보세요.</p>
+      {ARG_STEPS.slice(0,argStep+1).map((step,i)=>(
+        <div key={i} style={{ marginBottom:14, opacity:i===argStep?1:0.55, transition:"opacity 0.3s" }}>
+          <div style={{ display:"flex", alignItems:"stretch" }}>
+            <div style={{ width:4, background:step.color, flexShrink:0 }} />
+            <div style={{ background:i===argStep?C.surfUp:C.surf, padding:"20px 24px", flex:1 }}>
+              <div style={{ display:"flex", gap:12, alignItems:"center", marginBottom:10 }}>
+                <span style={{ fontFamily:F.b, fontSize:10, letterSpacing:4, color:step.color }}>{step.num}</span>
+                <span style={{ fontFamily:F.h, fontSize:18, color:i===argStep?C.txt:C.muted }}>{step.title}</span>
+              </div>
+              <p style={{ ...BD, fontSize:14, lineHeight:1.9, marginBottom:12, whiteSpace:"pre-line" }}>{step.body}</p>
+              <div style={{ padding:"10px 14px", background:C.bg, borderLeft:`2px solid ${step.color}44` }}>
+                <p style={{ ...MT, fontSize:12, margin:0, color:step.color }}>✦ {step.key}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+      <div style={{ display:"flex", gap:14, marginTop:24, alignItems:"center" }}>
+        {argStep<ARG_STEPS.length-1 ? (
+          <button onClick={()=>setArgStep(s=>s+1)}
+            onMouseEnter={e=>{e.currentTarget.style.background=ARG_STEPS[argStep+1].color;e.currentTarget.style.color=C.bg;}}
+            onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=ARG_STEPS[argStep+1].color;}}
+            style={{ padding:"12px 28px", background:"transparent", border:`1px solid ${ARG_STEPS[argStep+1].color}`, color:ARG_STEPS[argStep+1].color, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer", transition:"all 0.3s" }}>
+            다음 단계 →
+          </button>
+        ) : (
+          <span style={{ ...MT, fontSize:12, letterSpacing:2 }}>논증 완료</span>
+        )}
+        {argStep>0 && (
+          <button onClick={()=>setArgStep(0)} style={{ background:"transparent", border:"none", color:C.muted, fontFamily:F.b, fontSize:11, letterSpacing:2, cursor:"pointer" }}>처음부터</button>
+        )}
+        <span style={{ marginLeft:"auto", ...MT, fontSize:11 }}>{argStep+1} / {ARG_STEPS.length}</span>
+      </div>
+    </div>
+  );
+
+  case 8: return (
+    <div style={W}>
+      <StageBadge />
+      <span style={SL}>논리 2/2 · 철학사적 대결</span>
+      <h2 style={BT}>후설·인식론 전통과의 대결</h2>
+      <div style={DIV} />
+      <p style={{ ...MT, marginBottom:24, fontSize:14 }}>세 입장을 눌러 비교해보세요. 사르트르가 어디서 갈라지는지 확인하세요.</p>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, marginBottom:36 }}>
+        {POSITIONS.map((pos,i)=>{
+          const open=posOpen===i;
+          return (
+            <div key={i} onClick={()=>setPosOpen(open?null:i)}
+              style={{ background:open?C.surfUp:C.surf, border:`1px solid ${open?pos.color+"88":C.line}`, padding:"16px 14px", cursor:"pointer", transition:"all 0.25s" }}>
+              <p style={{ fontFamily:F.h, fontSize:17, color:open?pos.color:C.muted, margin:"0 0 4px", textAlign:"center" }}>{pos.label}</p>
+              <p style={{ fontSize:10, color:C.muted, fontStyle:"italic", margin:0, textAlign:"center", letterSpacing:1 }}>{pos.sub}</p>
+              {open && (
+                <div style={{ marginTop:14 }}>
+                  <div style={{ marginBottom:10, paddingBottom:10, borderBottom:`1px solid ${C.line}` }}>
+                    <p style={{ fontSize:10, color:pos.color, letterSpacing:3, marginBottom:6 }}>주장</p>
+                    <p style={{ ...BD, fontSize:12, margin:0, lineHeight:1.75 }}>{pos.claim}</p>
+                  </div>
+                  <div style={{ marginBottom:10 }}>
+                    <p style={{ fontSize:10, color:i===2?"#5a8a5a":"#8a4a4a", letterSpacing:3, marginBottom:6 }}>{i===2?"귀결":"한계"}</p>
+                    <p style={{ ...BD, fontSize:12, margin:0, lineHeight:1.75, color:i===2?"#8abb8a":"#c48a8a" }}>{pos.problem}</p>
+                  </div>
+                  <div style={{ padding:"8px 12px", background:C.surf, borderLeft:`2px solid ${pos.color}44` }}>
+                    <p style={{ fontSize:11, color:pos.color, margin:0, fontStyle:"italic" }}>"{pos.quote}"</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ background:C.surf, padding:"20px 24px" }}>
+        <p style={{ fontFamily:F.b, fontSize:11, color:STAGES.logic.color, letterSpacing:4, marginBottom:14 }}>핵심 차이</p>
+        <p style={{ ...BD, fontSize:14, lineHeight:1.9, margin:0 }}>
+          후설은 인식을 <strong style={{color:C.txt}}>채움(Erfüllung)</strong>으로, 인식론 전통은 인식을 <strong style={{color:C.txt}}>먹기·동화</strong>로 모델링합니다. 사르트르는 둘 다 같은 시원적 착각의 변종으로 봅니다. 그에게 인식은 <strong style={{color:C.txt}}>한정된 텅 빔에 대한 알림</strong>이며 갈증의 증대입니다. 양과 공간은 사물에 깃들지 않고 대자가 가져오는 무이며, 본질은 미래로부터 거꾸로 흘러옵니다. 그 대가는 무겁습니다—세계의 모든 구조가 대자의 부정과 자유에 뿌리박혀 있다는 결론입니다.
+        </p>
+      </div>
+    </div>
+  );
+
+  case 9: return (
+    <div style={W}>
+      <StageBadge />
+      <span style={SL}>수사 · 세미나 준비</span>
+      <h2 style={BT}>이제 함께 탐구합니다</h2>
+      <div style={DIV} />
+      <div style={{ background:"#1a0f0f", border:`1px solid ${STAGES.rhetoric.color}33`, padding:"20px 24px", marginBottom:36 }}>
+        <p style={{ fontFamily:F.b, fontSize:11, color:STAGES.rhetoric.color, letterSpacing:4, marginBottom:10 }}>수사 단계에 대하여</p>
+        <p style={{ ...BD, fontSize:14, margin:0, lineHeight:1.9 }}>
+          문법으로 텍스트를 읽고, 논리로 논증을 분석했습니다. 수사는 그것을 <strong style={{color:C.txt}}>함께 말하는 단계</strong>입니다. 소크라테스식 세미나는 정답을 향해 가는 것이 아닙니다—질문이 질문을 낳고, 생각이 생각을 밀어올리는 과정입니다.
+        </p>
+      </div>
+      <p style={{ fontFamily:F.b, fontSize:11, color:STAGES.rhetoric.color, letterSpacing:4, marginBottom:20 }}>세미나 토론 질문</p>
+      {SEMINAR_QS.map((item,i)=>{
+        const open=seminHints.has(i);
+        return (
+          <div key={i} style={{ marginBottom:20, background:C.surf, padding:"22px 26px", borderLeft:`3px solid ${STAGES.rhetoric.color}${i%2===0?"cc":"44"}` }}>
+            <div style={{ display:"flex", gap:16, alignItems:"flex-start", marginBottom:12 }}>
+              <span style={{ fontFamily:F.h, fontSize:28, color:STAGES.rhetoric.color, lineHeight:1, minWidth:34 }}>S{i+1}</span>
+              <p style={{ ...BD, fontWeight:400, lineHeight:1.8, margin:0, flex:1 }}>{item.q}</p>
+            </div>
+            <div style={{ paddingLeft:50 }}>
+              <button onClick={()=>{const n=new Set(seminHints);if(n.has(i))n.delete(i);else n.add(i);setSeminHints(n);}}
+                style={{ background:"transparent", border:"none", color:C.muted, fontFamily:F.b, fontSize:11, letterSpacing:3, cursor:"pointer", padding:0 }}>
+                {open?"힌트 접기 ↑":"힌트 보기 ↓"}
+              </button>
+              {open && (
+                <div style={{ marginTop:10, padding:"12px 16px", background:C.surfUp, borderLeft:`2px solid ${STAGES.rhetoric.color}33` }}>
+                  <p style={{ ...MT, fontSize:13, fontStyle:"italic", margin:0, lineHeight:1.8 }}>💡 {item.hint}</p>
+                  <p style={{ fontFamily:F.b, fontSize:11, color:C.gold, letterSpacing:2, margin:"10px 0 0 0", paddingTop:8, borderTop:`1px dashed ${C.line}` }}>↳ {item.source}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  case 10: return (
+    <div style={{ minHeight:"100vh", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", textAlign:"center", padding:"48px 28px", background:C.bg, position:"relative" }}>
+      <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:`linear-gradient(90deg,transparent,${C.gold}44,transparent)` }} />
+      <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:6, color:"#d4b46a", marginBottom:48, display:"block", fontWeight:500 }}>생각학교 ASK · 존재와 무 클래스</span>
+      <div style={{ width:1, height:64, background:`linear-gradient(${C.gold}88,transparent)`, margin:"0 auto 44px" }} />
+      <div style={{ background:C.surf, padding:"36px 40px", maxWidth:640, textAlign:"left", borderLeft:`3px solid ${C.gold}`, marginBottom:52 }}>
+        <p style={{ fontSize:11, color:C.gold, letterSpacing:4, marginBottom:20, fontWeight:500 }}>오늘의 마지막 문장 · Jean-Paul Sartre</p>
+        <p style={{ fontFamily:F.h, fontSize:"clamp(15px,2.2vw,18px)", fontStyle:"italic", color:C.txt, lineHeight:2.2, margin:0 }}>
+          "이렇듯 순수한 초록은 장래의 배경으로부터 <span style={{ color:C.goldBr }}>'밝음-거침-초록'</span>에로 그것의 의미로서 온다."
+        </p>
+        <p style={{ fontFamily:F.b, fontSize:13, color:"#c8b896", marginTop:20, marginBottom:0, letterSpacing:2, fontWeight:500 }}>— 『존재와 무』 2부 3장 3절, p.432</p>
+      </div>
+      <div style={{ display:"flex", gap:32, marginBottom:52, justifyContent:"center" }}>
+        {[["문법","Grammar","#c4a35a"],["논리","Logic","#5a9abc"],["수사","Rhetoric","#bc7a7a"]].map(([l,e,col])=>(
+          <div key={l} style={{ textAlign:"center" }}>
+            <div style={{ width:5, height:5, borderRadius:"50%", background:col, margin:"0 auto 8px" }} />
+            <p style={{ fontFamily:F.b, fontSize:11, color:col, letterSpacing:3, marginBottom:5 }}>{l}</p>
+            <p style={{ fontFamily:F.h, fontSize:13, color:C.muted, margin:0, fontStyle:"italic" }}>{e}</p>
+          </div>
+        ))}
+      </div>
+      <button onClick={()=>go(0)} style={{ background:"transparent", border:`1px solid ${C.line}`, color:C.muted, fontFamily:F.b, fontSize:11, letterSpacing:4, padding:"12px 32px", cursor:"pointer" }}>처음으로</button>
+    </div>
+  );
+
+  default: return null;
+  }};
+
+  const navVisible = page>0 && page<10;
+  return (
+    <div style={{ background:C.bg, minHeight:"100vh" }}>
+      {navVisible && (
+        <div style={{ position:"fixed", top:0, left:0, right:0, height:2, background:C.line, zIndex:100 }}>
+          <div style={{ height:"100%", width:`${((page-1)/8)*100}%`, background:stage?stage.color:C.gold, transition:"width 0.4s ease, background 0.4s ease" }} />
+        </div>
+      )}
+      <div style={{ opacity:fading?0:1, transition:"opacity 0.28s ease", paddingTop:navVisible?2:0 }}>
+        {renderPage()}
+      </div>
+      {navVisible && (
+        <div style={{ maxWidth:720, margin:"0 auto", padding:"0 28px 52px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <button onClick={prev} style={{ background:"transparent", border:"none", color:C.muted, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer", padding:"12px 0" }}>← 이전</button>
+          <div style={{ display:"flex", gap:4, alignItems:"center" }}>
+            {Array.from({length:9},(_,i)=>{
+              const ps=PAGE_STAGE[i+2], col=ps?STAGES[ps].color:C.gold, active=i===page-2, done=i<page-2;
+              return <div key={i} style={{ width:active?8:5, height:active?8:5, borderRadius:"50%", background:done||active?col:C.line, transition:"all 0.3s" }} />;
+            })}
+          </div>
+          {page<9 ? (
+            <button onClick={next} style={{ background:"transparent", border:"none", color:stage?stage.color:C.gold, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer", padding:"12px 0" }}>다음 →</button>
+          ) : (
+            <button onClick={next}
+              onMouseEnter={e=>{e.currentTarget.style.background=STAGES.rhetoric.color;e.currentTarget.style.color=C.bg;}}
+              onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=STAGES.rhetoric.color;}}
+              style={{ background:"transparent", border:`1px solid ${STAGES.rhetoric.color}`, color:STAGES.rhetoric.color, fontFamily:F.b, fontSize:11, letterSpacing:3, padding:"10px 24px", cursor:"pointer", transition:"all 0.3s" }}>
+              마무리
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
