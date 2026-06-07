@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>존재와 무 4절 전반부 · 생각학교 ASK</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>* { box-sizing: border-box; } body { margin: 0; background: #0d0b09; } button { -webkit-tap-highlight-color: transparent; }</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+const CONCEPTS = [
+  { id:"tempsuniv", term:"보편적 시간", latin:"temps universel", keyword:"대자에 의해 세계에 온다",
+    desc:"4절의 출발 명제. \"보편적인 시간은 대자에 의해 세계에 온다\"(p.453). 즉자는 시간성을 마음대로 이용하지 못한다 — 즉자는 즉자이기 때문이고, 시간성은 끊임없이 자기를 위해 자기와 거리를 두고 존재하는 통일적 존재 방식이기 때문이다. 대자는 시간성이다. 비반성적 방식으로 대자는 존재 위에서, 다시 말해 밖에서 시간성을 발견한다. 보편적 시간성은 객관적이다.",
+    example:"시계의 시간, 달력의 시간, 강물 위에 흐르는 시간 — 이 모든 객관적 시간은 사물에서 솟아나지 않는다. 대자의 시간성이 존재 위에서 발견될 때 비로소 거기 있다(p.453).", accent:"#c4a35a" },
+
+  { id:"recognition", term:"재인의 종합", latin:"synthèse de récognition", keyword:"칸트의 시간 종합 — 사르트르가 거부한다",
+    desc:"칸트가 제시한 시간 의식의 종합. \"'재인의 종합(synthèse de récognition)'이라는 말로 '지금들'의 계기적인 조직에 의해 지각된 사물에 하나의 '지속(maintenant)'을 부여하는 동일화의 점진적인 조작으로 이해한다면, 잉크병은 '재인의 종합'에 의해 결코 존재하는 것이 아니다\"(p.454). 잉크병은 단번에 시간의 3차원에 속한다.",
+    example:"종이컵을 5초간 본다. 칸트라면 의식이 매 순간을 종합하여 \"같은 컵\"으로 재인한다고 말할 것이다. 사르트르는 다르다 — 컵은 지각하자마자 단번에 시간의 3차원에 속해 있다(p.453). 종합은 필요 없다.", accent:"#9a7abd" },
+
+  { id:"refraction", term:"시간성의 굴절", latin:"réfraction de la temporalité", keyword:"내감의 선험적 형식이 아니다",
+    desc:"칸트의 내감(內感, sens interne) 비판. \"이것이 시간적으로 자기를 드러내 보이는데, 그것은 이것이 내감(內感, sens interne)의 하나의 선험적 형식을 통해 굴절되기 때문이 아니라, 오히려 이것이 그 존재 자체가 시간화인 하나의 드러남에 자기를 드러내 보이기 때문이다\"(p.454).",
+    example:"빛이 프리즘을 통과해 색깔로 나뉜다는 비유 — 칸트의 모델은 사물이 의식의 선험적 형식(시간)을 통과하여 시간화된다고 본다. 사르트르는 거부한다. 사물 자체의 드러남이 시간화이기 때문이다(p.454).", accent:"#c47a7a" },
+
+  { id:"permanence", term:"항상성", latin:"permanence", keyword:"작은 무들의 활주",
+    desc:"비시간적 동일성과 시간화의 탈자적 통일 사이의 타협. \"비시간적인 동일성과 시간화의 탈자적 통일 사이의 타협으로서의 항상성은, 초시간적인 불변성을 보존하고 있는 하나의 존재의 표면에 즉자적인 순간들의 단순한 활주로, 서로 분리되어 있으면서도 단순한 외면적 관계에 의해 재통합되는 작은 무들(petits néants)의 활주로 나타날 것이다\"(p.455).",
+    example:"책상이 5분 후에도 같은 책상으로 남아 있다는 사실. 이 항상성은 책상 안에 있는 것도 아니고, 책상이 시간을 거치는 것도 아니다. 책상의 표면 위로 작은 무들이 활주하는 사태이다(p.455).", accent:"#6aaa82" },
+
+  { id:"petitneants", term:"작은 무들", latin:"petits néants", keyword:"존재의 표면을 활주하는 즉자적 순간들",
+    desc:"시간의 즉자적 순간들. \"초시간적인 불변성을 보존하고 있는 하나의 존재의 표면에 즉자적인 순간들의 단순한 활주로, 서로 분리되어 있으면서도 단순한 외면적 관계에 의해 재통합되는 작은 무들(petits néants)의 활주로 나타날 것이다\"(p.455). 시간의 순간들은 존재가 아니라 무다 — 그러나 항상성을 가진 존재의 표면 위에서 활주한다.",
+    example:"영화의 프레임 하나하나는 그 자체로 존재가 아니지만, 그것들이 연결되어 영화가 흐른다. 사물 위로 흐르는 시간도 그렇다 — 작은 무들의 활주(p.455).", accent:"#5a9abc" },
+
+  { id:"homogen", term:"동질성", latin:"homogénéité", keyword:"시간의 환영적 무성을 개념으로 고정한 것",
+    desc:"시간의 동질적 성격에 대한 사르트르의 결정적 폭로. \"교양을 갖춘 사람은 시간의 이 절대적이고 환영적인 무성(無性, néantité)을 [시간의] 동질성(homogénéité)이라는 이름 아래 개념으로 고정할 것이다\"(p.457). 시간을 등질적·균일한 차원으로 보는 과학적·일상적 사유는 시간의 환영적 무성이 개념화된 형태일 뿐이다.",
+    example:"\"시간은 균일하게 흐른다\", \"1초는 어디서나 1초다\"는 통념. 이 동질성이야말로 시간의 환영적 무성을 개념적으로 고정한 결과다(p.457). 과학적 시간관의 뿌리.", accent:"#aaba5a" },
+
+  { id:"neantite", term:"환영적 무성", latin:"néantité", keyword:"시간의 절대적·환영적 본성",
+    desc:"보편적 시간의 본성. 시간은 존재가 아니라 무성이지만, 그 무는 환영처럼 우리에게 시간이라는 통일된 형식으로 나타난다. \"공통 존재 또는 시간(Temps)으로서 필연성과 실체성으로 생각된 산포 그 자체\"(p.457). 대자(산포)와 즉자(필연성·실체성)라는 이중 근거 위에서만 나타날 수 있는 모순적 본성.",
+    example:"\"시간은 흐른다\"고 우리는 말한다. 그러나 시간은 흐르는 어떤 것이 아니다. 흐름이라는 환영, 그 자체로는 무성인 것이 동질성이라는 개념적 옷을 입고 우리에게 흐르는 것처럼 보일 뿐이다(p.457).", accent:"#c4a35a" },
+
+  { id:"abolition", term:"폐지", latin:"abolitions", keyword:"형이상학적 우연 — 존재론적 필연이 아니다",
+    desc:"사물의 사라짐. \"이 현출들과 이 폐지들은 순전히 형이상학적 해명의 대상이 되어야지, 존재론적 해명의 대상이 되어서는 안 된다\"(p.458). 즉자의 존재 구조에서도, 대자의 존재 구조에서도 그것들의 필연성을 생각해 낼 수 없다. 그것들은 우연적이고 형이상학적인 사실의 존재이다.",
+    example:"어제 책상 위에 있던 컵이 오늘 없다. 컵은 \"폐지\"되었다. 그러나 이 폐지는 컵의 존재론적 운명이 아니다 — 우연한 형이상학적 사실일 뿐이다(p.458).", accent:"#9a7abd" },
+
+  { id:"apparition", term:"현출", latin:"apparitions", keyword:"단번에 존재로 — 자기의 이전과 관계 맺지 않는다",
+    desc:"사물의 나타남. 폐지의 짝개념. \"현출한 것은 단번에 존재로 있으며, 있지-않음의 방식으로 있어야 하는 하나의 이전, 즉 그것이 단순한 부재로서 존재해야 하는 하나의 이전과 아무 관계도 맺지 않는다\"(p.459).",
+    example:"어제까지 없던 책이 오늘 책상 위에 있다. 책은 \"현출\"했다. 그러나 이 현출은 책 자체의 자기 모험이 아니다 — 책은 단번에 존재로 있을 뿐, 자기의 이전과 관계 맺지 않는다(p.459).", accent:"#c47a7a" },
+
+  { id:"anteriorite", term:"자기에 대한 선행성", latin:"antériorité à soi", keyword:"모험에 전제되지만 즉자에는 없다",
+    desc:"모험을 가능하게 하는 구조. \"현출들은 현출하는 존재의 모험(aventures de l'être)들이 아니다. 우리는 모험에 전제되는 자기에 대한 선행성(antériorité à soi)을 대자 속에서만 발견할 수 있을 뿐이다\"(p.459). 자기에 대한 선행성이 있어야 모험이 가능하다 — 그러나 즉자에는 그것이 없다.",
+    example:"한 사람의 인생이 모험인 것은 그가 자기에 앞서 자신의 미래로 있기 때문이다. 컵이 깨지는 일은 컵의 모험이 아니다 — 컵은 자기에 선행하지 않으므로(p.459).", accent:"#6aaa82" },
+
+  { id:"causalite", term:"인과성", latin:"causalité", keyword:"외면적 연결이 아니라 탈자적 시간성의 최초 파악",
+    desc:"인과성의 기원에 대한 사르트르의 재정의. 메이에르송과의 결별(p.460, 각주 107). \"최초의 인과성은, 현출된 것이 현출하기 이전에, 그것이 자신의 현출을 준비하기 위해 자신의 고유한 무 속에 이미 거기에 있는 것으로서 파악한다. 인과성은 그저 현출된 것의 시간성을 존재의 탈자적인 방식으로서 최초로 파악한다\"(p.461).",
+    example:"비가 와서 땅이 젖는다. 통념: 비 → 땅 젖음의 외면적 법칙적 연결. 사르트르: 땅이 젖기 전에, \"젖을 것\"이 이미 비의 무 속에 거기 있었다. 인과성은 이 탈자적 시간성의 최초 파악이다(p.461).", accent:"#5a9abc" },
+
+  { id:"glissement", term:"활주", latin:"glissement", keyword:"현재는 존재를 따라 일어나는 단순한 무",
+    desc:"대자의 현재의 본질. \"대자의 현재는 존재에 대한 현전이다. 그리고 그런 한에서 대자의 현재는 존재하지 않는다… 현재는 존재를 따라 일어나는 단순한 활주이며, 단순한 무이다\"(p.462). 현재는 이율배반적으로 주어진다 — 체험될 때는 있지 않은 것으로 주어지고, 존재의 유일한 척도로 있는 것으로 주어진다.",
+    example:"\"지금 이 순간\"이라고 말할 때, 그 \"지금\"은 어디 있는가? 잡으려 하면 사라진다. 그러나 모든 존재는 \"지금\"에서 우리에게 드러난다. 활주이자 단순한 무 — 그것이 현재의 본질이다(p.462).", accent:"#aaba5a" },
+
+  { id:"quiddite", term:"개성원리", latin:"quidditas, quiddité", keyword:"운동에 전제되는 본질의 항상성",
+    desc:"아비센나가 아리스토텔레스의 '존재에 있어서 무엇인 것'을 라틴어로 옮긴 'quidditas'를 프랑스어로 옮긴 것(p.463 각주 108). 개별 사물의 본질. \"운동에는 개성원리(quiddité)의 항상성이 전제되어 있다. 만일 하나의 이것이 한 장소에서 다른 장소로 운반되고, 또 운반되는 동안에 그 존재에서 근본적인 변질을 겪는다면, 이것은 운동을 부정하는 것이 될 것이다\"(p.463).",
+    example:"빨간 당구공이 굴러간다. 굴러간 후에도 그것은 여전히 빨간 당구공이다. 이 변하지 않는 \"당구공임\"이 개성원리다. 변화는 운동이 아니다 — 운동은 개성원리의 항상성을 전제한다(p.463).", accent:"#c4a35a" },
+
+  { id:"etrepassage", term:"지나감의-존재", latin:"être-de-passage", keyword:"한 장소에 있으면서 동시에 있지 않는 것",
+    desc:"운동하는 존재의 존재 방식. 엘레아학파의 화살 아포리아를 피하려면 즉자존재 보존 공준을 포기해야 한다. \"AB를 지나가는 것은 단지 지나감의-존재(être-de-passage)이다. 지나간다는 것은 무엇인가? 바로 한 장소에 존재하면서 동시에 존재하지 않는 것이다\"(p.467).",
+    example:"화살이 AB 지점을 \"지나간다.\" 화살은 그곳에 있는가, 없는가? 둘 다이다. 화살은 거기서 \"지나감의-존재\"로 있다 — 거기 있으면서 동시에 거기 있지 않다(p.467).", accent:"#9a7abd" },
+
+  { id:"exteriorsoi", term:"자기에-대한-외면성", latin:"extériorité à soi", keyword:"운동의 본질 — 존재의 단순한 질병",
+    desc:"운동의 본질에 대한 사르트르의 정의. \"운동은 자기에 외적인 하나의 존재의 존재이다\"(p.469). \"이 자기에-대한-외면성은 존재의 단순한 질병으로서, 자기로 있음과 동시에 그것들의 고유한 무로 있다고 하는, 어떤 종류의 이것들에게 있어서는 있을 수 없는 불가능성으로서 나타난다\"(p.470-471).",
+    example:"당구공이 굴러간다. 굴러가는 동안 그것은 자기 자신과 어긋난다 — A에 있으면서 동시에 A에 있지 않은 채 B로 향한다. 이 자기와의 어긋남이 자기에-대한-외면성이다(p.469-471).", accent:"#c47a7a" },
+
+  { id:"trajectoire", term:"궤적", latin:"trajectoire", keyword:"무한한 다수의 외면성으로 곧장 붕괴하는 거짓 외관",
+    desc:"운동이 그리는 선. \"자기에-대한-외부성을 측정하고 또 그것을 의미하는 이 아무것도 아닌 것, 그것이 바로 하나의 궤적(trajectoire), 다시 말해 하나의 동일한 존재의 통일 속에서 외면성을 구성한다. 궤적은 그어지는 선이다. 다시 말해 궤적은 공간에서 종합적인 통일의 갑작스러운 나타남이고, 무한한 다수(multiplicité infinie)의 외면성으로 곧장 붕괴하는 하나의 거짓 외관이다\"(p.471).",
+    example:"별똥별이 그리는 빛의 선. 그 선은 거기 있는가? 별이 지나간 자리에 선이 남는가? 없다. 궤적은 운동이 그리는 거짓 외관일 뿐이다 — 그어지자마자 무한한 다수로 붕괴한다(p.471).", accent:"#6aaa82" },
+
+  { id:"moindreetre", term:"최소-존재", latin:"le moindre-être", keyword:"폐기되지도 완전히 존재하지도 못하는 어떤 것",
+    desc:"운동의 본질에 대한 사르트르의 최종 정의. \"궤적은 결코 존재하지 않는다… 운동은 더더욱 존재하지 않는다. 운동은 폐기되기에 이를 수도 없고, 완전히 존재하기에 이를 수도 없는 하나의 존재의 최소-존재(le moindre-être)이다\"(p.471). 운동은 즉자의 핵심에서 일어나는 무차별한 외면성의 나타남이고, 단순한 존재의 요동침은 존재의 우연한 모험이다.",
+    example:"운동은 무인가? 그렇지 않다. 그렇다고 완전한 존재인가? 그것도 아니다. 운동은 그 사이의 어떤 것 — 존재의 최소한, \"최소-존재\"이다. 존재의 표면에서 일어나는 우연한 요동침(p.471).", accent:"#5a9abc" },
+
+  { id:"mouvant", term:"운동자", latin:"le mouvant", keyword:"보편적 시간을 실현하는 자",
+    desc:"운동하는 자. \"대자는 운동자(le mouvant)를 통해 자신의 현재를 자신에게 알린다. 대자는 현재의 운동과 동시적으로 자신의 고유한 현재이다. 대자가 동체의 현재에 의해 자신의 고유한 현재를 자기에게 알리는 한에서, 보편적인 시간을 실현하는 임무를 맡고 있는 것은 바로 운동이다\"(p.473).",
+    example:"흐르는 강물, 굴러가는 공, 떨어지는 잎새 — 이것들이 운동자다. 운동자가 있어야 우리는 \"지금\"을 객관적 현재로 파악한다. 운동자가 없는 정지된 세계에서는 보편적 시간이 발생하지 않는다(p.473).", accent:"#bc7a7a" },
+];
+
+const PASSAGES = [
+  { title:"논점 1 · 보편적 시간은 대자에 의해 세계에 온다 — 잉크병은 단번에 시간의 3차원에 속한다",
+    note:"p.453 절 도입 '보편적인 시간은 대자에 의해 세계에 온다'부터 p.457 '보편적인 시간의 존재 방식을 정초한다'까지. '보편적 시간' '재인의 종합' '시간성의 굴절' '항상성' '작은 무들'이 키워드입니다. 사르트르가 어떻게 칸트의 시간 분석(내감의 선험적 형식 + 재인의 종합)을 거부하면서, 시간이 사물 위로 흐른다는 자신의 입장을 정초하는지 따라가 보세요.",
+    layers:[
+      { label:"핵심 주장", text:"4절은 단호한 명제로 시작한다. \"보편적인 시간은 대자에 의해 세계에 온다. 즉자는 시간성을 마음대로 이용하지 못한다… 대자는 시간성이다. 비반성적 방식으로 대자는 존재 위에서, 다시 말해 밖에서 시간성을 발견한다. 보편적인 시간성은 객관적이다\"(p.453).\n\n잉크병의 분석이 이어진다. \"이 잉크병은, 내가 그것을 지각하자마자, 그 존재 속에서 이미 시간적인 3차원에 속해 있다\"(p.453). 잉크병은 칸트적 \"재인의 종합\"에 의해 존재하지 않는다 — 단번에 거기 있다.\n\n그리고 4절의 결정적 명제: \"그것들은 지속하지 않는다. 그것들은 존재한다. 그리고 시간이 그것들 위로 흐른다\"(p.456). 이 명제는 베르그송(지속)과 칸트(의식의 종합)를 동시에 거꾸러뜨린다." },
+      { label:"왜 그런가", text:"만일 시간이 의식 안의 형식이라면(칸트), 사물의 시간화는 의식의 굴절을 통과한 산물일 것이다. 사르트르는 거부한다. \"이것이 시간적으로 자기를 드러내 보이는데, 그것은 이것이 내감의 하나의 선험적 형식을 통해 굴절되기 때문이 아니라, 오히려 이것이 그 존재 자체가 시간화인 하나의 드러남에 자기를 드러내 보이기 때문이다\"(p.454).\n\n만일 시간이 사물 자체의 흐름이라면(베르그송의 지속), 사물은 지속할 것이다. 사르트르는 또 거부한다 — 사물은 지속하지 않는다. 존재할 뿐이다.\n\n그렇다면 시간은 어디에 있는가? 사물의 표면 위로 흐르는 작은 무들의 활주다. \"비시간적인 동일성과 시간화의 탈자적 통일 사이의 타협으로서의 항상성은, 초시간적인 불변성을 보존하고 있는 하나의 존재의 표면에 즉자적인 순간들의 단순한 활주로, 작은 무들(petits néants)의 활주로 나타날 것이다\"(p.455)." },
+      { label:"비유로", text:"칸트의 모델: 빛(=사물)이 프리즘(=의식의 선험적 형식)을 통과하여 색깔(=시간)로 나뉜다. → 사르트르 거부.\n\n베르그송의 모델: 음악이 흐르듯 사물이 지속한다. → 사르트르 거부.\n\n사르트르 자신의 모델: 흐르는 강 위에 떠 있는 돌. 돌은 지속하지 않는다. 돌은 그저 거기 있다. 강이 흐를 뿐이다. 시간은 강이고, 사물은 그 위에 떠 있는 돌이다.\n\n\"그것들은 지속하지 않는다. 그것들은 존재한다. 그리고 시간이 그것들 위로 흐른다\"(p.456). 이 명제 하나가 시간 철학사 전체와 대결한다." },
+    ]},
+  { title:"논점 2 · 시간은 환영적 무성·동질성 — 폐지와 현출은 형이상학적 우연이다",
+    note:"p.457 '교양을 갖춘 사람은 시간의 이 절대적이고 환영적인 무성을…'부터 p.462 '현재와 미래에 의해서이다'까지. '동질성' '환영적 무성' '폐지' '현출' '자기에 대한 선행성' '인과성'이 키워드입니다. 사르트르가 어떻게 시간의 동질성을 환영적 무성으로 폭로하고, 사물의 나타남·사라짐을 형이상학의 문제로 옮기며, 인과성의 기원을 어떻게 재정의하는지 따라가 보세요.",
+    layers:[
+      { label:"핵심 주장", text:"시간은 동질적이지 않다. \"교양을 갖춘 사람은 시간의 이 절대적이고 환영적인 무성(無性, néantité)을 [시간의] 동질성(homogénéité)이라는 이름 아래 개념으로 고정할 것이다\"(p.457). 즉, 시간을 등질적 차원으로 보는 사고는 시간의 환영적 무성을 개념적으로 고정한 결과일 뿐이다.\n\n시간(Temps)은 \"공통 존재 또는 시간(Temps)으로서 필연성과 실체성으로 생각된 산포 그 자체\"(p.457)이다. 대자(산포)와 즉자(필연성·실체성)라는 이중 근거 위에서만 나타날 수 있는 모순적 본성.\n\n폐지(abolitions)와 현출(apparitions)도 이런 모순을 보여준다. \"이 현출들과 이 폐지들은 순전히 형이상학적 해명의 대상이 되어야지, 존재론적 해명의 대상이 되어서는 안 된다\"(p.458). 그것들은 우연적·형이상학적 사실들이다.\n\n그리고 결론: \"나의 과거는 세계 속의 과거이다\"(p.461). 대자가 보편적 시간성에 속하는 것은 과거에 의해서다." },
+      { label:"왜 중요한가", text:"이 분석은 두 거대한 시간 이론을 무너뜨린다. (1) 시간을 동질적·균질적 차원으로 보는 과학적·물리학적 시간관 — 사르트르는 이를 환영적 무성의 개념적 고정이라고 폭로한다. (2) 인과성을 원인과 결과의 외면적·법칙적 연결로 보는 통념(메이에르송) — 사르트르는 이를 탈자적 시간성의 일차적 파악이라고 재정의한다.\n\n사르트르의 인과성 재정의: \"최초의 인과성은, 현출된 것이 현출하기 이전에, 그것이 자신의 현출을 준비하기 위해 자신의 고유한 무 속에 이미 거기에 있는 것으로서 파악한다. 인과성은 그저 현출된 것의 시간성을 존재의 탈자적인 방식으로서 최초로 파악한다\"(p.461).\n\n그리고 결정적으로: \"현출들은 현출하는 존재의 모험(aventures de l'être)들이 아니다. 우리는 모험에 전제되는 자기에 대한 선행성(antériorité à soi)을 대자 속에서만 발견할 수 있을 뿐이다\"(p.459). 사물의 나타남·사라짐은 사물의 일이 아니다. 사물은 단번에 존재로 있을 뿐이다.\n\n그 결과: \"내가 보편적인 시간성에 속하는 것은 과거에 의해서이고, 내가 보편적인 시간성에서 벗어나는 것은 현재와 미래에 의해서이다\"(p.462)." },
+      { label:"비유로", text:"영화의 프레임들. 영화는 24fps의 동질적 차원으로 흐른다 — 우리는 그렇게 생각한다. 그러나 그 동질성은 환영이다. 각 프레임은 단번에 거기 있고, 다음 프레임도 단번에 거기 있다. \"흐름\"은 우리의 의식이 그 프레임들 위로 미끄러질 때 발생하는 환영이다.\n\n게슈탈트 이론: \"순수한 현출은 언제나 동적인 나타남으로 파악되고, 현출된 것은 무의 배경으로부터 달음질쳐서 존재에게로 온다\"(p.460). 인과성은 그 달음질을 최초로 파악하는 것이다.\n\n메이에르송 비판(p.460, 각주 107): 인과성은 두 현상 사이의 외면적·항상적 연결이 아니다. 그것은 시간성의 탈자적 파악이다." },
+    ]},
+  { title:"논점 3 · 현재는 운동이고, 운동은 즉자의 \"최소-존재\"이다",
+    note:"p.462 'B) 현재'부터 p.473 '시간의 무한한 분할은 이 절대적인 외부성 속에 근거를 둔다'까지. '활주' '개성원리' '지나감의-존재' '자기에-대한-외면성' '궤적' '최소-존재' '운동자'가 키워드입니다. 사르트르가 어떻게 현재의 이율배반에서 운동으로 도약하고, 엘레아학파의 화살 아포리아를 해결하며, 마침내 운동을 즉자의 '최소-존재'로 규정하는지 따라가 보세요.",
+    layers:[
+      { label:"핵심 주장", text:"\"대자의 현재는 존재에 대한 현전이다. 그리고 그런 한에서 대자의 현재는 존재하지 않는다… 현재는 존재를 따라 일어나는 단순한 활주이며, 단순한 무이다\"(p.462). 현재는 이율배반적으로 주어진다.\n\n그러나 보편적 시간의 현재적 차원은 어떻게 파악되는가? 운동을 통해서다. \"보편적 시간을 순수한 현재로 규정하는 것은 운동이다\"(p.472).\n\n운동의 본질: 자기에-대한-외면성. \"운동은 자기에 외적인 하나의 존재의 존재이다\"(p.469). 엘레아학파의 화살 아포리아를 피하려면 즉자존재 보존 공준을 포기해야 한다. \"AB를 지나가는 것은 단지 지나감의-존재(être-de-passage)이다. 지나간다는 것은 무엇인가? 바로 한 장소에 존재하면서 동시에 존재하지 않는 것이다\"(p.467).\n\n사르트르의 최종 정식: \"운동은 폐기되기에 이를 수도 없고, 완전히 존재하기에 이를 수도 없는 하나의 존재의 최소-존재(le moindre-être)이다\"(p.471). 운동은 즉자의 핵심에서 일어나는 무차별한 외면성의 나타남이고, 존재의 우연한 모험이다." },
+      { label:"왜 중요한가", text:"이 분석은 가장 일상적 현상 — 운동 — 에 대한 형이상학적 재정의다. 운동은 사물의 우유성(accident)이 아니다. 운동은 존재의 \"최소한\"이다. 존재의 표면에서 일어나는 우연한 요동침. 그러나 이 요동침이 없으면 우리는 시간을 시간으로 파악할 수 없다.\n\n엘레아학파(파르메니데스, 제논)는 운동을 환상으로 보았다 — 화살은 매 순간 어떤 지점에 정지해 있으므로 운동은 없다. 사르트르는 다른 길을 간다. 화살은 매 순간 \"거기 있으면서 동시에 거기 있지 않다.\" 운동은 자기에-대한-외면성이고, 이 외면성은 즉자에 대해서만 말해질 수 없다 — 의식에 의해서만 발견될 수 있다.\n\n결과적으로 보편적 시간의 세 차원이 모두 다른 방식으로 구성된다. 과거 = 사물 위로 흐르는 작은 무들의 활주. 현재 = 운동을 통한 순수한 활주. 그리고 미래는 다음 절에서 다룬다.\n\n결론: \"대자가 동체의 현재에 의해 자신의 고유한 현재를 자기에게 알리는 한에서, 보편적인 시간을 실현하는 임무를 맡고 있는 것은 바로 운동이다\"(p.473)." },
+      { label:"비유로", text:"화살의 아포리아 (제논): 화살이 AB 지점을 지나갈 때, 화살은 거기 정지해 있는 화살과 정확히 같은 방식으로 \"존재한다.\" 그렇다면 운동은 어디에 있는가? 제논의 결론은 운동은 환상이라는 것이었다.\n\n사르트르의 답: 운동은 환상이 아니다. 그러나 단순한 존재도 아니다. AB를 지나가는 것은 \"지나감의-존재\" — 거기 있으면서 동시에 거기 있지 않은 것이다.\n\n빨간 당구공(p.470): \"당구대 위를 구르는 빨간 당구공은 결코 빨강으로 있기를 그치지 않는다. 하지만 빨간 당구공의 빨강은, 그것이 있는 그대로 있다고 해도, 그것이 정지해 있었을 때와 똑같은 방식으로 빨강으로 있지는 않다. 이 빨강은 폐기와 항상성 사이에서 미결정 상태에 있다.\"\n\n도마뱀의 비유(p.472): \"보편적인 시간은 벽 위를 기어가는 도마뱀의 계속되는 전진과 같다.\" 도마뱀이 지나간 자리에 아무것도 남지 않는다. 그러나 도마뱀이 움직이는 한, 시간이 거기 있다." },
+    ]},
+];
+
+const QUIZ = [
+  { q:"사르트르가 \"보편적인 시간은 대자에 의해 세계에 온다\"고 할 때 그 의미로 가장 정확한 것은?",
+    opts:["시간은 의식 안에만 있고 세계에는 없다","시간은 즉자가 능동적으로 만들어내는 것이다","즉자는 시간성을 이용하지 못하고, 대자가 시간성이므로, 대자가 비반성적으로 존재 위에서 시간성을 발견하여 보편적·객관적 시간이 성립한다","시간은 칸트가 말한 내감의 선험적 형식이다"],
+    ans:2, exp:"p.453. 사르트르 시간론의 출발점. 시간은 의식 안에만 있는 것도(칸트), 사물 자체의 흐름도(베르그송) 아니다. 대자가 시간성이고, 그것이 존재 위에서 발견될 때 보편적·객관적 시간이 성립한다." },
+  { q:"사르트르가 사물의 시간성에 대해 단언하는 핵심 명제는?",
+    opts:["사물은 의식의 종합을 통해 비로소 시간 속에 자리한다","그것들은 지속하지 않는다. 그것들은 존재한다. 그리고 시간이 그것들 위로 흐른다","사물은 자기 안에서 지속하면서 변화한다","사물의 시간은 인과적 법칙에 의해 외부로부터 부여된다"],
+    ans:1, exp:"p.456. 사르트르 시간 분석의 결정적 명제. 베르그송의 '지속(durée)'과 칸트의 '종합'을 동시에 거꾸러뜨린다. 사물은 단번에 거기 있을 뿐이고, 시간은 그 위로 흐르는 작은 무들의 활주다." },
+  { q:"사르트르가 엘레아학파(제논)의 화살 아포리아를 어떻게 풀어내는가?",
+    opts:["시간의 무한 분할이 가능하지 않다고 주장한다","운동이 환상이라는 엘레아학파의 결론을 수용한다","즉자존재 보존 공준을 포기하고, 운동을 '지나감의-존재(être-de-passage)' — 한 장소에 있으면서 동시에 있지 않은 것 — 으로 재정의한다","운동을 수학적 미분으로 환원한다"],
+    ans:2, exp:"pp.466-467. 엘레아학파의 아포리아를 피하려면 \"운동하는 존재가 자신의 즉자존재를 보존한다\"는 공준을 포기해야 한다. AB를 지나가는 것은 \"한 장소에 존재하면서 동시에 존재하지 않는 것\"이다." },
+  { q:"사르트르가 운동에 대해 내리는 최종 정의는?",
+    opts:["운동은 존재의 우유성(accident)이다","운동은 두 정지 상태 사이의 외적 관계다","운동은 의식이 사물에 부여한 환상이다","운동은 폐기되기에 이를 수도 없고 완전히 존재하기에 이를 수도 없는 존재의 '최소-존재(le moindre-être)'이다"],
+    ans:3, exp:"p.471. 사르트르 운동 분석의 결론. 운동은 무도 존재도 아닌, 그 사이의 어떤 것 — 즉자의 핵심에서 일어나는 무차별한 외면성의 나타남이며, 존재의 우연한 모험이다. 운동을 통해 보편적 시간이 순수한 현재로 실현된다." },
+];
+
+const ARG_STEPS = [
+  { num:"전제 1", color:"#c4a35a", title:"보편적 시간은 대자에 의해 세계에 온다 — 사물 안에 있지 않다",
+    body:"4절의 출발 명제. \"보편적인 시간은 대자에 의해 세계에 온다\"(p.453). 즉자는 시간성을 마음대로 이용하지 못한다. 즉자는 즉자이기 때문이고, 시간성은 자기를 위해 자기와 거리를 두고 존재하는 통일적 존재 방식이기 때문이다.\n\n대자는 시간성이다. 비반성적 방식으로 대자는 존재 위에서 시간성을 발견한다. 보편적 시간성은 객관적이지만, 즉자 내부에 있지 않다.",
+    key:"시간은 사물 안에 있지 않다 — 그러나 사물 위로 흐른다." },
+  { num:"전제 2", color:"#9a7abd", title:"사물은 지속하지 않는다 — 단번에 존재할 뿐, 시간이 그 위로 흐른다",
+    body:"잉크병은 지각하자마자 단번에 시간의 3차원에 속한다(p.453). 재인의 종합(칸트)은 필요하지 않다. 시간성의 굴절은 내감의 선험적 형식이 아니다(p.454).\n\n항상성은 비시간적 동일성과 시간화의 탈자적 통일 사이의 타협이다 — 초시간적 불변성을 보존하는 존재의 표면 위로 작은 무들(petits néants)이 활주한다(p.455).\n\n결정적 명제: \"그것들은 지속하지 않는다. 그것들은 존재한다. 그리고 시간이 그것들 위로 흐른다\"(p.456).",
+    key:"사물의 표면 위로 작은 무들이 활주한다." },
+  { num:"추론", color:"#5a9abc", title:"시간은 동질성·환영적 무성 — 폐지와 현출은 형이상학적 우연이다",
+    body:"시간의 동질성은 환영적 무성의 개념적 고정이다(p.457). 시간(Temps)은 필연성과 실체성으로 생각된 산포 그 자체다.\n\n폐지와 현출은 존재론이 아니라 형이상학의 문제다(p.458). 사물의 나타남·사라짐은 사물의 모험이 아니다 — 자기에 대한 선행성(antériorité à soi)은 대자에만 있다(p.459).\n\n인과성은 외면적·법칙적 연결이 아니라 탈자적 시간성의 최초 파악이다(p.461, 메이에르송 비판).",
+    key:"시간은 동질적 차원이 아니다 — 환영적 무성의 개념적 고정이다." },
+  { num:"결론", color:"#c47a7a", title:"현재는 단순한 활주·무 — 그러나 운동을 통해 보편적 시간이 실현된다",
+    body:"대자의 현재는 존재에 대한 현전 = 단순한 활주, 단순한 무(p.462). 현재는 이율배반적이다 — 체험될 때는 있지 않은 것으로, 존재의 유일한 척도로 있는 것으로 주어진다.\n\n그러나 운동을 통해 보편적 시간이 순수한 현재로 규정된다(p.472). 엘레아학파의 화살 아포리아를 피하려면 즉자존재 보존 공준을 포기해야 한다(p.467). 운동 = 지나감의-존재(être-de-passage) = 자기에-대한-외면성(p.469).",
+    key:"보편적 시간을 순수한 현재로 규정하는 것은 운동이다." },
+  { num:"함의", color:"#bc7a7a", title:"운동은 즉자의 \"최소-존재\" — 존재의 우연한 모험",
+    body:"\"운동은 폐기되기에 이를 수도 없고, 완전히 존재하기에 이를 수도 없는 하나의 존재의 최소-존재(le moindre-être)이다\"(p.471). 운동은 즉자의 핵심에서 일어나는 무차별한 외면성의 나타남이다.\n\n빨간 당구공: 폐기와 항상성 사이의 미결정(p.470). 궤적: 무한한 다수의 외면성으로 곧장 붕괴하는 거짓 외관(p.471).\n\n보편적 시간은 벽 위를 기어가는 도마뱀의 계속되는 전진과 같다(p.472). 운동자(le mouvant)가 보편적 시간을 실현한다.",
+    key:"운동은 존재의 최소-존재 — 존재의 우연한 모험." },
+];
+
+const POSITIONS = [
+  { label:"칸트", sub:"내감의 선험적 형식 + 재인의 종합 (1781)", color:"#5a7abc",
+    claim:"시간은 내감(內感)의 선험적 형식이다. 의식이 \"지금들\"의 계기를 종합하여 사물에 \"지속\"을 부여한다(재인의 종합). 시간은 의식 안에 있고, 사물에 가해지는 형식이다.",
+    problem:"사르트르의 명시 비판(p.454): \"이것이 시간적으로 자기를 드러내 보이는데, 그것은 이것이 내감의 하나의 선험적 형식을 통해 굴절되기 때문이 아니다.\" 잉크병은 단번에 시간의 3차원에 속하지, 종합을 통해 시간화되지 않는다(p.453-454).",
+    quote:"이것이 그 존재 자체가 시간화인 하나의 드러남에 자기를 드러내 보이기 때문이다." },
+  { label:"엘레아학파", sub:"파르메니데스·제논 — 운동은 환상 (기원전 5세기)", color:"#7aaa6a",
+    claim:"진실로 있는 것은 불가분이고, 일체(一體)이며, 불생불멸이고, 운동도 변화도 하지 않는 전체다. 화살이 AB 지점을 지나갈 때, 화살은 정지해 있는 화살과 같이 정확히 거기 \"존재한다\" — 따라서 운동은 환상이다.",
+    problem:"사르트르의 비판(pp.466-467): 엘레아학파는 즉자존재 보존 공준을 가정한다 — 운동 중에도 존재가 자기와 동일하게 머문다는 것. 사르트르는 이 공준을 포기한다. AB를 지나가는 것은 \"한 장소에 존재하면서 동시에 존재하지 않는 것\" — 지나감의-존재(être-de-passage)다.",
+    quote:"운동하는 존재가 자신의 즉자존재를 보존한다고, 일반적으로 용인되는 공준을 포기해야 한다." },
+  { label:"사르트르", sub:"현상학적 존재론 (1943)", color:"#c4a35a",
+    claim:"보편적 시간은 대자에 의해 세계에 온다. 사물은 지속하지 않는다 — 존재할 뿐, 시간이 그 위로 흐른다. 시간의 동질성은 환영적 무성의 개념적 고정이다. 현재는 운동을 통해서만 보편적 시간으로 실현된다. 운동은 자기에-대한-외면성, 즉자의 \"최소-존재\"다.",
+    problem:"이 입장은 칸트의 종합 모델과 엘레아학파의 즉자존재 보존 공준을 동시에 거부한다. 그 대가는 무겁다 — 운동·시간·현재 모두 무도 존재도 아닌 \"최소한\"의 사태로 규정된다. 사물의 모험은 사물의 일이 아니다. 보편적 시간은 도마뱀의 전진과 같다.",
+    quote:"그것들은 지속하지 않는다. 그것들은 존재한다. 그리고 시간이 그것들 위로 흐른다." },
+];
+
+const SEMINAR_QS = [
+  { q:"사르트르에게 시간은 사물 안에 있지도, 우리 의식 안에 있지도 않습니다. 사물은 그저 존재하고, 시간은 그 위로 흐를 뿐이지요. 그렇다면 시간은 도대체 어디에 있는 걸까요? 그리고 \"나는 나이 들어간다\"고 할 때, 정작 늙어가는 것은 무엇일까요?",
+    hint:"옛집은 우리를 기다리며 함께 늙어간 걸까, 아니면 그저 거기 있었을 뿐일까. 변한 것은 집인가, 우리인가, 그 사이를 흐른 무엇인가.",
+    source:"본문 통찰 · 시간은 대자에 의해 세계에 온다 / 사물은 지속하지 않고 시간이 그 위로 흐른다 — 논점 1, pp.453·456" },
+  { q:"사르트르는 우리가 시간을 \"어디서나 똑같이 흐르는 것\"으로 여기는 게 사실은 환영이라고 말합니다. 시계로는 똑같은 한 시간인데, 설레며 기다리는 한 시간과 무료하게 버티는 한 시간은 전혀 다르게 흐르지요. 그렇다면 우리가 정말로 살아내는 한 시간이란 어떤 것일까요?",
+    hint:"시계가 가리키는 균질한 시간과 우리가 겪는 시간 — 어느 쪽이 먼저이고, 어느 쪽이 그림자일까.",
+    source:"본문 통찰 · 시간의 동질성은 환영적 무성의 개념적 고정 — 논점 2, p.457" },
+  { q:"사르트르는 사물의 사라짐이 사물 자신의 일이 아니라고 말합니다 — 떠난 것은 자기가 떠났음을 모르니까요. 그렇다면 우리가 누군가를, 어떤 시절을 \"떠나보낸다\"고 할 때, 그 이별은 대체 누구에게 일어나는 일일까요?",
+    hint:"떠난 사람은 자기가 \"사라졌다\"는 걸 알까. 사라짐을 아는 건 늘 남겨진 쪽이 아닐까.",
+    source:"본문 통찰 · 폐지와 현출은 사물의 모험이 아니다 — 논점 2, pp.458-459" },
+  { q:"화살을 매 순간 사진으로 찍으면 늘 한 점에 멈춰 있는데, 우리는 분명 \"날아가는 화살\"을 봅니다. 그렇다면 운동이란 도대체 무엇일까요? 멈춘 장면 어디에도 없는 그 \"날아감\"은 대체 어디에 있는 걸까요?",
+    hint:"멈춘 사진을 아무리 여러 장 이어 붙여도 \"날아감\"이 될까. 움직임은 사진들 사이 어디에 숨어 있을까.",
+    source:"본문 통찰 · 운동 = 지나감의-존재 (엘레아학파 화살 아포리아 비판) — 논점 3, pp.466-467" },
+  { q:"사르트르는 운동을 붙잡으려 하면 사라지는 \"최소한의 존재\"라 부르면서도, 바로 그 운동을 통해서만 \"지금\"이 우리에게 온다고 말합니다. 우리가 가장 붙잡고 싶어 하는 \"이 순간\"이 사실은 가장 붙잡을 수 없는 것이라면, 그래도 거기 매달리는 우리는 무엇을 원하는 걸까요?",
+    hint:"가만히 \"지금\"을 붙잡으려 하면 사라지고, 무언가 움직일 때 비로소 \"지금\"이 온다 — 왜 그럴까.",
+    source:"본문 통찰 · 운동은 최소-존재, 보편적 시간의 현재를 실현한다 — 논점 3, pp.471-472" },
+];
+
+const STAGES = {
+  grammar:{ label:"문법", latin:"Grammatica", sub:"텍스트가 무엇을 말하는가", color:"#c4a35a", bg:"#1a160a" },
+  logic:  { label:"논리", latin:"Dialectica",  sub:"논증이 어떻게 작동하는가", color:"#5a9abc", bg:"#0a121a" },
+  rhetoric:{ label:"수사", latin:"Rhetorica",  sub:"함께 탐구하고 설득하는가", color:"#bc7a7a", bg:"#1a0f0f" },
+};
+const PAGE_STAGE = {2:"grammar",3:"grammar",4:"grammar",5:"grammar",6:"grammar",7:"logic",8:"logic",9:"rhetoric"};
+
+function App() {
+  const [page, setPage] = useState(0);
+  const [fading, setFading] = useState(false);
+  const [flipped, setFlipped] = useState(new Set());
+  const [pLayers, setPLayers] = useState([0,0,0]);
+  const [qSel, setQSel] = useState([null,null,null,null]);
+  const [qDone, setQDone] = useState([false,false,false,false]);
+  const [argStep, setArgStep] = useState(0);
+  const [posOpen, setPosOpen] = useState(null);
+  const [seminHints, setSeminHints] = useState(new Set());
+
+  const TOTAL = 11;
+  const go = n => { setFading(true); setTimeout(()=>{ setPage(n); setFading(false); window.scrollTo(0,0); },280); };
+  const next = () => { if(page<TOTAL-1) go(page+1); };
+  const prev = () => { if(page>0) go(page-1); };
+
+  const C = { bg:"#0d0b09", surf:"#1d1812", surfUp:"#2a2418", txt:"#f5efe0", muted:"#b8a888", gold:"#d4b46a", goldBr:"#e8c878", line:"#3a3424" };
+  const F = { h:"'Cormorant Garamond', Georgia, serif", b:"'Noto Serif KR', Georgia, serif" };
+  const W = { maxWidth:720, margin:"0 auto", padding:"52px 28px", color:C.txt, fontFamily:F.b };
+  const SL = { fontFamily:F.b, fontSize:11, letterSpacing:4, color:C.gold, marginBottom:18, display:"block" };
+  const BT = { fontFamily:F.h, fontSize:32, fontWeight:400, color:C.txt, lineHeight:1.25, marginBottom:8 };
+  const DIV = { width:36, height:1, background:C.gold, marginBottom:28 };
+  const BD = { fontSize:15, lineHeight:1.95, color:C.txt, fontWeight:400, fontFamily:F.b };
+  const MT = { fontSize:15, lineHeight:1.95, color:C.muted, fontWeight:400, fontFamily:F.b };
+
+  const stageKey = PAGE_STAGE[page];
+  const stage = stageKey ? STAGES[stageKey] : null;
+
+  const StageBadge = () => !stage ? null : (
+    <div style={{ display:"flex", gap:10, alignItems:"center", marginBottom:28, padding:"10px 16px", background:stage.bg, border:`1px solid ${stage.color}33`, width:"fit-content" }}>
+      <div style={{ width:6, height:6, borderRadius:"50%", background:stage.color }} />
+      <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:4, color:stage.color }}>{stage.label}</span>
+      <span style={{ fontFamily:F.h, fontSize:13, color:C.muted, fontStyle:"italic" }}>{stage.latin}</span>
+      <span style={{ fontFamily:F.b, fontSize:11, color:C.muted }}>· {stage.sub}</span>
+    </div>
+  );
+
+  const renderPage = () => { switch(page) {
+
+  case 0: return (
+    <div style={{ minHeight:"100vh", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", textAlign:"center", padding:"48px 28px", background:C.bg, position:"relative", overflow:"hidden" }}>
+      <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${C.gold},transparent)` }} />
+      <div style={{ position:"absolute", bottom:0, left:0, right:0, height:1, background:`linear-gradient(90deg,transparent,${C.gold}44,transparent)` }} />
+      <div style={{ position:"absolute", inset:0, backgroundImage:`radial-gradient(ellipse at 50% 55%,#1a160e 0%,transparent 65%)`, pointerEvents:"none" }} />
+      <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:6, color:"#d4b46a", marginBottom:48, display:"block", fontWeight:500 }}>생각학교 ASK · 존재와 무 클래스</span>
+      <h1 style={{ fontFamily:F.h, fontSize:"clamp(40px,8vw,60px)", fontWeight:300, color:C.txt, lineHeight:1.1, marginBottom:10 }}>존재와 무</h1>
+      <p style={{ fontFamily:F.h, fontSize:22, color:"#f0e4c8", fontStyle:"italic", marginBottom:8, fontWeight:400 }}>L'Être et le Néant</p>
+      <p style={{ fontFamily:F.b, fontSize:13, color:"#d4c4a0", letterSpacing:2, fontWeight:500 }}>Jean-Paul Sartre, 1943</p>
+      <div style={{ width:1, height:52, background:`linear-gradient(${C.gold}88,transparent)`, margin:"36px auto" }} />
+      <p style={{ fontFamily:F.b, fontSize:13, letterSpacing:5, color:C.gold, marginBottom:10 }}>소크라테스식 고전 탐구 세미나</p>
+      <p style={{ fontFamily:F.h, fontSize:19, color:"#f0e4c8", fontStyle:"italic", marginBottom:8, fontWeight:500 }}>2부 3장 4절</p>
+      <p style={{ fontFamily:F.h, fontSize:19, color:"#f0e4c8", fontStyle:"italic", marginBottom:52, fontWeight:500 }}>세계의 시간 (전반부)</p>
+      <button onClick={next} onMouseEnter={e=>{e.currentTarget.style.background=C.gold;e.currentTarget.style.color=C.bg;}} onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=C.gold;}}
+        style={{ background:"transparent", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:F.b, fontSize:12, letterSpacing:4, padding:"15px 48px", cursor:"pointer", transition:"all 0.3s" }}>
+        시작하기
+      </button>
+      <div style={{ display:"flex", gap:24, marginTop:40, justifyContent:"center" }}>
+        {[["문법","#c4a35a"],["논리","#5a9abc"],["수사","#bc7a7a"]].map(([l,col])=>(
+          <div key={l} style={{ textAlign:"center" }}>
+            <div style={{ width:5, height:5, borderRadius:"50%", background:col, margin:"0 auto 6px" }} />
+            <span style={{ fontFamily:F.b, fontSize:10, color:col, letterSpacing:3 }}>{l}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  case 1: return (
+    <div style={W}>
+      <span style={SL}>안내 · 트리비움으로 읽다</span>
+      <h2 style={BT}>세 단계로 고전을 읽는 법</h2>
+      <div style={DIV} />
+      <p style={{ ...BD, marginBottom:32 }}>이 세미나는 생각을 이끄는 도구, <strong style={{color:C.goldBr}}>트리비움</strong>으로 텍스트를 읽습니다—<strong style={{color:C.goldBr}}>문법, 논리, 수사</strong>. 각 단계는 텍스트를 다른 깊이로 만나는 방법입니다.</p>
+      {[
+        { key:"grammar", n:"01", label:"문법 — Grammatica", pages:"5섹션", desc:"텍스트가 무엇을 말하는지 파악합니다. 사르트르가 사용하는 언어와 개념을 내 것으로 만드는 단계입니다.", items:["보편적 시간·재인의 종합·시간성의 굴절·항상성·작은 무들·동질성·환영적 무성·폐지·현출·자기에 대한 선행성·인과성·활주·개성원리·지나감의-존재·자기에-대한-외면성·궤적·최소-존재·운동자 개념 카드 (18종)","핵심 논점 3개 단계별 독해","이해 확인 퀴즈 4문항"] },
+        { key:"logic", n:"02", label:"논리 — Dialectica", pages:"2섹션", desc:"사르트르의 논증 구조를 단계별로 분해합니다. 칸트·엘레아학파와의 대결을 통해 논증의 결정적 지점을 찾아봅니다.", items:["논증 구조 5단계 시각화","칸트 vs 엘레아학파 vs 사르트르 비교 분석"] },
+        { key:"rhetoric", n:"03", label:"수사 — Rhetorica", pages:"세미나에서 함께", desc:"이 단계는 세미나 현장에서 함께 합니다. 가이드에서는 토론 질문을 미리 확인합니다.", items:["소크라테스식 세미나 토론 질문 5개","힌트와 함께 입장 준비"] },
+      ].map(item=>{
+        const s=STAGES[item.key];
+        return (
+          <div key={item.key} style={{ marginBottom:20, background:C.surf, padding:"22px 24px", borderLeft:`3px solid ${s.color}` }}>
+            <div style={{ display:"flex", gap:14, alignItems:"flex-start", marginBottom:14 }}>
+              <span style={{ fontFamily:F.h, fontSize:30, color:s.color, lineHeight:1, minWidth:32 }}>{item.n}</span>
+              <div>
+                <div style={{ display:"flex", gap:10, alignItems:"center", marginBottom:6 }}>
+                  <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:4, color:s.color }}>{item.label}</span>
+                  <span style={{ fontFamily:F.b, fontSize:11, color:C.muted }}>· {item.pages}</span>
+                </div>
+                <p style={{ ...BD, fontSize:13, margin:0, lineHeight:1.8 }}>{item.desc}</p>
+              </div>
+            </div>
+            <div style={{ paddingLeft:46 }}>
+              {item.items.map((it,j)=>(
+                <div key={j} style={{ display:"flex", gap:10, alignItems:"flex-start", padding:"4px 0" }}>
+                  <div style={{ width:4, height:4, borderRadius:"50%", background:s.color+"88", flexShrink:0, marginTop:7 }} />
+                  <span style={{ ...MT, fontSize:13 }}>{it}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  case 2: return (
+    <div style={W}>
+      <StageBadge />
+      <span style={SL}>문법 1/5 · 핵심 개념</span>
+      <h2 style={BT}>카드를 눌러 개념을 확인하세요</h2>
+      <div style={DIV} />
+      <p style={{ ...MT, marginBottom:36, fontSize:14 }}>18개 모두 열어보시길 권합니다. 지금 완전히 이해하지 않아도 됩니다—이후 독해와 퀴즈를 통해 다시 만납니다.</p>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+        {CONCEPTS.map(c=>{
+          const open=flipped.has(c.id);
+          return (
+            <div key={c.id} onClick={()=>{const n=new Set(flipped);if(n.has(c.id))n.delete(c.id);else n.add(c.id);setFlipped(n);}}
+              style={{ background:open?C.surfUp:C.surf, border:`1px solid ${open?c.accent+"66":C.line}`, padding:"18px 20px", cursor:"pointer", transition:"all 0.25s" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                <div style={{ flex:1, paddingRight:8 }}>
+                  <p style={{ fontFamily:F.h, fontSize:17, color:open?c.accent:C.goldBr, fontWeight:500, margin:"0 0 2px", lineHeight:1.25 }}>{c.term}</p>
+                  <p style={{ fontSize:10, color:C.muted, fontStyle:"italic", margin:0 }}>{c.latin}</p>
+                </div>
+                <span style={{ color:open?C.gold:C.muted, fontSize:20, lineHeight:1, transform:open?"rotate(45deg)":"none", transition:"transform 0.25s", flexShrink:0 }}>+</span>
+              </div>
+              {open && (
+                <div style={{ marginTop:16 }}>
+                  <p style={{ fontSize:11, color:c.accent, letterSpacing:3, marginBottom:10, fontWeight:500 }}>{c.keyword}</p>
+                  <p style={{ ...BD, fontSize:13, marginBottom:14, lineHeight:1.85, whiteSpace:"pre-line" }}>{c.desc}</p>
+                  <div style={{ background:C.surf, padding:"12px 14px" }}>
+                    <p style={{ ...MT, fontSize:12, margin:0, lineHeight:1.8 }}>✦ {c.example}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ textAlign:"center", marginTop:28 }}>
+        <span style={{ ...MT, fontSize:12, letterSpacing:2 }}>{flipped.size} / {CONCEPTS.length} 확인</span>
+        <div style={{ display:"flex", justifyContent:"center", gap:5, marginTop:10, flexWrap:"wrap" }}>
+          {CONCEPTS.map((c,i)=><div key={i} style={{ width:6, height:6, borderRadius:"50%", background:flipped.has(c.id)?C.gold:C.line, transition:"background 0.3s" }} />)}
+        </div>
+      </div>
+    </div>
+  );
+
+  case 3: case 4: case 5: {
+    const pIdx=page-3, p=PASSAGES[pIdx], layer=pLayers[pIdx];
+    return (
+      <div style={W}>
+        <StageBadge />
+        <span style={SL}>문법 {pIdx+2}/5 · 핵심 논점 {pIdx+1}/3</span>
+        <h2 style={BT}>{p.title}</h2>
+        <div style={DIV} />
+        <div style={{ background:"#111a10", border:`1px solid #2a4a2a`, padding:"18px 22px", marginBottom:28 }}>
+          <p style={{ fontSize:11, color:"#4a8a4a", letterSpacing:3, marginBottom:8 }}>책에서 찾아보기</p>
+          <p style={{ ...BD, fontSize:13, margin:0, color:"#8abb8a", lineHeight:1.85 }}>{p.note}</p>
+        </div>
+        <p style={{ ...MT, fontSize:12, marginBottom:16, letterSpacing:1 }}>아래 탭을 순서대로 눌러 이해의 층을 쌓아보세요</p>
+        <div style={{ display:"flex" }}>
+          {p.layers.map((l,i)=>(
+            <button key={i} onClick={()=>setPLayers(prev=>{const n=[...prev];n[pIdx]=i;return n;})}
+              style={{ flex:1, padding:"12px 8px", background:layer===i?C.surfUp:C.surf, border:"none", borderBottom:`2px solid ${layer===i?C.gold:C.line}`, color:layer===i?C.gold:C.muted, fontFamily:F.b, fontSize:12, letterSpacing:2, cursor:"pointer", transition:"all 0.2s" }}>
+              {l.label}
+            </button>
+          ))}
+        </div>
+        <div style={{ background:C.surfUp, padding:"28px 26px", minHeight:148, borderTop:`1px solid ${C.line}`, marginBottom:32 }}>
+          <p style={{ ...BD, margin:0, lineHeight:2.1, whiteSpace:"pre-line" }}>{p.layers[layer].text}</p>
+        </div>
+        {pIdx<2 && (
+          <div style={{ display:"flex", justifyContent:"center" }}>
+            <button onClick={next} style={{ background:"transparent", border:`1px solid ${C.line}`, color:C.muted, fontFamily:F.b, fontSize:12, letterSpacing:3, padding:"10px 28px", cursor:"pointer" }}>
+              다음 논점으로 →
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  case 6: return (
+    <div style={W}>
+      <StageBadge />
+      <span style={SL}>문법 5/5 · 이해 확인</span>
+      <h2 style={BT}>이해 확인 퀴즈</h2>
+      <div style={DIV} />
+      <p style={{ ...MT, marginBottom:40, fontSize:14 }}>정답을 선택하고 '확인'을 누르면 해설이 나옵니다.</p>
+      {QUIZ.map((q,qi)=>(
+        <div key={qi} style={{ marginBottom:40 }}>
+          <div style={{ display:"flex", gap:14, marginBottom:16, alignItems:"flex-start" }}>
+            <span style={{ fontFamily:F.h, fontSize:26, color:C.gold, lineHeight:1, minWidth:32 }}>Q{qi+1}</span>
+            <p style={{ ...BD, fontWeight:400, lineHeight:1.75, margin:0 }}>{q.q}</p>
+          </div>
+          {q.opts.map((opt,oi)=>{
+            const sel=qSel[qi]===oi, done=qDone[qi], correct=oi===q.ans;
+            let bg=C.surf, border=C.line, color=C.txt;
+            if(done){ if(correct){bg="#192819";border="#3a7a3a";color="#8acd8a";}else if(sel){bg="#281919";border="#7a3a3a";color="#cd8a8a";}else{color=C.muted;} }
+            else if(sel){ bg=C.surfUp; border=C.gold+"88"; }
+            return (
+              <div key={oi} onClick={()=>{if(!done){const n=[...qSel];n[qi]=oi;setQSel(n);}}}
+                style={{ background:bg, border:`1px solid ${border}`, padding:"13px 18px", marginBottom:8, cursor:done?"default":"pointer", display:"flex", gap:14, alignItems:"flex-start", transition:"all 0.2s" }}>
+                <span style={{ fontFamily:F.h, fontSize:16, color:done&&correct?"#3a7a3a":(done&&sel?"#7a3a3a":C.muted), minWidth:20, lineHeight:1.6 }}>{String.fromCharCode(65+oi)}</span>
+                <span style={{ ...BD, fontSize:14, color, margin:0, lineHeight:1.7 }}>{opt}</span>
+                {done&&correct&&<span style={{ marginLeft:"auto", color:"#3a7a3a", fontSize:16, flexShrink:0 }}>✓</span>}
+              </div>
+            );
+          })}
+          {!qDone[qi]&&qSel[qi]!==null&&(
+            <button onClick={()=>{const n=[...qDone];n[qi]=true;setQDone(n);}}
+              style={{ marginTop:8, padding:"10px 28px", background:"transparent", border:`1px solid ${C.gold}`, color:C.gold, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer" }}>
+              확인
+            </button>
+          )}
+          {qDone[qi]&&(
+            <div style={{ background:"#101910", border:`1px solid #1e3a1e`, padding:"16px 20px", marginTop:12 }}>
+              <p style={{ fontSize:11, color:"#4a8a4a", letterSpacing:3, marginBottom:8 }}>해설</p>
+              <p style={{ ...BD, fontSize:13, color:"#90bb90", margin:0, lineHeight:1.85 }}>{q.exp}</p>
+            </div>
+          )}
+        </div>
+      ))}
+      <div style={{ textAlign:"center", padding:"16px 0", borderTop:`1px solid ${C.line}` }}>
+        <span style={{ ...MT, fontSize:12, letterSpacing:2 }}>{qDone.filter(Boolean).length} / {QUIZ.length} 완료</span>
+      </div>
+    </div>
+  );
+
+  case 7: return (
+    <div style={W}>
+      <StageBadge />
+      <span style={SL}>논리 1/2 · 논증 구조</span>
+      <h2 style={BT}>사르트르의 논증을 분해한다</h2>
+      <div style={DIV} />
+      <p style={{ ...MT, marginBottom:36, fontSize:14, lineHeight:1.9 }}>'다음 단계' 버튼을 눌러 사르트르의 논증을 단계적으로 따라가보세요.</p>
+      {ARG_STEPS.slice(0,argStep+1).map((step,i)=>(
+        <div key={i} style={{ marginBottom:14, opacity:i===argStep?1:0.55, transition:"opacity 0.3s" }}>
+          <div style={{ display:"flex", alignItems:"stretch" }}>
+            <div style={{ width:4, background:step.color, flexShrink:0 }} />
+            <div style={{ background:i===argStep?C.surfUp:C.surf, padding:"20px 24px", flex:1 }}>
+              <div style={{ display:"flex", gap:12, alignItems:"center", marginBottom:10 }}>
+                <span style={{ fontFamily:F.b, fontSize:10, letterSpacing:4, color:step.color }}>{step.num}</span>
+                <span style={{ fontFamily:F.h, fontSize:18, color:i===argStep?C.txt:C.muted }}>{step.title}</span>
+              </div>
+              <p style={{ ...BD, fontSize:14, lineHeight:1.9, marginBottom:12, whiteSpace:"pre-line" }}>{step.body}</p>
+              <div style={{ padding:"10px 14px", background:C.bg, borderLeft:`2px solid ${step.color}44` }}>
+                <p style={{ ...MT, fontSize:12, margin:0, color:step.color }}>✦ {step.key}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+      <div style={{ display:"flex", gap:14, marginTop:24, alignItems:"center" }}>
+        {argStep<ARG_STEPS.length-1 ? (
+          <button onClick={()=>setArgStep(s=>s+1)}
+            onMouseEnter={e=>{e.currentTarget.style.background=ARG_STEPS[argStep+1].color;e.currentTarget.style.color=C.bg;}}
+            onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=ARG_STEPS[argStep+1].color;}}
+            style={{ padding:"12px 28px", background:"transparent", border:`1px solid ${ARG_STEPS[argStep+1].color}`, color:ARG_STEPS[argStep+1].color, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer", transition:"all 0.3s" }}>
+            다음 단계 →
+          </button>
+        ) : (
+          <span style={{ ...MT, fontSize:12, letterSpacing:2 }}>논증 완료</span>
+        )}
+        {argStep>0 && (
+          <button onClick={()=>setArgStep(0)} style={{ background:"transparent", border:"none", color:C.muted, fontFamily:F.b, fontSize:11, letterSpacing:2, cursor:"pointer" }}>처음부터</button>
+        )}
+        <span style={{ marginLeft:"auto", ...MT, fontSize:11 }}>{argStep+1} / {ARG_STEPS.length}</span>
+      </div>
+    </div>
+  );
+
+  case 8: return (
+    <div style={W}>
+      <StageBadge />
+      <span style={SL}>논리 2/2 · 철학사적 대결</span>
+      <h2 style={BT}>칸트·엘레아학파와의 대결</h2>
+      <div style={DIV} />
+      <p style={{ ...MT, marginBottom:24, fontSize:14 }}>세 입장을 눌러 비교해보세요. 사르트르가 어디서 갈라지는지 확인하세요.</p>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, marginBottom:36 }}>
+        {POSITIONS.map((pos,i)=>{
+          const open=posOpen===i;
+          return (
+            <div key={i} onClick={()=>setPosOpen(open?null:i)}
+              style={{ background:open?C.surfUp:C.surf, border:`1px solid ${open?pos.color+"88":C.line}`, padding:"16px 14px", cursor:"pointer", transition:"all 0.25s" }}>
+              <p style={{ fontFamily:F.h, fontSize:17, color:open?pos.color:C.muted, margin:"0 0 4px", textAlign:"center" }}>{pos.label}</p>
+              <p style={{ fontSize:10, color:C.muted, fontStyle:"italic", margin:0, textAlign:"center", letterSpacing:1 }}>{pos.sub}</p>
+              {open && (
+                <div style={{ marginTop:14 }}>
+                  <div style={{ marginBottom:10, paddingBottom:10, borderBottom:`1px solid ${C.line}` }}>
+                    <p style={{ fontSize:10, color:pos.color, letterSpacing:3, marginBottom:6 }}>주장</p>
+                    <p style={{ ...BD, fontSize:12, margin:0, lineHeight:1.75 }}>{pos.claim}</p>
+                  </div>
+                  <div style={{ marginBottom:10 }}>
+                    <p style={{ fontSize:10, color:i===2?"#5a8a5a":"#8a4a4a", letterSpacing:3, marginBottom:6 }}>{i===2?"귀결":"한계"}</p>
+                    <p style={{ ...BD, fontSize:12, margin:0, lineHeight:1.75, color:i===2?"#8abb8a":"#c48a8a" }}>{pos.problem}</p>
+                  </div>
+                  <div style={{ padding:"8px 12px", background:C.surf, borderLeft:`2px solid ${pos.color}44` }}>
+                    <p style={{ fontSize:11, color:pos.color, margin:0, fontStyle:"italic" }}>"{pos.quote}"</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ background:C.surf, padding:"20px 24px" }}>
+        <p style={{ fontFamily:F.b, fontSize:11, color:STAGES.logic.color, letterSpacing:4, marginBottom:14 }}>핵심 차이</p>
+        <p style={{ ...BD, fontSize:14, lineHeight:1.9, margin:0 }}>
+          칸트는 시간을 <strong style={{color:C.txt}}>내감의 선험적 형식 + 재인의 종합</strong>으로, 엘레아학파는 운동을 <strong style={{color:C.txt}}>환상</strong>으로 봅니다. 사르트르는 둘 다 거부합니다. 그에게 시간은 사물에도 의식의 형식에도 깃들지 않으며, <strong style={{color:C.txt}}>대자에 의해 세계에 옵니다</strong>. 사물은 지속하지 않고 단지 존재하며, <strong style={{color:C.txt}}>시간이 그 위로 흐릅니다</strong>. 운동은 즉자존재 보존 공준을 깨뜨리는 <strong style={{color:C.txt}}>지나감의-존재</strong>이고, 폐기되지도 완전히 존재하지도 못하는 <strong style={{color:C.txt}}>최소-존재</strong>입니다. 보편적 시간은 벽 위를 기어가는 도마뱀의 전진과 같습니다.
+        </p>
+      </div>
+    </div>
+  );
+
+  case 9: return (
+    <div style={W}>
+      <StageBadge />
+      <span style={SL}>수사 · 세미나 준비</span>
+      <h2 style={BT}>이제 함께 탐구합니다</h2>
+      <div style={DIV} />
+      <div style={{ background:"#1a0f0f", border:`1px solid ${STAGES.rhetoric.color}33`, padding:"20px 24px", marginBottom:36 }}>
+        <p style={{ fontFamily:F.b, fontSize:11, color:STAGES.rhetoric.color, letterSpacing:4, marginBottom:10 }}>수사 단계에 대하여</p>
+        <p style={{ ...BD, fontSize:14, margin:0, lineHeight:1.9 }}>
+          문법으로 텍스트를 읽고, 논리로 논증을 분석했습니다. 수사는 그것을 <strong style={{color:C.txt}}>함께 말하는 단계</strong>입니다. 소크라테스식 세미나는 정답을 향해 가는 것이 아닙니다—질문이 질문을 낳고, 생각이 생각을 밀어올리는 과정입니다.
+        </p>
+      </div>
+      <p style={{ fontFamily:F.b, fontSize:11, color:STAGES.rhetoric.color, letterSpacing:4, marginBottom:20 }}>세미나 토론 질문</p>
+      {SEMINAR_QS.map((item,i)=>{
+        const open=seminHints.has(i);
+        return (
+          <div key={i} style={{ marginBottom:20, background:C.surf, padding:"22px 26px", borderLeft:`3px solid ${STAGES.rhetoric.color}${i%2===0?"cc":"44"}` }}>
+            <div style={{ display:"flex", gap:16, alignItems:"flex-start", marginBottom:12 }}>
+              <span style={{ fontFamily:F.h, fontSize:28, color:STAGES.rhetoric.color, lineHeight:1, minWidth:34 }}>S{i+1}</span>
+              <p style={{ ...BD, fontWeight:400, lineHeight:1.8, margin:0, flex:1 }}>{item.q}</p>
+            </div>
+            <div style={{ paddingLeft:50 }}>
+              <button onClick={()=>{const n=new Set(seminHints);if(n.has(i))n.delete(i);else n.add(i);setSeminHints(n);}}
+                style={{ background:"transparent", border:"none", color:C.muted, fontFamily:F.b, fontSize:11, letterSpacing:3, cursor:"pointer", padding:0 }}>
+                {open?"힌트 접기 ↑":"힌트 보기 ↓"}
+              </button>
+              {open && (
+                <div style={{ marginTop:10, padding:"12px 16px", background:C.surfUp, borderLeft:`2px solid ${STAGES.rhetoric.color}33` }}>
+                  <p style={{ ...MT, fontSize:13, fontStyle:"italic", margin:0, lineHeight:1.8 }}>💡 {item.hint}</p>
+                  <p style={{ fontFamily:F.b, fontSize:11, color:C.gold, letterSpacing:2, margin:"10px 0 0 0", paddingTop:8, borderTop:`1px dashed ${C.line}` }}>↳ {item.source}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  case 10: return (
+    <div style={{ minHeight:"100vh", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", textAlign:"center", padding:"48px 28px", background:C.bg, position:"relative" }}>
+      <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:`linear-gradient(90deg,transparent,${C.gold}44,transparent)` }} />
+      <span style={{ fontFamily:F.b, fontSize:11, letterSpacing:6, color:"#d4b46a", marginBottom:48, display:"block", fontWeight:500 }}>생각학교 ASK · 존재와 무 클래스</span>
+      <div style={{ width:1, height:64, background:`linear-gradient(${C.gold}88,transparent)`, margin:"0 auto 44px" }} />
+      <div style={{ background:C.surf, padding:"36px 40px", maxWidth:640, textAlign:"left", borderLeft:`3px solid ${C.gold}`, marginBottom:52 }}>
+        <p style={{ fontSize:11, color:C.gold, letterSpacing:4, marginBottom:20, fontWeight:500 }}>오늘의 마지막 문장 · Jean-Paul Sartre</p>
+        <p style={{ fontFamily:F.h, fontSize:"clamp(15px,2.2vw,18px)", fontStyle:"italic", color:C.txt, lineHeight:2.2, margin:0 }}>
+          "이렇게 해서 이 컵과 이 책상이 나에게 드러나 보인다. <span style={{ color:C.goldBr }}>그것들은 지속하지 않는다. 그것들은 존재한다. 그리고 시간이 그것들 위로 흐른다</span>."
+        </p>
+        <p style={{ fontFamily:F.b, fontSize:13, color:"#c8b896", marginTop:20, marginBottom:0, letterSpacing:2, fontWeight:500 }}>— 『존재와 무』 2부 3장 4절, p.456</p>
+      </div>
+      <div style={{ display:"flex", gap:32, marginBottom:52, justifyContent:"center" }}>
+        {[["문법","Grammar","#c4a35a"],["논리","Logic","#5a9abc"],["수사","Rhetoric","#bc7a7a"]].map(([l,e,col])=>(
+          <div key={l} style={{ textAlign:"center" }}>
+            <div style={{ width:5, height:5, borderRadius:"50%", background:col, margin:"0 auto 8px" }} />
+            <p style={{ fontFamily:F.b, fontSize:11, color:col, letterSpacing:3, marginBottom:5 }}>{l}</p>
+            <p style={{ fontFamily:F.h, fontSize:13, color:C.muted, margin:0, fontStyle:"italic" }}>{e}</p>
+          </div>
+        ))}
+      </div>
+      <button onClick={()=>go(0)} style={{ background:"transparent", border:`1px solid ${C.line}`, color:C.muted, fontFamily:F.b, fontSize:11, letterSpacing:4, padding:"12px 32px", cursor:"pointer" }}>처음으로</button>
+    </div>
+  );
+
+  default: return null;
+  }};
+
+  const navVisible = page>0 && page<10;
+  return (
+    <div style={{ background:C.bg, minHeight:"100vh" }}>
+      {navVisible && (
+        <div style={{ position:"fixed", top:0, left:0, right:0, height:2, background:C.line, zIndex:100 }}>
+          <div style={{ height:"100%", width:`${((page-1)/8)*100}%`, background:stage?stage.color:C.gold, transition:"width 0.4s ease, background 0.4s ease" }} />
+        </div>
+      )}
+      <div style={{ opacity:fading?0:1, transition:"opacity 0.28s ease", paddingTop:navVisible?2:0 }}>
+        {renderPage()}
+      </div>
+      {navVisible && (
+        <div style={{ maxWidth:720, margin:"0 auto", padding:"0 28px 52px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <button onClick={prev} style={{ background:"transparent", border:"none", color:C.muted, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer", padding:"12px 0" }}>← 이전</button>
+          <div style={{ display:"flex", gap:4, alignItems:"center" }}>
+            {Array.from({length:9},(_,i)=>{
+              const ps=PAGE_STAGE[i+2], col=ps?STAGES[ps].color:C.gold, active=i===page-2, done=i<page-2;
+              return <div key={i} style={{ width:active?8:5, height:active?8:5, borderRadius:"50%", background:done||active?col:C.line, transition:"all 0.3s" }} />;
+            })}
+          </div>
+          {page<9 ? (
+            <button onClick={next} style={{ background:"transparent", border:"none", color:stage?stage.color:C.gold, fontFamily:F.b, fontSize:12, letterSpacing:3, cursor:"pointer", padding:"12px 0" }}>다음 →</button>
+          ) : (
+            <button onClick={next}
+              onMouseEnter={e=>{e.currentTarget.style.background=STAGES.rhetoric.color;e.currentTarget.style.color=C.bg;}}
+              onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=STAGES.rhetoric.color;}}
+              style={{ background:"transparent", border:`1px solid ${STAGES.rhetoric.color}`, color:STAGES.rhetoric.color, fontFamily:F.b, fontSize:11, letterSpacing:3, padding:"10px 24px", cursor:"pointer", transition:"all 0.3s" }}>
+              마무리
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
