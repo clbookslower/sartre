@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보편적 시간은 도마뱀의 전진과 같다 — 존재와 무 2부 3장 4절 세계의 시간(과거·현재)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background: #fff; color: #111; font-size: 16px; line-height: 1.9; -webkit-font-smoothing: antialiased; }
+.page { max-width: 720px; margin: 0 auto; padding: 72px 24px 100px; }
+.breadcrumb { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #aaa; margin-bottom: 48px; flex-wrap: wrap; }
+.breadcrumb a { color: #aaa; text-decoration: none; }
+.breadcrumb .sep { opacity: 0.4; }
+.article-header { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid #f0f0f0; }
+.meta { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.badge { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 12px; border-radius: 100px; letter-spacing: 0.06em; }
+.badge-class { background: #EAF3DE; color: #3B6D11; }
+.badge-book { background: #F0EBF8; color: #6B3FA0; }
+.dot { color: #ddd; font-size: 12px; }
+.meta-text { font-size: 12px; color: #999; font-family: 'DM Mono', monospace; }
+h1 { font-family: 'Noto Serif KR', serif; font-size: 34px; font-weight: 400; line-height: 1.35; letter-spacing: -0.02em; margin-bottom: 14px; }
+.subtitle { font-family: 'Noto Serif KR', serif; font-size: 17px; font-weight: 300; color: #777; line-height: 1.7; margin-bottom: 24px; font-style: italic; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-size: 12px; padding: 3px 12px; border-radius: 100px; background: #f5f5f5; color: #888; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+.step { display: flex; gap: 24px; margin-bottom: 52px; align-items: flex-start; }
+.step-num { width: 32px; height: 32px; border-radius: 50%; background: #2C3B2D; color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 12px; flex-shrink: 0; margin-top: 6px; }
+.step-body { flex: 1; min-width: 0; }
+.step-title { font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 400; margin-bottom: 16px; line-height: 1.4; letter-spacing: -0.01em; }
+.step-body p { color: #444; margin-bottom: 14px; font-size: 15px; line-height: 1.95; }
+.callout { background: #f9f9f9; border-left: 2.5px solid #111; padding: 18px 22px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+.callout-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #888; margin-bottom: 8px; }
+.callout p { font-size: 14px; color: #333; line-height: 1.8; margin: 0; }
+blockquote { margin: 28px 0; padding: 0 0 0 24px; border-left: 1.5px solid #ddd; }
+blockquote p { font-family: 'Noto Serif KR', serif; font-size: 17px; font-style: italic; color: #333; line-height: 1.8; margin-bottom: 8px; }
+blockquote cite { font-family: 'DM Mono', monospace; font-size: 11px; color: #aaa; font-style: normal; letter-spacing: 0.06em; }
+.concept { display: flex; border: 1px solid #f0f0f0; border-radius: 12px; overflow: hidden; margin: 24px 0; }
+.concept-term { background: #111; color: #fff; padding: 20px 22px; display: flex; align-items: center; justify-content: center; min-width: 120px; }
+.concept-term span { font-family: 'Noto Serif KR', serif; font-size: 16px; writing-mode: vertical-rl; letter-spacing: 0.1em; }
+.concept-def { padding: 20px 22px; flex: 1; }
+.concept-def .term-en { font-family: 'DM Mono', monospace; font-size: 11px; color: #aaa; letter-spacing: 0.1em; margin-bottom: 8px; display: block; }
+.concept-def p { font-size: 14px; color: #444; line-height: 1.8; margin: 0; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.col-card { background: #fafafa; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; }
+.col-card h3 { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 14px; }
+.col-card ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.col-card ul li { font-size: 14px; color: #444; padding-left: 16px; position: relative; line-height: 1.6; }
+.col-card ul li::before { content: '—'; position: absolute; left: 0; color: #ccc; }
+.col-card.dark { background: #2C3B2D; border-color: #2C3B2D; }
+.col-card.dark h3 { color: #7a9c7b; }
+.col-card.dark ul li { color: #d4e8d4; }
+.col-card.dark ul li::before { color: #7a9c7b; }
+.cta-box { background: #2C3B2D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 64px; }
+.cta-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #7a9c7b; margin-bottom: 16px; }
+.cta-text { font-family: 'Noto Serif KR', serif; color: #f0ece4; font-size: 20px; font-weight: 300; line-height: 1.7; margin-bottom: 28px; }
+.cta-sub { font-size: 13px; color: #7a9c7b; line-height: 1.7; }
+.footnote { font-family: 'DM Mono', monospace; font-size: 11px; color: #bbb; letter-spacing: 0.06em; margin-top: 64px; padding-top: 24px; border-top: 1px solid #f5f5f5; line-height: 1.9; }
+p { color: #444; margin-bottom: 16px; }
+.haiku { text-align: center; padding: 32px 24px; margin: 28px 0; background: #fafafa; border: 1px solid #f0f0f0; border-radius: 12px; }
+.haiku p { font-family: 'Noto Serif KR', serif; font-size: 18px; font-weight: 300; color: #222; line-height: 2.2; margin: 0; }
+.haiku cite { display: block; margin-top: 16px; font-family: 'DM Mono', monospace; font-size: 11px; color: #bbb; letter-spacing: 0.08em; }
+.motion-scene { margin: 32px 0; padding: 28px 24px 22px; background: #fafafa; border: 1px solid #f0f0f0; border-radius: 12px; text-align: center; }
+.motion-scene svg { max-width: 100%; height: auto; }
+.motion-cap { font-family: 'DM Mono', monospace; font-size: 11px; color: #aaa; letter-spacing: 0.06em; margin-top: 14px; }
+.voice-grid { display: flex; flex-direction: column; gap: 16px; margin: 28px 0; }
+.voice-card { background: #fafafa; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; }
+.voice-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #2C3B2D; margin-bottom: 10px; text-transform: uppercase; }
+.voice-card p { font-size: 14px; color: #333; line-height: 1.85; margin: 0; }
+@media (max-width: 600px) {
+  h1 { font-size: 26px; }
+  .two-col { grid-template-columns: 1fr; }
+  .concept { flex-direction: column; }
+  .concept-term { writing-mode: horizontal-tb; min-width: auto; }
+  .concept-term span { writing-mode: horizontal-tb; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="breadcrumb">
+    <a href="#">생각학교 ASK</a>
+    <span class="sep">/</span>
+    <span>존재와 무 클래스</span>
+    <span class="sep">/</span>
+    <span>5회차 · 제2부 3장 4절 세계의 시간(과거·현재)</span>
+  </nav>
+
+  <header class="article-header">
+    <div class="meta">
+      <span class="badge badge-class">클래스 리뷰</span>
+      <span class="badge badge-book">존재와 무</span>
+      <span class="dot">·</span>
+      <span class="meta-text">2026.06.08 MON</span>
+      <span class="dot">·</span>
+      <span class="meta-text">5회차 · pp. 461–472</span>
+    </div>
+    <h1>보편적 시간은 도마뱀의 전진과 같다</h1>
+    <p class="subtitle">운동·운동자·외면성을 통해 본 세계의 시간 — 과거와 현재</p>
+    <div class="tags">
+      <span class="tag">세계의 시간</span>
+      <span class="tag">운동</span>
+      <span class="tag">운동자</span>
+      <span class="tag">보편적 시간</span>
+      <span class="tag">외면성</span>
+      <span class="tag">현재</span>
+      <span class="tag">과거</span>
+    </div>
+  </header>
+
+  <p>2주 만에 다시 모인 월요일 밤. 연구원님들은 《존재와 무》 제2부 대자존재, 제3장 초월, 제4절 '세계의 시간' 가운데 <strong>A. 과거</strong>와 <strong>B. 현재</strong>를 함께 읽었다. 2부 2장에서 한 번 다뤘던 시간성이, 왜 초월의 장에서 '운동'이라는 한 겹을 더 입고 돌아오는가. 진행자의 말처럼 "어려운 걸 잘 헤쳐왔다고 뿌듯했더니, 또 물음표가 더 많아진" 시간이었다. <em>운동이란 무엇인가, 도마뱀이 기어가야 비로소 현재가 오는가, 궤적이 남지 않는데 우리는 왜 가고 있는가.</em> 두 차례의 소그룹과 전체 토론을 아래에 정리했다.</p>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h2 class="step-title">10년 전의 나, 지금의 나 — 과거와 현재로 들어가는 입구</h2>
+
+      <p>이날의 아이스브레이킹은 그 자체로 오늘의 주제였다. "10년 전의 나라면 지금의 근황을 듣고 깜짝 놀랄 이야기가 있나요?" 진행자는 추상적인 '세계의 시간'을 다루기 전에, 각자의 살아 있는 과거와 현재를 먼저 연결 짓게 했다.</p>
+
+      <p>이사를 앞두고 마음이 바빴던 까만천사 연구원님은 "10년 전엔 내가 누구인지도 모르고 늘 불안하고 초조하게 살았는데, 지금 사르트르의 《존재와 무》를 토론하고 있다고 하면 그때의 나는 기절할 것"이라고 했다. 작가가 된 도담도담 연구원님은 "10년 뒤엔 책도 썼을 거라고 알려주면 진짜 기함할 것"이라며 웃었다. 평일 오전 체육관에서 운동하는 일상을 두고 "10년 전엔 한 번도 상상해 본 적 없는 시간"이라 말한 연구원님도, 혼자 있는 시간을 외로움이 아니라 즐거움으로 바꾼 연구원님도 있었다.</p>
+
+      <div class="callout">
+        <div class="callout-label">왜 이 질문이 본문과 맞닿는가</div>
+        <p>지나간 사실 자체는 즉자(卽自)로 굳어 변하지 않는다. 그러나 그 과거에 지금의 내가 부여하는 의미는 끊임없이 다시 쓰인다. 같은 10년 전을 두고 누군가는 불안을, 누군가는 희망의 씨앗을 읽는다. 진행자는 "과거는 현재 이렇게 있는 것이군요"라며, 오늘 텍스트가 말하는 시간의 구조를 연구원님들의 삶에서 먼저 만나게 했다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h2 class="step-title">운동 — 즉자의 핵심에서 일어나는 '최소 존재'</h2>
+
+      <p>본문의 출발점은 <strong>운동(mouvement)</strong>이다. 시간성에 '운동'이라는 한 겹이 덮이자, "이 존재의 요동침은 무엇인가, 운동성은 무엇인가" 하는 물음들이 쏟아졌다. 소그룹에서 까만천사 연구원님이 짚어준 471–472쪽이 토론의 중심에 놓였다.</p>
+
+      <blockquote>
+        <p>"운동은 즉자의 핵심에서 일어나는 무차별한 외면성의 나타남이다. 이 단순한 존재의 요동침은 존재의 우연한 모험이다."</p>
+        <cite>존재와 무 · pp. 471–472</cite>
+      </blockquote>
+
+      <div class="concept">
+        <div class="concept-term"><span>운동</span></div>
+        <div class="concept-def">
+          <span class="term-en">le mouvement · 최소 존재</span>
+          <p>운동은 즉자가 가질 수 있는 가장 빈약한, '최소한의 존재'다. 즉자(en-soi)는 변하지 않는 본질로 그저 거기 있을 뿐이지만, 그 핵심에서 무차별하게 일어나는 미세한 요동침 — 사르트르는 이것을 "존재의 우연한 모험"이라 부른다. 붉은 당구공이 굴러갈 때, 공의 본질은 그대로인 채 장소만 옮겨간다. 그 사이의 '있음도 없음도 아닌' 어떤 떨림이 바로 운동이다.</p>
+        </div>
+      </div>
+
+      <p>아나이스 연구원님은 이 문장이 대자에 대한 특별함으로 다가왔다고 했다. "너희는 요동쳐봤자 변할 수 없는 존재잖아, 하지만 우리는 다르다 — 그렇게 인간을 너무 띄워놓은 것 아닌가" 하는 의문이었다. 그러면서 책이 쓰인 세계대전의 배경을 떠올렸다. 상대를 '같은 인간'으로 보지 못하는 데서 전쟁과 소통의 부재가 온다면, 이 텍스트는 오히려 존재의 의미를 다시 새기게 하려는 것 아닐까. 진행자는 여기에 "AI 시대에 인간다움이란 무엇인가"라는 오늘의 질문을 포개었다. 인간의 지능을 넘어서는 AI 앞에 선 인간이, 바로 그 '없음(결핍)'으로 어떻게 더 인간다울 수 있는가.</p>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h2 class="step-title">현재 — 도마뱀이 기어가야 비로소 현재가 온다</h2>
+
+      <p>범위의 마지막, 472쪽에서 사르트르는 시간을 이렇게 비유한다.</p>
+
+      <blockquote>
+        <p>"보편적인 시간은 벽 위를 기어가는 도마뱀의 계속되는 전진과 같다."</p>
+        <cite>존재와 무 · p. 472</cite>
+      </blockquote>
+
+      <p>진행자는 이를 엘레아 학파의 화살과 대비시켰다. 제논의 화살은 매 순간 정지해 있고, 정지의 합으로는 결코 현재가 생기지 않는다. 그러나 벽을 기어가는 도마뱀이 있어야 비로소 '지금'이 발생한다. 현재는 정지의 누적이 아니라, 운동하는 동체(動體)를 통해 대자에게 알려지는 사건이다.</p>
+
+      <div class="two-col">
+        <div class="col-card">
+          <h3>엘레아 학파의 화살</h3>
+          <ul>
+            <li>매 순간 화살은 자기 자리에 정지해 있다</li>
+            <li>정지의 합 — 거기에는 현재가 없다</li>
+            <li>운동은 환영, 변화는 불가능</li>
+            <li>파르메니데스: 있는 것은 있고 없는 것은 없다</li>
+          </ul>
+        </div>
+        <div class="col-card dark">
+          <h3>사르트르의 도마뱀</h3>
+          <ul>
+            <li>벽을 기어가는 동체가 전진한다</li>
+            <li>그 운동을 통해 비로소 현재가 온다</li>
+            <li>거기 있으면서 동시에 사라지는 떨림</li>
+            <li>있으면서도 없다 — 한 번 더 뒤집기</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept">
+        <div class="concept-term"><span>운동자</span></div>
+        <div class="concept-def">
+          <span class="term-en">le mobile · 動體</span>
+          <p>운동하는 그 무엇. 사르트르는 "대자는 운동자를 통해 자신의 현재를 자신에게 알린다"고 쓴다. 즉 대자는 현재의 운동과 동시적으로 '자신의 고유한 현재'가 된다. 현재는 따로 주어진 그릇이 아니라, 동체의 전진과 함께 매번 발생하는 것이다.</p>
+        </div>
+      </div>
+
+      <p>그렇다면 이 '운동'은 우리가 흔히 말하는 시간과 같은 것일까. 샬랄라 연구원님이 결을 갈라주었다. 책에 따르면 보편적인 시간은 과거 쪽에 속하고, 현재와 미래는 거기서 벗어난다. 운동자가 이 보편적 시간을 '실현'하는 동안 정작 현재 자체는 "단순한 활주(滑走)"일 뿐, 거의 아무것도 아닌 무(無)에 가깝다. 그렇게 지금 움직이는 운동이 쌓여 보편적 시간이 되고, 그 합이 우리가 사는 세계의 모습이 된다.</p>
+
+      <div class="callout">
+        <div class="callout-label">아리스토텔레스와의 갈림길</div>
+        <p>여기서 진행자는 목적(telos)을 끌어왔다. 아리스토텔레스에게 사물은 용도를 향해 있지만, 사르트르는 이를 부정한다. 즉자는 무엇을 위한 것이 아니라 그냥 그것으로 있을 뿐 — 컵은 마시기 위해 거기 있는 게 아니다. 그러므로 대자가 발생시키는 시간성은 미리 정해진 목적이 아니라, 대자가 끊임없이 자기와 '어긋나며' 가져오는 객관적 구조다. 즉자는 어긋남이 없지만, 대자는 늘 어긋나기에 시간을 낳는다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h2 class="step-title">과거 — 궤적은 남지 않지만, 수레는 움직였다</h2>
+
+      <p>범위의 마지막 문장은 가장 어려웠다. "동체의 현재는 운동의 본성 자체로 인해, 자신의 고유한 과거에 대한 외면성으로서, 그리고 외면성에 대한 외면성으로서 정의된다. 시간의 무한한 분할은 이 절대적인 외부성 속에 근거를 둔다." 연구원님들은 이 문장을 함께 더듬으며 과거의 자리를 찾아갔다.</p>
+
+      <div class="concept">
+        <div class="concept-term"><span>외면성에<br>대한 외면성</span></div>
+        <div class="concept-def">
+          <span class="term-en">extériorité d'extériorité</span>
+          <p>운동하는 동체는 매 순간 자신의 직전 위치(이미 즉자로 굳은 과거의 나)에 대해 바깥에 있다. 그런데 그 '바깥에 있음' 자체가 다시 또 바깥으로 미끄러진다. 과거는 비시간적인 공간 속으로 흩어져 무가 되고, 지금 눈앞에 현출한 것만이 대자의 시간성 안에 품어진다. 시간이 무한히 쪼개질 수 있는 까닭이 바로 이 절대적인 외부성에 있다.</p>
+        </div>
+      </div>
+
+      <p>아나이스 연구원님은 여기서 핵심을 짚었다. 시간성은 대자가 가져오지만, 대자 혼자서는 만들 수 없다. 보편적 시간이 실현되려면 즉자가 즉자로서 거기 있어야 한다. 시간은 즉자와 대자의 관계적 면에서 비로소 생겨난다는 것이다. 햅쌀 연구원님은 461쪽의 한 문장을 오래 곱씹었다.</p>
+
+      <blockquote>
+        <p>"나는 지나간 존재의 총체에 속하면서도, 동시에 그것으로부터 달아난다."</p>
+        <cite>존재와 무 · p. 461</cite>
+      </blockquote>
+
+      <p>과거를 딛고 살되, 현재가 텅 빈 무라면 거기서 미래의 가능성을 던질 수 있다는 양가의 독해였다. 한편 까만천사 연구원님이 가져온 맨발 걷기의 한 장면은 이 추상을 단숨에 그림으로 만들었다. 흙길을 가로지른 지렁이가 똑바로 가면 될 것을 구불구불 한참을 돌아갔는데, 그 흔적을 다 합치면 길을 몇 번이나 왕복할 거리였다는 것. "저 작은 존재가 무슨 목적이 있어 저러나 싶다가 — 높은 곳의 누군가가 꼬물거리는 인간을 보면 똑같이 생각하지 않을까" 하는 데까지 닿았다. 궤적은 결국 사라지지만, 그 온몸의 밀어붙임이 동체를 여기까지 옮겨놓았다. 잡히지 않는 당근만 보지 말고, 내가 끌어온 수레가 분명히 움직였음을 보자던 지난 시간의 이야기가 여기서 다시 만났다.</p>
+    </div>
+  </div>
+
+  <!-- STEP 5: 현장의 목소리 -->
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h2 class="step-title">연구원님들의 마지막 한 문장 — 각자가 건진 운동</h2>
+
+      <p>종강을 2주 앞둔 이날, 진행자는 "이번 파트에서 오래 남은 문장이나 단어"를 한 사람씩 청했다. 같은 텍스트를 읽었지만 각자가 길어 올린 문장은 달랐다.</p>
+
+      <div class="haiku">
+        <p>도마뱀이 지나간 자리에는<br>아무것도 남지 않는다.<br>그러나 도마뱀이 움직이는 한,<br>시간이 거기에 있다.</p>
+        <cite>샬랄라 연구원님 — 472쪽을 옮기며</cite>
+      </div>
+
+      <div class="voice-grid">
+
+        <div class="voice-card">
+          <div class="voice-name">힘내샘</div>
+          <p>요동침이 처절하지만, 나이가 들어서도 우리는 계속 요동칠 수 있습니다. 좋았던 것도 나빴던 것도 다시 무가 되어 또 시작이 되니까요. 그렇게 다시 무에서 시작할 수 있는 존재는 인간뿐이라는 것이, 처음엔 짐 같다가도 스스로 위대하다는 생각으로 바뀌더군요. 지금 화살이 지나갈 때 그건 끝점이 아니라 '지나가는 중'이라는 사실이, 나를 볼 때도 타인을 볼 때도 가능성과 이해의 폭을 넓혀줍니다.</p>
+        </div>
+
+        <div class="voice-card">
+          <div class="voice-name">햅쌀</div>
+          <p>이번엔 더 많이, 더 어려웠습니다. 그래도 461쪽 "나는 지나간 존재의 총체에 속하면서도 동시에 그것으로부터 달아난다"가 계속 남았어요. 과거를 딛고 살지만 현재가 텅 빈 무라면, 그 자리에서 미래의 가능성을 던질 수 있다는 뜻으로 좋게 읽고 싶었습니다. 모순과 양가 감정 — 그래서 이 한 문장이 마음에 들었습니다.</p>
+        </div>
+
+        <div class="voice-card">
+          <div class="voice-name">아나이스</div>
+          <p>토론에 들어와서 좋은 건, 혼자 읽을 때 밑줄 긋지 못한 문장을 같이 읽게 된다는 것입니다. "도마뱀이 어디 나왔지?" 한참 찾기도 했고요. 인간이 어쩔 수 없이 지닌 결핍 — 그것이 있기에 오히려 정해진 것을 변화시킬 수 있는 것도 인간이 아닐까, 읽는 내내 그런 생각을 함께했습니다.</p>
+        </div>
+
+        <div class="voice-card">
+          <div class="voice-name">수산나</div>
+          <p>좋았던 문장보다, 던지다 만 질문이 남았습니다. 궤적은 결코 존재하지 않고 운동은 더더욱 존재하지 않는다는데, 그래도 우리는 가고 있잖아요. 그렇다면 중요한 건 방향이 아닐까. 보편적 시간은 각자가 만들어 가는 것이고, 그것이 전쟁 중에 쓰였다면 그들의 방향은 옳지 않았던 것이니까요. 움직였다는 사실보다 어디로 움직이는지에 자꾸 힘이 실렸습니다.</p>
+        </div>
+
+        <div class="voice-card">
+          <div class="voice-name">샬랄라</div>
+          <p>운동하고, 자기와 어긋나고, 그럼으로써 내 존재로 나아간다 — 거기까지 생각하다가, 수산나 님 말씀을 듣고 한 가지가 더해졌습니다. 움직이는 것에 '방향'이 있어야 제대로 기어가는 도마뱀이 아닐까. 막연히 과거·현재로 흐른다고만 여겼던 시간이, 조금 다르게 보이기 시작했습니다.</p>
+        </div>
+
+        <div class="voice-card">
+          <div class="voice-name">도담도담</div>
+          <p>너무 어려워서 엉뚱한 생각을 했습니다. 본래 무한했던 시간을 인간이 편리를 위해 규격화해 나누었고, 그 과정에서 마치 신이 된 듯 누군가를 없애기도 했지요. 사르트르가 그 오만을 경계하려고 시간을 이렇게 붙든 건 아닐까. 그러다 보니 '운동'이란 몸이 움직이는 것만이 아니라, 어제의 나와 미래의 내가 다르다는 걸 아는 것까지가 운동이겠다 싶었습니다.</p>
+        </div>
+
+        <div class="voice-card">
+          <div class="voice-name">까만천사</div>
+          <p>2부 2장에서 분명히 시간성을 다뤘는데, 왜 3장 초월에서 또 시간을 가져왔을까 — 그 궁금증이 컸습니다. '근원적인 시간'이라는 말이 결국 사르트르가 말하려는 시간이겠거니 짐작만 합니다. 다만 2주의 간격을 두고 책을 손에서 놓은 한 주가 유난히 답답했어요. 이 책을 읽는 이유는 대단한 지식이 아니라, 읽는 과정에서 내면에 일어나는 변화 때문이라는 것 — 이해하느냐보다 꾸역꾸역 읽어 나가는 것이 정말 중요하다고 다시 느꼈습니다.</p>
+        </div>
+
+      </div>
+
+      <p>진행자는 이렇게 마무리했다. "시간 앞에서 늘 무력했어요. 늙어가니 시간이 없는 것 같고, 시간의 피해자처럼 느껴지기도 하고요. 그런데 움직이고 견딘다는 것이 피함이 아니라, 나와 거리를 둔 그 어긋남이 오히려 시간을 낳고, 무에서 무언가를 지금의 나에게로 달려오게 만든다는 것 — 이 '운동'이 저에겐 희망적으로 읽혔습니다. 꿈지럭꿈지럭거리기만 해도 일어나는 이 시간성에 한번 기대어 살아보고 싶어요. 현재는 존재를 따라 일어나는 단순한 활주이고 단순한 무니까요."</p>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h2 class="step-title">이날 클래스의 텍스트 흐름</h2>
+
+      <div class="two-col">
+        <div class="col-card">
+          <h3>텍스트 지형 (pp.461–472)</h3>
+          <ul>
+            <li>~461: 과거 — 지나간 총체에 속하면서 달아남</li>
+            <li>471: 운동 = 즉자의 최소 존재, 우연한 모험</li>
+            <li>472 중간: 공간적 통일의 환영, 분산의 다수성</li>
+            <li>472 끝: 보편적 시간 = 도마뱀의 전진</li>
+            <li>472 끝: 외면성에 대한 외면성, 절대적 외부성</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>클래스 핵심 질문</h3>
+          <ul>
+            <li>운동이 왜 즉자의 '최소 존재'인가</li>
+            <li>제논의 화살 vs 도마뱀: 현재는 어디서 오는가</li>
+            <li>운동(운동성)과 시간성은 같은 것인가</li>
+            <li>'보편적 시간'은 우리가 아는 그 시간인가</li>
+            <li>궤적이 남지 않는데 방향은 의미가 있는가</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-label">다음 클래스 · 종강</div>
+    <p class="cta-text">
+      궤적은 남지 않아도, 동체는 분명히 전진했다.<br>
+      이제 남은 것은 — 미래.
+    </p>
+    <p class="cta-sub">
+      다음 모임은 2주 후, 제4절 마지막 'C. 미래'로 종강합니다.<br>
+      이해하느냐보다, 꿈지럭거리며 끝까지 함께 읽겠습니다.<br><br>
+      세계에 무를 도래시키면서 자유로 살아가는 인간 존재의 탐구.<br>
+      2쿼터 종강을 기대합니다.
+    </p>
+  </div>
+
+  <footer class="footnote">
+    <p>생각학교 ASK · 존재와 무 클래스 · 5회차 · 제2부 대자존재 3장 초월 4절 세계의 시간(A.과거 / B.현재) · 2026.06.08</p>
+    <p style="margin-top:6px;">원문: Jean-Paul Sartre, <em>L'Être et le Néant</em> (1943, 독일 점령기 집필·간행) · 한국어판 기준 pp.461–472 (페이지 범위는 토론 중 언급된 쪽 기준의 근사값)</p>
+    <p style="margin-top:6px;">개념 원어: 운동 le mouvement · 운동자/동체 le mobile · 보편적 시간 le temps universel · 외면성에 대한 외면성 extériorité d'extériorité · 즉자 en-soi / 대자 pour-soi</p>
+    <p style="margin-top:6px;">[팩트체크①] 본문의 비유는 '도마뱀(벽을 기어가는 동체)'이며, 토론 중 자주 등장한 '지렁이'는 까만천사 연구원님의 맨발 걷기 일화에서 온 이미지다. 텍스트의 도마뱀과 일화의 지렁이가 자연스럽게 겹쳐 쓰였다.</p>
+    <p style="margin-top:6px;">[팩트체크②] '제논의 화살'은 엘레아 학파(파르메니데스·제논)의 운동 부정 역설로, 사르트르는 이를 뒤집어 운동이 현재를 발생시킨다고 본다. '목적' 비판은 아리스토텔레스적 목적론(telos)에 대한 사르트르의 부정을 가리킨다.</p>
+    <p style="margin-top:6px;">[확인 요청] 화자 매핑은 진행자의 호명 순서·자기소개를 기준으로 정리했습니다(파일1·파일2는 별도 녹취로 화자 번호가 일치하지 않음). 공개 전 닉네임 표기를 최종 확인해 주세요.</p>
+    <p style="margin-top:6px;">녹취 바탕 편집 · 철학 개념 팩트체크 포함 · 현장 발언 비문 다듬어 재구성</p>
+  </footer>
+
+</div>
+</body>
+</html>
