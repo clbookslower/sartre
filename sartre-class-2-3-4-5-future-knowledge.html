@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>세계는 인간적이다 · 생각학교 ASK 존재와 무 클래스</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background: #fff; color: #111; font-size: 16px; line-height: 1.9; -webkit-font-smoothing: antialiased; }
+.page { max-width: 720px; margin: 0 auto; padding: 72px 24px 100px; }
+.breadcrumb { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #aaa; margin-bottom: 48px; flex-wrap: wrap; }
+.breadcrumb a { color: #aaa; text-decoration: none; }
+.breadcrumb .sep { opacity: 0.4; }
+.article-header { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid #f0f0f0; }
+.meta { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.badge { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 12px; border-radius: 100px; letter-spacing: 0.06em; }
+.badge-class { background: #EAF3DE; color: #3B6D11; }
+.badge-book { background: #F0EBF8; color: #6B3FA0; }
+.dot { color: #ddd; font-size: 12px; }
+.meta-text { font-size: 12px; color: #999; font-family: 'DM Mono', monospace; }
+h1 { font-family: 'Noto Serif KR', serif; font-size: 34px; font-weight: 400; line-height: 1.35; letter-spacing: -0.02em; margin-bottom: 14px; }
+.subtitle { font-family: 'Noto Serif KR', serif; font-size: 17px; font-weight: 300; color: #777; line-height: 1.7; margin-bottom: 24px; font-style: italic; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-size: 12px; padding: 3px 12px; border-radius: 100px; background: #f5f5f5; color: #888; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+.step { display: flex; gap: 24px; margin-bottom: 52px; align-items: flex-start; }
+.step-num { width: 32px; height: 32px; border-radius: 50%; background: #2C3B2D; color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 12px; flex-shrink: 0; margin-top: 6px; }
+.step-body { flex: 1; min-width: 0; }
+.step-title { font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 400; margin-bottom: 16px; line-height: 1.4; letter-spacing: -0.01em; }
+.step-body p { color: #444; margin-bottom: 14px; font-size: 15px; line-height: 1.95; }
+.callout { background: #f9f9f9; border-left: 2.5px solid #111; padding: 18px 22px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+.callout-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #888; margin-bottom: 8px; }
+.callout p { font-size: 14px; color: #333; line-height: 1.8; margin: 0; }
+blockquote { margin: 28px 0; padding: 0 0 0 24px; border-left: 1.5px solid #ddd; }
+blockquote p { font-family: 'Noto Serif KR', serif; font-size: 17px; font-style: italic; color: #333; line-height: 1.8; margin-bottom: 8px; }
+blockquote cite { font-family: 'DM Mono', monospace; font-size: 11px; color: #aaa; font-style: normal; letter-spacing: 0.06em; }
+.concept { display: flex; border: 1px solid #f0f0f0; border-radius: 12px; overflow: hidden; margin: 24px 0; }
+.concept-term { background: #111; color: #fff; padding: 20px 22px; display: flex; align-items: center; justify-content: center; min-width: 120px; }
+.concept-term span { font-family: 'Noto Serif KR', serif; font-size: 16px; writing-mode: vertical-rl; letter-spacing: 0.1em; }
+.concept-def { padding: 20px 22px; flex: 1; }
+.concept-def .term-en { font-family: 'DM Mono', monospace; font-size: 11px; color: #aaa; letter-spacing: 0.1em; margin-bottom: 8px; display: block; }
+.concept-def p { font-size: 14px; color: #444; line-height: 1.8; margin: 0; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.col-card { background: #fafafa; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; }
+.col-card h3 { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 14px; }
+.col-card ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.col-card ul li { font-size: 14px; color: #444; padding-left: 16px; position: relative; line-height: 1.6; }
+.col-card ul li::before { content: '—'; position: absolute; left: 0; color: #ccc; }
+.voice-grid { display: flex; flex-direction: column; gap: 16px; margin: 28px 0; }
+.voice-card { background: #fafafa; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; }
+.voice-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #2C3B2D; margin-bottom: 10px; text-transform: uppercase; }
+.voice-card p { font-size: 14px; color: #333; line-height: 1.85; margin: 0; }
+.cta-box { background: #2C3B2D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 64px; }
+.cta-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #7a9c7b; margin-bottom: 16px; }
+.cta-text { font-family: 'Noto Serif KR', serif; color: #f0ece4; font-size: 20px; font-weight: 300; line-height: 1.7; margin-bottom: 28px; }
+.cta-sub { font-size: 13px; color: #7a9c7b; line-height: 1.7; }
+.footnote { font-family: 'DM Mono', monospace; font-size: 11px; color: #bbb; letter-spacing: 0.06em; margin-top: 64px; padding-top: 24px; border-top: 1px solid #f5f5f5; line-height: 1.9; }
+p { color: #444; margin-bottom: 16px; }
+@media (max-width: 600px) { h1 { font-size: 26px; } .two-col { grid-template-columns: 1fr; } .concept { flex-direction: column; } .concept-term { writing-mode: horizontal-tb; min-width: auto; } .concept-term span { writing-mode: horizontal-tb; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="breadcrumb">
+    <a href="#">생각학교 ASK</a>
+    <span class="sep">/</span>
+    <span>존재와 무 클래스</span>
+    <span class="sep">/</span>
+    <span>6회차 · 제2부 3장 4절(미래)·5절 인식 — 2쿼터 종강</span>
+  </nav>
+
+  <header class="article-header">
+    <div class="meta">
+      <span class="badge badge-class">클래스 리뷰</span>
+      <span class="badge badge-book">존재와 무</span>
+      <span class="dot">·</span>
+      <span class="meta-text">2026.06.22 MON</span>
+      <span class="dot">·</span>
+      <span class="meta-text">6회차 · pp. 473–483</span>
+    </div>
+    <h1>세계는 인간적이다</h1>
+    <p class="subtitle">미래·인식을 끝으로 1년의 통독을 매듭짓다 — 책상마저 모험하게 하는 '무', 그리고 나를 향한 시간</p>
+    <div class="tags">
+      <span class="tag">미래</span>
+      <span class="tag">즉자적 무</span>
+      <span class="tag">인식</span>
+      <span class="tag">세계는 인간적이다</span>
+      <span class="tag">대자의 수난</span>
+      <span class="tag">관념론·실재론</span>
+      <span class="tag">대타존재</span>
+    </div>
+  </header>
+
+  <p>2025년 7월에 첫 장을 펼친 《존재와 무》가, 꼭 1년 만에 한 매듭에 닿았다. 이번 모임은 제2부 대자존재, 제3장 초월의 마지막 — 제4절 '세계의 시간'의 <strong>C. 미래</strong>와, 3장 전체를 봉인하는 <strong>제5절 인식</strong>을 함께 읽고 2쿼터 종강을 맞은 자리였다. 분량은 줄었지만 "결론이라 그런지 작아도 쉽지는 않았던" 대목. 진행자의 말처럼 <em>"초월을 하고 싶었는데, 초월이 이렇게 힘들다는 걸 알게 된"</em> 한 쿼터였다. 책상을 모험하게 하는 인식이란 무엇인가, 시간을 '산다'는 건 어떤 순간인가, 나는 지금 나를 향해 가고 있는가. 두 차례의 소그룹과 전체 토론, 그리고 종강 소감을 아래에 정리했다.</p>
+
+  <!-- 1 -->
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h2 class="step-title">1년을 읽고 — 종강을 맞으며</h2>
+      <p>문을 여는 자리는 근황과 소감이었다. 다음 쿼터까지 한동안 못 보기에, 연구원님들은 평소보다 길게 인사를 나눴다. 어려운 책을 '혼자가 아니라 함께' 읽었다는 사실에 대한 감사가 거듭 흘렀다.</p>
+
+      <div class="voice-grid">
+        <div class="voice-card">
+          <div class="voice-name">햇살 연구원님</div>
+          <p>이 책을 어디서 이렇게 읽어보겠어요. 혼자 읽었으면 정말 제 마음대로 오해하고 해석했을 것 같은데, 함께 읽기 때문에 비로소 알아가는 것 같아요. 함께 읽어주셔서 너무 감사하고 다행이라는 생각이 듭니다.</p>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">까만천사 연구원님</div>
+          <p>《존재와 무》는 분량이 많고 적고가 아무 상관이 없더라고요. 많아도 어렵고 적어도 어렵고, 읽어도 안 읽어도 모르겠고. 그런데 묘하게 "이 토론에는 들어와야겠다"는 생각이 자꾸 들어요. 내용을 알고 모르고를 떠나서, 꾸역꾸역 붙잡고 함께 나아가다 보니 삶 속에서 저도 모르게 뭔가가 이어지고 있는 느낌이에요.</p>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">도담도담 연구원님</div>
+          <p>메모를 보니 작년 7월부터 시작했더라고요. 왠지 기둥 하나를 세우는 것 같은 느낌이에요. 기둥을 세워두면 서까래도 올리고 창문도 달고 대문도 달 수 있을 것 같은. 이해 못 하는 걸 꾸역꾸역 붙들어야 하나 싶다가도, 혼자가 아니라 함께하는 분들이 있기에 버텨갑니다. 다음 쿼터엔 잊지 않을 정도만이라도 이어지면 좋겠어요.</p>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">아나이스 연구원님</div>
+          <p>이번엔 분량이 적어서 내용 이해와는 별개로 마음의 부담은 좀 덜했어요. 끊기지 않을 정도로만 연결되면 좋겠어요. 이 책하고 《잃어버린 시간을 찾아서》를 같이 읽고 있는데, 둘 다 장기 플랜이라 마치 장기 연애하는 기분이에요. 막 열정적이진 않은데 나도 모르게 스며들고, 없으면 허전할 것 같아요. 오늘도 미리 써주신 서평에서 제가 보지 못한 부분이 있어서, 함께 읽고 토론하는 데 기대를 안고 들어왔습니다.</p>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">수산나 연구원님</div>
+          <p>종강인데 저는 지난주부터 클래스가 계속 있어 좀 분주했어요. 원래 느긋하게 읽어야 하는데 바쁜 월요일에 읽으니, 글자는 글자인데 무슨 내용인지 잘 모르겠더라고요. 그래도 우리가 1년을 읽었네요. 절반은 온 거니까 절반의 성공이고, 이제 절반을 향해 나아가야지 싶어요. 조금이라도 쉬면 다 까먹을 것 같아서요.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">진행자의 매듭</div>
+        <p>"맛만 보고 다 못 읽을 거라 생각했는데, 전체를 정독해 나갈 수 있다는 것 자체가 의미 있다." 진행자는 "모르겠다고들 하시지만 토론은 정말 깊이 있게 해주신 덕분에 여기까지 한 페이지씩 넘어왔다"며, 연구원님들께 감사를 표했다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h2 class="step-title">미래 — 내가 사물 위에 던진 가능</h2>
+      <p>본문은 시간의 마지막 차원, <strong>미래</strong>에서 출발한다. 과거·현재와 마찬가지로 미래도 사물이 스스로 품고 있는 것이 아니다. 내가 '아직 안 된 나(가능)'로서 현실 너머의 즉자에 현전하게 될 — 그 가능성이 곧 미래다.<sup>※1</sup></p>
+
+      <div class="concept">
+        <div class="concept-term"><span>즉자의 미래</span></div>
+        <div class="concept-def">
+          <span class="term-en">FUTUR DE L'EN-SOI</span>
+          <p>"즉자의 미래는 변양된 현재적인 즉자이다." 잉크병의 '비워질' 미래는 잉크병이 품고 있던 것이 아니라, 내가 그것을 비울 가능성으로서 거기 비친 현재의 잉크병이다. 망치를 망치로 보는 순간 이미 '내려쳐질' 미래가 함께 온다 — 도구성 자체가 미래를 가리킨다.</p>
+        </div>
+      </div>
+
+      <p>다만 '보편적 장래'는 어떤 실체가 아니라 "미래들의 등가물 위계를 나타내는 추상적인 테두리", 곧 텅 빈 용기다. 그래서 장래는 어떤 때는 긴급함과 위협으로, 어떤 때는 단순한 외면성으로, 또 어떤 때는 "하나의 즉자적인 무(un néant en-soi)"로 드러난다. 진행자는 이 대목을 "1년 동안 그렇게 궁금해하던 시간의 정체가, 결국 행위 속에서만 반짝이는 무로 닫힌다"고 짚었다.</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h2 class="step-title">「세계는 인간적이다」 — 짧지만 위험한 한 문장</h2>
+      <p>481쪽의 짧은 한 문장, <strong>"세계는 인간적이다"</strong>가 토론의 한가운데로 들어왔다. 아나이스 연구원님이 이 문장 앞에서 멈춰 섰다.</p>
+
+      <div class="voice-grid">
+        <div class="voice-card">
+          <div class="voice-name">아나이스 연구원님</div>
+          <p>되게 짧은 문장인데 마음에 와닿았어요. 존재들이 나를 포위하고 위로 무겁게 짓누르고 공격하는 그 상황에서도, 나를 부정하면서 대상들에 긍정을 부여하는 역할은 결국 내가 하는 거잖아요. 그게 내가 만들어가는 세계다 — 이런 느낌이 들었어요. 그런데 어떻게 보면 되게 <strong>위험한 문장</strong>이기도 해요. 내가 어떻게 만들어가느냐에 따라 세계가 달라질 수 있다는, 양면성을 가진 문장이라.</p>
+        </div>
+      </div>
+
+      <p>진행자도 그 '위험함'에 공명했다. 우리를 에워싼 동시적인 즉자들은 그냥 거기 있기만 한데, 내가 '결여되어 있지 않은 것으로 있는 나'를 자각하고 미래의 내가 되고 싶은 것으로 현재를 구성할 때 — 비로소 세계도 인식도 의식도 나도 다 존재한다. 그런데 내가 그런 인식의 구조를 작동시키지 않으면, 그 세계 자체가 한순간에 사라질 수도 있다.</p>
+
+      <div class="callout">
+        <div class="callout-label">왜 이 문장이 결론인가</div>
+        <p>세계성·공간성·양·도구성·시간성은 모두 "내가 존재에 대한 부정이기 때문에만" 존재에게 온다. 존재(즉자)는 그대로 둔 채, 그 위의 모든 짜임은 대자에게서 온다. 그래서 세계는 인간적이다.<sup>※2</sup> 진행자의 말처럼 "인식을 설명하지만 굉장히 비인식적인" 결론 — 매개나 표상을 통한 앎이 아니라, 무라는 '틈' 자체에서 세계가 열린다는 것이다.</p>
+        </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h2 class="step-title">인식 — 거리 없이, 그러나 나는 나만을 발견한다</h2>
+      <p>제5절 '인식'에서 사르트르는 관념론도 실재론도 부분적으로만 인정한 뒤 둘 다 넘어선다. 인식은 별도의 사건이 아니라 "존재의 대자에 대한 현전 외의 아무것도 아니다." 모든 것은 표상이라는 중간물 없이, <strong>거리 없이(sans distance)</strong> 전적인 실재성으로 나에게 현전한다.<sup>※3</sup></p>
+
+      <div class="concept">
+        <div class="concept-term"><span>인식</span></div>
+        <div class="concept-def">
+          <span class="term-en">CONNAISSANCE</span>
+          <p>내가 책상을 '안다'는 것은 내 안에 책상의 상(像)이 생기는 일이 아니라, 책상이 나에게 현전하는 그 사태 자체다. 지향적 긍정은 내적 부정의 이면이다 — 내가 즉자를 긍정하는 것은 "내가 그 즉자가 아니다"라는 부정을 통해서다. 그래서 대자는 즉자가 거기 있었다는 사실 외에 아무것도 덧붙이지 않는다.</p>
+        </div>
+      </div>
+
+      <p>여기서 아나이스 연구원님이 481쪽의 '프리즘' 비유를 끌어왔다. 칸트라면 의식을 프리즘에 빗대 — 존재의 빛이 굴절된 상으로만 주어진다고 — 말할 것이다. 그렇다면 그 왜곡을 걷어내고 '진짜 존재'를 찾는다는 희망이 생긴다.</p>
+
+      <div class="voice-grid">
+        <div class="voice-card">
+          <div class="voice-name">아나이스 연구원님</div>
+          <p>아무것도 없는 상태에서 존재를 바라본다는 게 가능할까요. 내가 인식하고 의식한다는 걸 깨달을 즈음이면 이미 내 안에는 여러 프리즘이 작동하고 있을 텐데, 그걸 다 걷어내고 정말 존재를 그냥 그렇게 바라볼 수 있나. 이론상으로는 가능할지 몰라도 실제로 우리가 그렇게 볼 수 있을까 싶었어요.</p>
+        </div>
+      </div>
+
+      <p>진행자는 본문이 그 그림을 거부한다고 정리했다. 존재는 굴절되어 오는 것이 아니라 거리 없이 직접 나를 포위한다. 다만 나는 존재에 대한 부정이기에, 나와 존재 사이엔 프리즘보다 더 근본적인 '무'가 놓인다. 그래서 역설적인 결론에 닿는다 — <em>"저기에 있는 이 책상은 존재이고 그 이상의 아무것도 아니다… 나는 이 존재를 파악하기를 원한다. 그런데 나는 나만을 발견할 뿐이다."</em><sup>※4</sup></p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h2 class="step-title">즉자의 모험과 대자의 수난 — 순환, 희생, 그리고 '그냥 무'</h2>
+      <p>토론이 가장 뜨거웠던 대목. 즉자는 혼자서는 아무것도 될 수 없지만, 대자에 의해 이렇게도 저렇게도 드러날 수 있다 — 사르트르는 이를 "즉자의 유일하게 가능한 모험"이라 부른다. 그 대가로 대자는 끊임없이 자기를 부정해야 한다.</p>
+
+      <blockquote>
+        <p>"모든 것은 마치 '세계'로서의 긍정이 즉자에 이르기 위해 스스로 자기를 상실하는 대자의 수난(passion du pour-soi)처럼 진행된다."</p>
+        <cite>존재와 무 · p. 479</cite>
+      </blockquote>
+
+      <div class="voice-grid">
+        <div class="voice-card">
+          <div class="voice-name">아나이스 연구원님</div>
+          <p>즉자는 그냥 즉자잖아요. 혼자서는 모험을 감행할 수 없는데, 대자가 있기에 이렇게 저렇게 보여질 수 있고. 그런데 즉자를 즉자의 자리에 두려면 나는 그것이면 안 되니까, 나는 계속 부정당해야만 즉자를 즉자화시킬 수 있어요. 어떻게 보면 되게 불쌍한 존재 — 그래서 '순환'이라는 말이 와닿았어요.</p>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">한 연구원님</div>
+          <p>'대자의 순환'이라는 표현이 너무 숭고하게 느껴져서, 저는 예수님의 수난을 떠올렸어요. 자기를 희생해서 즉자에게 긍정을 심어주는 — 모험이란 그런 희생 같은 게 아닌가 싶었어요.</p>
+        </div>
+      </div>
+
+      <p>이 직관은 본문과 정확히 맞닿는다. 사르트르 역시 이 대목에 각주를 달아 '그리스도의 수난'에 빗댄다.<sup>※5</sup> 진행자는 흥분을 감추지 못했다. "이게 책상이다 — 그런데 그 책상을 모험하게 한다는 것만으로도 가슴이 뛴다. 우리 때문에 책상이 모험을 한다니." 더구나 다음 쿼터엔 그 즉자가 '다른 사람(타자)'으로 확장된다. 사람조차 이 세계 안에서는 즉자이고, 우리는 서로를 모험하게 하면서 정작 자신은 순환으로 자기를 비운다 — 그것이 특별한 누군가가 아니라 "인류가, 인간이 그렇다"는 실존의 이야기다.</p>
+
+      <div class="concept">
+        <div class="concept-term"><span>대자의 수난</span></div>
+        <div class="concept-def">
+          <span class="term-en">PASSION DU POUR-SOI</span>
+          <p>의식은 세계를 '거기 있게' 하려고 스스로를 비운다. 세계를 드러내려 자기를 무화하는 이 자기 상실이 대자의 수난이다. 그런데 그렇게 어마어마한 일을 하면서도, 정작 그 사이에 놓인 것은 "아무것도 아닌 것 — 순수한 무"일 뿐이다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h2 class="step-title">나는 나를 향해 가고 있는가</h2>
+      <p>지난 시간 은혜받았던 문장 — "시간은 벽 위를 기어가는 도마뱀의 계속된 전진과 같다" — 이 미래에서 다시 메아리쳤다. 시간은 즉자적 무이고, 우리가 무언가를 향해 나아가는 행위 속에서만 존재한다. 그래서 진행자는 삶의 질문으로 넓혔다. <em>"우리는 정말로 시간을 '산다'고 느끼는 게 어떤 순간일까요. 지금 여러분은 어디로 향해 가고 계신가요?"</em></p>
+
+      <div class="voice-grid">
+        <div class="voice-card">
+          <div class="voice-name">햇살 연구원님</div>
+          <p>본의 아니게 요즘 쉬고 있어요. 멈추는 게 처음엔 뒤처질 것 같아 받아들이기 힘들었는데, 쉬면서 오히려 저 자신을 향해 더 많이 생각하게 됐어요. 내가 뭘 위해 살아가는지를 살피는 시간이 주어졌구나 싶어요. 시간의 흐름에 쫓기듯 하던 게 정작 나를 위한 게 아니었더라고요.</p>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">햅쌀 연구원님</div>
+          <p>저는 반대로, 요즘은 깊이 고민하지 않고 "되든지 말든지 일단 하자"는 식으로 단순하게 저에게로 향하는 것 같아요. "미래는 대자의 반응에서 세계에 온다"는 마지막 문장이 참 멋있었어요. 결국 내가 그쪽으로 몸을 조금 기우는 순간, 비로소 미래가 생겨나는 게 아닐까 싶었어요.</p>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">도담도담 연구원님</div>
+          <p>예전엔 "내일 하겠다"가 늘 미루고 자책하는 말이었어요. 그런데 요즘은 "아, 내일이 있네" 싶어요. 오늘은 오늘대로 살았으니 내일이라는 시간이 또 있으니까. 합리화인지 여유인지는 모르겠지만, 같은 문장이 다르게 읽히는 이 변화가 나로 향하는 길이려니 합니다.</p>
+        </div>
+        <div class="voice-card">
+          <div class="voice-name">까만천사 연구원님</div>
+          <p>과거엔 "이렇게 해야 돼"에 매여 완벽을 좇으며 살았는데, 요즘은 '내맡김'을 연습하고 있어요. 새벽마다 주제를 미리 정하지 않고 그냥 첫 문장을 던지면 또 한 꼭지가 나오더라고요. 아무 생각 없이 쓰는 것 같지만, 무의식중에 제가 어디론가 가야 한다는 걸 알고 있나 봐요. 내려놓는다는 건 방임이 아니라, 더더욱 내가 주인이 될 때 가능한 일이라는 생각이 들어요.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">종강 소감</div>
+        <p>수산나 연구원님은 "처음엔 어려운 걸 하나하나 알려고 했는데, 이제는 꽉 쥐려 하지 않고 각자의 시선에서 받아들이게 됐다"며 "누군가에게 주입된 시선이 아니라 나의 시선으로 보려 더 노력하게 됐다"고 했다. "토론에서 배운 게 책에서 읽은 것보다 더 많았다"는 말에 모두가 고개를 끄덕였다.</p>
+        <p style="margin-top:12px;">아나이스 연구원님은 "저 자신을 부정하면서 이 책을 긍정해 나가는 것 같다 — 그전에 갖고 있던 것에 끼워 맞추는 게 아니라, 책이 하려는 말을 그냥 따라가는 것"이라 했다.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="col-card">
+          <h3>오늘 읽은 좌표 (pp.473–483)</h3>
+          <ul>
+            <li>473–475: 미래 — 즉자의 미래, 보편적 장래, 즉자적 무</li>
+            <li>476–478: 보편적 시간은 즉자적 무, 무의 반짝임</li>
+            <li>478: 인식 — 존재의 대자에 대한 현전</li>
+            <li>479–480: 지향적 긍정·내적 부정, 대자의 수난</li>
+            <li>480–481: 세계는 인간적이다 · 거리 없이</li>
+            <li>481–483: 칸트적 상대주의를 넘어 → 대타존재로</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>남은 물음</h3>
+          <ul>
+            <li>인간이 없으면 시간도, 의미도 있을까</li>
+            <li>프리즘을 다 걷어내고 존재를 볼 수 있나</li>
+            <li>'즉자의 유일한 모험'은 왜 가슴 뛰는가</li>
+            <li>시간을 '산다'고 느끼는 순간은 언제인가</li>
+            <li>나는 지금 나를 향해 가고 있는가</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-label">2쿼터 종강 · 다음을 향해</div>
+    <p class="cta-text">
+      책상마저 모험하게 하면서, 정작 그 사이엔 '그냥 무'.<br>
+      이제 그 무 너머에서 — 타자가 열린다.
+    </p>
+    <p class="cta-sub">
+      1년에 걸친 통독으로 제3장 초월을 닫았습니다.<br>
+      다음 쿼터엔 드디어 '대타존재(l'être-pour-autrui)' — 신체와 타자의 시선으로 넘어갑니다.<br><br>
+      끝까지 함께 읽겠습니다. 종강을 축하합니다.
+    </p>
+  </div>
+
+  <footer class="footnote">
+    <p>생각학교 ASK · 존재와 무 클래스 · 6회차 · 제2부 대자존재 3장 초월 4절 세계의 시간(C.미래) / 5절 인식 · 2026.06.22 · 2쿼터 종강</p>
+    <p style="margin-top:6px;">원문: Jean-Paul Sartre, <em>L'Être et le Néant</em> (1943) · 한국어판 기준 pp.473–483 (페이지는 토론 중 언급된 쪽 기준의 근사값)</p>
+    <p style="margin-top:6px;">개념 원어: 미래 le futur · 즉자의 미래 futur de l'en-soi · 보편적 장래 avenir universel · 즉자적 무 un néant en-soi · 인식 connaissance · 거리 없이 sans distance · 대자의 수난 passion du pour-soi · 대타존재 l'être-pour-autrui</p>
+    <p style="margin-top:6px;">※1 미래도 과거·현재와 같은 구조다. "근원적인 미래는… 내가 현실 저편에 그것으로 있어야 하는 현전의 가능성이다"(pp.473–474). 사물의 미래는 사물 안에 있지 않고, 내가 그것을 변양시킬 가능성으로서 거기 비친다.</p>
+    <p style="margin-top:6px;">※2 "세계성, 공간성, 양, 도구성, 시간성 등은 내가 존재에 대한 부정이기 때문에만 존재에게 올 뿐이다… 세계는 인간적이다"(pp.480–481). 존재에 더해지는 것은 없지만, '세계'라는 구조는 인간(대자)에게서 온다.</p>
+    <p style="margin-top:6px;">※3 인식은 관념론(인식이 존재에 대한 현전)도 실재론(현전하는 것은 존재 자체)도 부분적으로 인정하되 둘 다 넘어선다. "우리는 그 점에서 칸트적인 상대주의에서 벗어난다"(p.481).</p>
+    <p style="margin-top:6px;">※4 인용은 한국어판 pp.480–482의 본문을 토론 중 진행자가 낭독한 대로 옮긴 것이다(존재는 거리 없이 거기 있으나, 그것을 붙잡으려 하면 나는 나 자신만을 발견한다 — p.482).</p>
+    <p style="margin-top:6px;">※5 [팩트체크] '대자의 순환=예수님의 수난'이라는 연구원님의 직관은 본문과 합치한다. 사르트르도 이 대목에 각주를 달아 '그리스도의 수난'에 빗댄다(p.479 각주 119). 단, 그는 4부에서 인간을 '무용한 수난(passion inutile)'으로 다시 규정하므로, 이 '수난'은 종교적 구원의 함의로 단정하기보다 존재론적 자기 상실의 비유로 읽는 것이 안전하다.</p>
+    <p style="margin-top:6px;">[확인 요청] 화자 매핑은 진행자의 호명 순서와 발언 내용을 기준으로 정리했습니다. 두 녹취 파일은 화자 번호가 서로 일치하지 않습니다. 1단계 소감 라운드는 진행자가 호명한 순서("도담도담 → 아나이스 → 수산나")에 따라 표기했고, 그중 아나이스 연구원님은 《잃어버린 시간을 찾아서》 언급으로 교차 확인했습니다(도담도담·수산나는 호명 순서 기준). 호명이 분명하지 않은 5·6단계 일부 발언은 '한 연구원님'으로 두었습니다. 공개 전 닉네임 표기와, 종강 라운드의 개인적 성찰(쉼·꿈·글쓰기 일화 등) 인용 여부를 최종 확인해 주세요.</p>
+    <p style="margin-top:6px;">녹취 바탕 편집 · 철학 개념 팩트체크 포함 · 현장 발언 비문 다듬어 재구성</p>
+  </footer>
+
+</div>
+</body>
+</html>
