@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>존재와 무 · 후설, 헤겔, 하이데거 — 생각학교ASK</title>
+<meta property="og:title" content="존재와 무 · 후설, 헤겔, 하이데거 — 생각학교ASK" />
+<meta property="og:description" content="제3부 대타존재 · 제1장 타자의 존재 · 3절 | 세 거인의 어깨, 그리고 그 너머 — 사르트르가 타인에게 이르는 길" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://clbookslower.github.io/sartre/sartre-husserl-hegel-heidegger-deck.html" />
+<meta property="og:image" content="https://clbookslower.github.io/sartre/og-sartre-3q.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Gothic:wght@400;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF8F1;
+  --ink:#211D1A;
+  --ink-soft:#5A534C;
+  --red:#CC3333;
+  --red-deep:#A32626;
+  --line:#D8D2C6;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--paper)}
+body{font-family:'Nanum Myeongjo',serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* ---------- deck chrome ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--red);width:0%;z-index:60;transition:width .5s cubic-bezier(.4,0,.2,1)}
+#counter{position:fixed;bottom:22px;right:28px;z-index:60;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.08em;color:var(--ink-soft)}
+.on-red #counter{color:rgba(251,248,241,.75)}
+#notesBtn{position:fixed;bottom:18px;left:24px;z-index:70;font-family:'Nanum Gothic',sans-serif;font-size:11px;letter-spacing:.22em;padding:9px 16px;border:1px solid var(--line);border-radius:2px;background:transparent;color:var(--ink-soft);cursor:pointer;transition:all .25s}
+#notesBtn:hover{border-color:var(--red);color:var(--red)}
+.on-red #notesBtn{border-color:rgba(251,248,241,.4);color:rgba(251,248,241,.8)}
+#hint{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:55;font-family:'Nanum Gothic',sans-serif;font-size:10.5px;letter-spacing:.25em;color:var(--ink-soft);opacity:.55;transition:opacity 1s}
+#hint.gone{opacity:0}
+
+/* ---------- slides ---------- */
+.slide{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6vh 9vw;opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease,visibility .7s;text-align:center;background:var(--paper)}
+.slide.active{opacity:1;visibility:visible;transform:translateY(0)}
+.slide.red{background:var(--red);color:var(--paper)}
+.slide.red .eyebrow{color:rgba(251,248,241,.72)}
+.slide.red .eyebrow::after{background:rgba(251,248,241,.45)}
+
+.eyebrow{font-family:'Nanum Gothic',sans-serif;font-size:11px;font-weight:700;letter-spacing:.34em;color:var(--red);margin-bottom:34px;display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:"";display:block;width:36px;height:1px;background:var(--red);opacity:.5}
+.eyebrow .mv{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;letter-spacing:.12em}
+
+h1{font-size:clamp(30px,4.6vw,58px);font-weight:800;line-height:1.42;letter-spacing:-.01em}
+h2{font-size:clamp(24px,3.4vw,44px);font-weight:800;line-height:1.5}
+.big{font-size:clamp(26px,3.8vw,50px);font-weight:800;line-height:1.55}
+p.lead{font-size:clamp(16px,1.55vw,21px);line-height:2.05;color:var(--ink-soft);max-width:760px}
+.slide.red p.lead{color:rgba(251,248,241,.88)}
+.gap-s{height:20px}.gap-m{height:34px}.gap-l{height:52px}
+.accent{color:var(--red)}
+.slide.red .accent{color:var(--paper)}
+.fr{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;letter-spacing:.02em}
+.quote{font-size:clamp(19px,2.3vw,30px);font-weight:700;line-height:1.9;max-width:820px}
+.quote-src{font-family:'Nanum Gothic',sans-serif;font-size:11.5px;letter-spacing:.2em;color:var(--ink-soft);margin-top:26px}
+.hair{width:44px;height:1px;background:var(--line);margin:30px auto}
+.slide.red .hair{background:rgba(251,248,241,.4)}
+.kicker{font-family:'Nanum Gothic',sans-serif;font-size:12px;font-weight:700;letter-spacing:.3em;color:var(--ink-soft)}
+
+.figure{margin:0 auto 42px;height:clamp(120px,20vh,190px);display:flex;align-items:center;justify-content:center}
+.figure svg{height:100%;overflow:visible}
+
+.cond{max-width:780px;text-align:left;display:flex;gap:26px;align-items:baseline;margin-bottom:34px}
+.cond .no{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;color:var(--red);min-width:40px;text-align:right}
+.cond .body b{display:block;font-size:clamp(18px,1.9vw,25px);font-weight:800;margin-bottom:8px;line-height:1.6}
+.cond .body span{font-size:clamp(14.5px,1.3vw,18px);line-height:1.95;color:var(--ink-soft)}
+
+/* ---------- svg drawings ---------- */
+.stroke{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.stroke.red-s{stroke:var(--red)}
+.stroke.thin{stroke-width:1.6}
+.dot-f{fill:var(--ink)}
+.red-f{fill:var(--red)}
+
+.draw{stroke-dasharray:600;stroke-dashoffset:600}
+.active .draw{animation:draw 2.4s ease forwards}
+.active .draw.d2{animation-delay:.6s}
+.active .draw.d3{animation-delay:1.2s}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.active .pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:.9;transform:scale(1.12)}}
+
+.active .sonar{animation:sonar 3.2s ease-out infinite}
+.active .sonar.s2{animation-delay:1.05s}
+.active .sonar.s3{animation-delay:2.1s}
+@keyframes sonar{0%{transform:scale(.25);opacity:.8}100%{transform:scale(1.6);opacity:0}}
+
+.active .fade-bridge{animation:fadeBridge 4s ease-in-out infinite}
+@keyframes fadeBridge{0%,15%{opacity:.9}55%,70%{opacity:.12}100%{opacity:.9}}
+
+.active .gaze-line{stroke-dasharray:7 9;animation:flow 1.6s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-32}}
+
+.active .orbit{transform-origin:center;animation:orbit 9s linear infinite}
+@keyframes orbit{to{transform:rotate(360deg)}}
+
+.active .row-l{transform-origin:50% 20%;animation:rowL 2.4s ease-in-out infinite}
+.active .row-r{transform-origin:50% 20%;animation:rowL 2.4s ease-in-out infinite;animation-delay:0s}
+@keyframes rowL{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+.active .boat{animation:boat 4.8s ease-in-out infinite}
+@keyframes boat{0%,100%{transform:translateY(0) rotate(-.6deg)}50%{transform:translateY(-6px) rotate(.6deg)}}
+
+.active .flicker{animation:flicker 3.6s ease-in-out infinite}
+@keyframes flicker{0%,100%{opacity:.95}45%,55%{opacity:.2}}
+
+.active .lid-top{transform-origin:100px 60px;animation:lidT 5s ease-in-out infinite}
+.active .lid-bot{transform-origin:100px 60px;animation:lidB 5s ease-in-out infinite}
+@keyframes lidT{0%,18%{transform:scaleY(.06)}42%,78%{transform:scaleY(1)}100%{transform:scaleY(.06)}}
+@keyframes lidB{0%,18%{transform:scaleY(.06)}42%,78%{transform:scaleY(1)}100%{transform:scaleY(.06)}}
+.active .iris{animation:iris 5s ease-in-out infinite}
+@keyframes iris{0%,18%{opacity:0}45%,78%{opacity:1}100%{opacity:0}}
+
+.active .reverse-a{animation:revA 4.2s ease-in-out infinite}
+@keyframes revA{0%,38%{opacity:1}52%,100%{opacity:.14}}
+.active .reverse-b{animation:revB 4.2s ease-in-out infinite}
+@keyframes revB{0%,38%{opacity:.14}52%,100%{opacity:1}}
+
+.active .breathe{animation:breathe 4.5s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.35}50%{opacity:1}}
+
+@media (prefers-reduced-motion: reduce){
+  .active .draw{animation:none;stroke-dashoffset:0}
+  .active *{animation:none !important}
+}
+
+/* ---------- notes ---------- */
+#notes{position:fixed;inset:0;background:var(--paper);z-index:65;overflow-y:auto;opacity:0;visibility:hidden;transition:opacity .5s}
+#notes.open{opacity:1;visibility:visible}
+.notes-inner{max-width:720px;margin:0 auto;padding:90px 28px 140px;text-align:left}
+.notes-inner .n-eyebrow{font-family:'Nanum Gothic',sans-serif;font-size:11px;font-weight:700;letter-spacing:.32em;color:var(--red);margin-bottom:20px}
+.notes-inner h3{font-size:26px;font-weight:800;line-height:1.6;margin-bottom:10px}
+.notes-inner .n-sub{font-family:'Nanum Gothic',sans-serif;font-size:12px;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:56px}
+.notes-inner h4{font-family:'Nanum Gothic',sans-serif;font-size:13px;font-weight:800;letter-spacing:.26em;color:var(--red);margin:60px 0 22px;display:flex;gap:12px;align-items:baseline}
+.notes-inner h4 span{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600}
+.notes-inner p{font-size:15.5px;line-height:2.15;margin-bottom:22px;text-indent:14px}
+.notes-inner .n-concept{border-left:2px solid var(--red);padding:6px 0 6px 22px;margin:34px 0 10px;font-weight:700;font-size:17px;line-height:1.95;text-indent:0}
+@media (max-width:640px){
+  .slide{padding:8vh 7vw}
+  .cond{gap:16px}
+  #hint{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="counter">1 / 24</div>
+<button id="notesBtn">강의 노트</button>
+<div id="hint">← → 또는 화면을 눌러 넘기세요</div>
+
+<!-- ═══════════════ I. 열다 ═══════════════ -->
+
+<!-- 1 · title -->
+<section class="slide active">
+  <div class="eyebrow">생각학교 ASK · 존재와 무 읽기</div>
+  <p class="kicker">제3부 대타존재 · 제1장 타자의 존재 · 3절</p>
+  <div class="gap-m"></div>
+  <h1>후설, 헤겔, 하이데거</h1>
+  <div class="gap-m"></div>
+  <p class="lead">세 거인의 어깨, 그리고 그 너머 —<br>사르트르가 타인에게 이르는 길</p>
+  <div class="hair"></div>
+  <p class="kicker fr" style="letter-spacing:.18em">Jean-Paul Sartre, <i>L'Être et le Néant</i></p>
+</section>
+
+<!-- 2 · converging concept -->
+<section class="slide">
+  <div class="eyebrow">이 강의가 수렴하는 한 문장</div>
+  <div class="figure"><svg viewBox="0 0 220 110">
+    <line class="stroke thin draw" x1="20" y1="55" x2="95" y2="55"/>
+    <path class="stroke red-s draw d2" d="M115 55 L192 55 M178 44 L192 55 L178 66"/>
+    <circle class="dot-f pulse" cx="20" cy="55" r="4"/>
+    <circle class="red-f pulse" cx="192" cy="55" r="5"/>
+  </svg></div>
+  <p class="quote">타인과의 관계는<br>인식이기를 그치고, <span class="accent">존재</span>가 된다.</p>
+  <div class="gap-m"></div>
+  <p class="lead">타인은 증명의 끝에서 오지 않는다.<br>존재의 한복판에서, 마주쳐진다.</p>
+</section>
+
+<!-- 3 · café -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">I</span>열다</div>
+  <div class="figure"><svg viewBox="0 0 240 110">
+    <circle class="stroke draw" cx="60" cy="45" r="16"/>
+    <path class="stroke draw" d="M40 95 Q60 68 80 95"/>
+    <circle class="stroke draw d2" cx="180" cy="45" r="16"/>
+    <path class="stroke draw d2" d="M160 95 Q180 68 200 95"/>
+    <path class="stroke thin red-s draw d3" d="M176 41 q4 6 0 10 M184 41 q-4 6 0 10" opacity=".9"/>
+    <line class="stroke thin gaze-line" x1="80" y1="45" x2="158" y2="45" opacity=".45"/>
+  </svg></div>
+  <h2>카페, 마주 앉은 사람.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">그의 웃음을 본다. 목소리를 듣는다.<br>그러나 그 안쪽 — 그가 세계를 겪고 있는 자리,<br>그곳에 나는 한 번도 들어가 본 적이 없다.</p>
+</section>
+
+<!-- 4 · solipsism -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">I</span>열다 · 유아론의 암초</div>
+  <div class="figure"><svg viewBox="0 0 220 120">
+    <circle class="dot-f" cx="110" cy="60" r="6"/>
+    <g style="transform-origin:110px 60px"><circle class="stroke thin sonar" cx="110" cy="60" r="34"/></g>
+    <g style="transform-origin:110px 60px"><circle class="stroke thin sonar s2" cx="110" cy="60" r="34"/></g>
+    <g style="transform-origin:110px 60px"><circle class="stroke thin sonar s3" cx="110" cy="60" r="34"/></g>
+  </svg></div>
+  <h2>데카르트가 남긴 섬.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">확실한 것은 단 하나, 지금 생각하는 나.<br>철학은 이 섬에서 타인이라는 대륙으로 건너가는 다리를<br>삼백 년 동안 설계해 왔다.</p>
+  <div class="gap-s"></div>
+  <p class="lead"><span class="accent fr">le solipsisme</span> — 그 다리들이 번번이 좌초한 암초의 이름.</p>
+</section>
+
+<!-- 5 · analogy -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">I</span>열다 · 유추의 다리</div>
+  <div class="figure"><svg viewBox="0 0 260 110">
+    <path class="stroke draw" d="M15 92 Q45 78 62 92 L62 60 Q45 46 30 60 Z" opacity=".9"/>
+    <path class="stroke draw" d="M245 92 Q215 78 198 92 L198 60 Q215 46 230 60 Z" opacity=".9"/>
+    <path class="stroke thin fade-bridge" stroke-dasharray="6 8" d="M62 62 Q130 30 198 62"/>
+  </svg></div>
+  <h2>가장 오래된 다리, 유추.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">저 몸짓은 내 몸짓을 닮았다 — 그러니 저 안에도 마음이 있으리라.<br>유추가 건네주는 것은 개연성까지다.</p>
+  <div class="gap-s"></div>
+  <p class="lead">그런데, 낯선 시선에 얼굴이 뜨거워지는 순간.<br><b class="accent">그 부끄러움은 '아마도'로 오지 않는다.</b></p>
+</section>
+
+<!-- ═══════════════ II. 전개하다 ═══════════════ -->
+
+<!-- 6 · divider -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>전개하다</div>
+  <div class="figure"><svg viewBox="0 0 240 110">
+    <line class="stroke draw" x1="50" y1="95" x2="50" y2="30"/>
+    <line class="stroke draw d2" x1="120" y1="95" x2="120" y2="30"/>
+    <line class="stroke draw d3" x1="190" y1="95" x2="190" y2="30"/>
+    <circle class="red-f breathe" cx="50" cy="22" r="4"/>
+    <circle class="red-f breathe" cx="120" cy="22" r="4" style="animation-delay:.5s"/>
+    <circle class="red-f breathe" cx="190" cy="22" r="4" style="animation-delay:1s"/>
+  </svg></div>
+  <h2>세 번의 시도</h2>
+  <div class="gap-s"></div>
+  <p class="lead fr" style="font-size:clamp(18px,2vw,24px)">Husserl · Hegel · Heidegger</p>
+  <div class="gap-s"></div>
+  <p class="lead">이십세기가 암초 앞에 세운 세 개의 등대.<br>사르트르는 셋을 딛고, 셋을 넘는다.</p>
+</section>
+
+<!-- 7 · Husserl 1 -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>후설 · 세계 속의 타인</div>
+  <div class="figure"><svg viewBox="0 0 240 120">
+    <rect class="stroke draw" x="95" y="48" width="50" height="34" rx="2"/>
+    <line class="stroke thin gaze-line" x1="24" y1="24" x2="90" y2="52" opacity=".6"/>
+    <line class="stroke thin gaze-line" x1="216" y1="24" x2="150" y2="52" opacity=".6"/>
+    <line class="stroke thin gaze-line red-s" x1="120" y1="112" x2="120" y2="88"/>
+    <circle class="dot-f" cx="22" cy="20" r="4"/>
+    <circle class="dot-f" cx="218" cy="20" r="4"/>
+    <circle class="red-f" cx="120" cy="115" r="4.5"/>
+  </svg></div>
+  <h2>지금 보는 이 책상은<br>'타인에게도 보이는 것'으로서 나타난다.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">내 지각의 결 속에 이미 다른 시점들이 접혀 있다.<br>세계는 처음부터 <b>우리의 세계</b>다.</p>
+</section>
+
+<!-- 8 · Husserl 2 -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>후설 · 객관성의 보증인</div>
+  <p class="quote">타인은 세계의 의미를 완성하는 조건,<br>대상의 객관성을 떠받치는<br>보이지 않는 기둥.</p>
+  <div class="hair"></div>
+  <p class="lead">내가 무엇을 보든, 그 의미의 결에는 타인이 스며 있다.<br>여기까지, 후설은 유아론을 향해 가장 우아한 포위망을 짰다.</p>
+</section>
+
+<!-- 9 · Husserl critique -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>후설 · 사르트르의 판정</div>
+  <div class="figure"><svg viewBox="0 0 220 120">
+    <g class="flicker">
+      <circle class="stroke" cx="110" cy="42" r="17" stroke-dasharray="5 7"/>
+      <path class="stroke" d="M88 100 Q110 70 132 100" stroke-dasharray="5 7"/>
+    </g>
+  </svg></div>
+  <h2>그러나 그 타인은 '의미'로 머문다.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">채워지기를 기다리는 빈 지향, 지평 저편의 가정.<br>인식의 자로 존재를 재는 한, 타인은 끝내 앎의 대상으로 물러난다.</p>
+  <div class="gap-s"></div>
+  <p class="lead"><b class="accent">후설은 암초를 비켜 가지 못했다.</b></p>
+</section>
+
+<!-- 10 · Hegel 1 -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>헤겔 · 한 세기 앞선 대답</div>
+  <div class="figure"><svg viewBox="0 0 240 120">
+    <circle class="stroke draw" cx="80" cy="60" r="26"/>
+    <circle class="stroke red-s draw d2" cx="160" cy="60" r="26"/>
+    <g class="orbit" style="transform-origin:120px 60px">
+      <path class="stroke thin" d="M120 18 q30 6 34 30" opacity=".55"/>
+      <path class="stroke thin" d="M120 102 q-30 -6 -34 -30" opacity=".55"/>
+      <circle class="dot-f" cx="152" cy="26" r="3"/>
+      <circle class="red-f" cx="88" cy="94" r="3"/>
+    </g>
+  </svg></div>
+  <p class="quote">"자기의식은 다른 자기의식 속에서만<br>자기 자신에 이른다."</p>
+  <p class="quote-src">헤겔, 『정신현상학』</p>
+</section>
+
+<!-- 11 · Hegel 2 -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>헤겔 · 존재의 층위로</div>
+  <h2>주인과 노예,<br>인정을 건 목숨의 투쟁.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">타인은 내 존재의 문 앞에 서 있다.<br>나를 나이게 하는 것 — 타인의 시선, 타인의 인정.</p>
+  <div class="hair"></div>
+  <p class="lead">문제가 인식의 층위에서 <b class="accent">존재의 층위</b>로 내려온다.<br>사르트르가 헤겔에게 바치는 찬사가 여기에 있다.<br>후설보다 한 걸음, 결정적으로 멀리 갔다는 것.</p>
+</section>
+
+<!-- 12 · Hegel critique 1 -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>헤겔 · 첫 번째 낙관</div>
+  <h2>인식론적 낙관 —<br>투쟁이 화해로 끝나리라는 믿음.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">상호 인정의 지평에서 갈등은 해소되고,<br>앎은 마침내 투명해지리라고 헤겔은 약속한다.</p>
+  <div class="gap-s"></div>
+  <p class="lead">그러나 의식과 의식 사이에는<br><b class="accent">지식으로 측량되기를 거부하는 심연</b>이 흐른다.</p>
+</section>
+
+<!-- 13 · Hegel critique 2 -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>헤겔 · 두 번째 낙관</div>
+  <div class="figure"><svg viewBox="0 0 240 120">
+    <circle class="stroke thin draw" cx="120" cy="62" r="46" stroke-dasharray="4 7"/>
+    <circle class="stroke draw" cx="120" cy="16" r="8"/>
+    <circle class="stroke draw" cx="166" cy="62" r="8"/>
+    <circle class="stroke draw d2" cx="120" cy="108" r="8"/>
+    <circle class="stroke draw d2" cx="74" cy="62" r="8"/>
+    <path class="stroke red-s draw d3" d="M108 50 L132 74 M132 50 L108 74"/>
+  </svg></div>
+  <h2>존재론적 낙관 —<br>헤겔은 전체의 자리에서 내려다본다.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">절대자의 관점, 모든 의식을 굽어보는 자리.<br><b class="accent">그 자리는 비어 있다.</b> 누구도 의식들의 바깥에 설 수 없다.</p>
+  <div class="gap-s"></div>
+  <p class="lead">의식들의 복수성이라는 스캔들 — 총체화를 거부하는 다수.</p>
+</section>
+
+<!-- 14 · Heidegger 1 -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>하이데거 · 함께-있음</div>
+  <div class="figure"><svg viewBox="0 0 280 130">
+    <g class="boat" style="transform-origin:140px 100px">
+      <path class="stroke draw" d="M40 96 Q140 122 240 96 L226 110 Q140 130 54 110 Z"/>
+      <circle class="stroke draw d2" cx="100" cy="66" r="11"/>
+      <circle class="stroke draw d2" cx="150" cy="66" r="11"/>
+      <circle class="stroke draw d2" cx="200" cy="66" r="11"/>
+      <g class="row-l" style="transform-origin:100px 80px"><line class="stroke red-s" x1="100" y1="80" x2="72" y2="112"/></g>
+      <g class="row-l" style="transform-origin:150px 80px"><line class="stroke red-s" x1="150" y1="80" x2="122" y2="112"/></g>
+      <g class="row-l" style="transform-origin:200px 80px"><line class="stroke red-s" x1="200" y1="80" x2="172" y2="112"/></g>
+    </g>
+    <path class="stroke thin" d="M14 120 q14 -7 28 0 t28 0" opacity=".4"/>
+    <path class="stroke thin" d="M226 122 q14 -7 28 0" opacity=".4"/>
+  </svg></div>
+  <h2><span class="fr">Mitsein</span> — 함께-있음.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">타인은 내가 만나러 가는 저편의 존재이기 이전에,<br>이미 내 존재의 결이다. 현존재는 처음부터 공동존재다.</p>
+</section>
+
+<!-- 15 · Heidegger 2 -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>하이데거 · 이미지의 교체</div>
+  <h2>투쟁에서, 승조원으로.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">헤겔의 그림 — 시선과 시선의 맞부딪힘.<br>하이데거의 그림 — 어깨와 어깨, 같은 리듬으로 젓는 노.</p>
+  <div class="gap-s"></div>
+  <p class="lead">갈등 이전에 공속.<br>마주 봄 이전에, 나란히 있음.</p>
+</section>
+
+<!-- 16 · Heidegger critique -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">II</span>하이데거 · 끊긴 다리</div>
+  <div class="figure"><svg viewBox="0 0 260 120">
+    <path class="stroke draw" d="M15 100 L15 62 Q60 44 105 58"/>
+    <line class="stroke thin draw" x1="40" y1="100" x2="40" y2="56"/>
+    <line class="stroke thin draw" x1="70" y1="100" x2="70" y2="52"/>
+    <line class="stroke thin draw d2" x1="100" y1="100" x2="100" y2="57"/>
+    <path class="stroke red-s draw d3" d="M105 58 q10 2 14 8" stroke-dasharray="3 6"/>
+    <circle class="stroke thin flicker" cx="225" cy="70" r="14"/>
+    <path class="stroke thin flicker" d="M208 106 Q225 84 242 106"/>
+  </svg></div>
+  <h2>그러나 아프리오리한 구조는<br>'이 사람' 앞에서 침묵한다.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">인류 일반과의 함께-있음이, 어떻게<br>지금 문을 열고 들어서는 단 한 사람을 설명하는가.</p>
+  <div class="gap-s"></div>
+  <p class="lead">존재론과 만남 사이 — <b class="accent">다리는 끊겨 있다.</b></p>
+</section>
+
+<!-- ═══════════════ III. 뒤집다 (red) ═══════════════ -->
+
+<!-- 17 · red turn 1 -->
+<section class="slide red">
+  <div class="eyebrow"><span class="mv">III</span>뒤집다</div>
+  <p class="big">세 거인의 공통 전진 —<br>관계를 인식에서 존재로 옮겨 놓았다.</p>
+  <div class="gap-l"></div>
+  <p class="big" style="opacity:.92">세 거인의 공통 좌초 —<br>여전히 <u style="text-underline-offset:8px">나로부터</u> 타인을 구성하려 했다.</p>
+</section>
+
+<!-- 18 · red turn 2 -->
+<section class="slide red">
+  <div class="eyebrow"><span class="mv">III</span>뒤집다</div>
+  <div class="figure"><svg viewBox="0 0 240 100">
+    <g class="reverse-a"><path class="stroke" style="stroke:#FBF8F1" d="M40 38 L196 38 M182 27 L196 38 L182 49"/></g>
+    <g class="reverse-b"><path class="stroke" style="stroke:#FBF8F1;stroke-width:3.2" d="M200 70 L44 70 M58 59 L44 70 L58 81"/></g>
+  </svg></div>
+  <p class="big">방향을 뒤집는다.</p>
+  <div class="gap-m"></div>
+  <p class="lead">내가 타인에게 가닿는 길을 찾는 대신 —<br>타인이 이미 나를 관통하고 있음을 본다.</p>
+</section>
+
+<!-- ═══════════════ IV. 이상한 고리 ═══════════════ -->
+
+<!-- 19 · four gates intro -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">IV</span>이상한 고리 · 네 개의 관문</div>
+  <div class="figure"><svg viewBox="0 0 260 100">
+    <path class="stroke draw" d="M35 88 L35 40 Q50 26 65 40 L65 88"/>
+    <path class="stroke draw" d="M95 88 L95 40 Q110 26 125 40 L125 88"/>
+    <path class="stroke draw d2" d="M155 88 L155 40 Q170 26 185 40 L185 88"/>
+    <path class="stroke red-s draw d3" d="M215 88 L215 40 Q230 26 245 40 L245 88"/>
+  </svg></div>
+  <h2>사르트르는 폐허 위에<br>설계도를 그린다.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">어떤 타자론이든 통과해야 할 네 개의 관문.<br>세 거인의 좌초에서 건져 올린, 항해의 조건들.</p>
+</section>
+
+<!-- 20 · conditions 1·2 -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">IV</span>네 개의 관문 · 하나, 둘</div>
+  <div class="cond">
+    <div class="no">1</div>
+    <div class="body"><b>증명을 포기할 것.</b>
+    <span>타인의 존재는 가설이기를 그친다. 개연성의 사다리를 걷어차고, 코기토의 확실성으로 — 사실의 필연성으로 주어진다.</span></div>
+  </div>
+  <div class="cond">
+    <div class="no">2</div>
+    <div class="body"><b>코기토가 타인을 내어줄 것.</b>
+    <span>출발점은 여전히 나의 의식이다. 다만 그 의식의 가장 깊은 곳에서, 나를 벗어나는 방식으로, 타인이 솟아난다.</span></div>
+  </div>
+</section>
+
+<!-- 21 · conditions 3·4 -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">IV</span>네 개의 관문 · 셋, 넷</div>
+  <div class="cond">
+    <div class="no">3</div>
+    <div class="body"><b>대상 이전에, 주체로 현전할 것.</b>
+    <span>타인은 내가 바라보는 사물이기 이전에, 나를 바라보는 자다. 사유되기 이전에, 나를 겨냥한 시선으로 온다.</span></div>
+  </div>
+  <div class="cond">
+    <div class="no">4</div>
+    <div class="body"><b>존재와 존재의 관계일 것.</b>
+    <span>앎이 오가기 이전에, 존재가 서로에게 스며드는 자리. 타인 앞에서 나는 정보를 얻는 대신, 다른 존재가 된다.</span></div>
+  </div>
+</section>
+
+<!-- 22 · strange loop -->
+<section class="slide">
+  <div class="eyebrow"><span class="mv">IV</span>이상한 고리</div>
+  <div class="figure"><svg viewBox="0 0 200 120">
+    <g class="lid-top"><path class="stroke" d="M28 60 Q100 8 172 60"/></g>
+    <g class="lid-bot"><path class="stroke" d="M28 60 Q100 112 172 60"/></g>
+    <g class="iris">
+      <circle class="stroke" cx="100" cy="60" r="21"/>
+      <circle class="red-f" cx="100" cy="60" r="9"/>
+    </g>
+  </svg></div>
+  <h2>나를 확인하려<br>내면의 바닥까지 내려갔다.</h2>
+  <div class="gap-s"></div>
+  <p class="lead">그 바닥에서 기다리고 있는 것 — 타인.<br>부끄러움이 밀려오는 바로 그 순간, 증명은 이미 끝나 있다.</p>
+  <div class="gap-s"></div>
+  <p class="lead"><b class="accent">나는 부끄럽다, 그러므로 타인이 있다.</b></p>
+</section>
+
+<!-- ═══════════════ V. 내려앉다 (red) ═══════════════ -->
+
+<!-- 23 · red landing -->
+<section class="slide red">
+  <div class="eyebrow"><span class="mv">V</span>내려앉다</div>
+  <p class="big">인식에서 존재로.</p>
+  <div class="gap-m"></div>
+  <p class="quote" style="font-weight:400">타인은 증명의 끝에서 오지 않는다.<br>수치심의 한복판에, 이미 와 있다.</p>
+</section>
+
+<!-- 24 · next -->
+<section class="slide">
+  <div class="eyebrow">다음 강의</div>
+  <div class="figure"><svg viewBox="0 0 200 120">
+    <circle class="stroke draw" cx="100" cy="46" r="22"/>
+    <rect class="stroke draw d2" x="90" y="62" width="20" height="38" rx="4"/>
+    <circle class="red-f breathe" cx="100" cy="46" r="6"/>
+  </svg></div>
+  <h2>시선 <span class="fr">Le regard</span></h2>
+  <div class="gap-s"></div>
+  <p class="lead">열쇠구멍 앞에 웅크린 한 사람.<br>복도 저편에서, 발소리가 들려온다.</p>
+  <div class="hair"></div>
+  <p class="kicker">생각학교 ASK · 존재와 무 읽기</p>
+</section>
+
+<!-- ═══════════════ notes ═══════════════ -->
+<div id="notes">
+  <div class="notes-inner">
+    <div class="n-eyebrow">강의 노트 · 생각학교 ASK</div>
+    <h3>후설, 헤겔, 하이데거 — 세 거인의 어깨, 그리고 그 너머</h3>
+    <div class="n-sub">『존재와 무』 제3부 대타존재 · 제1장 타자의 존재 · 3절</div>
+
+    <div class="n-concept">수렴 개념 — 타인과의 관계는 인식이기를 그치고, 존재가 된다. 타인은 증명의 끝에서 오지 않고, 존재의 한복판에서 마주쳐진다.</div>
+
+    <h4><span>I</span>열다 — 유아론의 암초</h4>
+    <p>카페에 마주 앉은 사람을 떠올려 봅시다. 우리는 그의 웃음을 보고 목소리를 듣지만, 그가 세계를 겪고 있는 그 안쪽 자리에는 한 번도 들어가 본 적이 없습니다. 데카르트 이후 철학이 물려받은 유산은 확실성의 섬 하나였습니다. 지금 생각하고 있는 나. 그 바깥의 모든 것은 의심의 안개 속에 잠기고, 타인의 의식은 그중에서도 가장 먼 대륙이 됩니다. 이 섬과 대륙 사이에 다리를 놓으려는 삼백 년의 설계가 번번이 좌초한 암초의 이름이 유아론입니다.</p>
+    <p>가장 오래된 다리는 유추였습니다. 저 몸짓이 내 몸짓을 닮았으니 저 안에도 마음이 있으리라는 추론. 그러나 유추가 건네주는 것은 개연성까지입니다. 타인은 '아마도 있는' 존재로 남습니다. 여기서 사르트르의 물음이 시작됩니다. 낯선 시선에 얼굴이 뜨거워지는 순간, 그 부끄러움은 '아마도'로 오지 않는다는 것. 개연적 존재 앞에서 이토록 확실한 감정이 일어난다면, 문제 설정 자체가 틀렸다는 신호입니다. 이 절은 그 신호를 따라, 이십세기의 세 거인이 남긴 지도를 다시 읽는 작업입니다.</p>
+
+    <h4><span>II</span>전개하다 — 세 번의 시도</h4>
+    <p>후설은 타인을 세계의 구조 안으로 끌어들였습니다. 지금 보는 이 책상은 '타인에게도 보이는 것'으로서 내게 나타납니다. 내 지각의 결 속에는 이미 다른 시점들이 접혀 있고, 대상의 객관성은 그 보이지 않는 시점들에 기대어 섭니다. 세계는 처음부터 우리의 세계라는 것 — 유아론을 향한 가장 우아한 포위망입니다. 그러나 사르트르의 판정은 냉정합니다. 후설에게 타인은 끝내 '의미'로 머뭅니다. 채워지기를 기다리는 빈 지향, 지평 저편의 가정. 인식의 자로 존재를 재는 한, 타인은 앎의 대상으로 물러나고, 초월적 주관과 초월적 주관 사이에는 어떤 다리도 놓이지 않습니다. 후설은 암초를 비켜 가지 못했습니다.</p>
+    <p>흥미로운 것은, 한 세기 앞선 헤겔이 더 깊은 자리까지 내려가 있었다는 사실입니다. 『정신현상학』의 통찰 — 자기의식은 다른 자기의식 속에서만 자기 자신에 이릅니다. 주인과 노예의 변증법, 인정을 건 목숨의 투쟁에서 타인은 내 존재의 문 앞에 서 있습니다. 나를 나이게 하는 것이 타인의 인정이라면, 문제는 인식의 층위에서 존재의 층위로 내려온 것입니다. 사르트르가 헤겔에게 바치는 찬사가 여기에 있습니다. 그러나 두 개의 낙관이 이 통찰을 배반합니다. 첫째, 인식론적 낙관 — 투쟁이 상호 인정의 화해로 끝나리라는 믿음. 의식과 의식 사이에는 지식으로 측량되기를 거부하는 심연이 흐릅니다. 둘째, 존재론적 낙관 — 헤겔은 전체의 자리, 절대자의 관점에서 의식들을 내려다봅니다. 그 자리는 비어 있습니다. 누구도 의식들의 바깥에 설 수 없기에, 의식들의 복수성은 총체화를 거부하는 스캔들로 남습니다.</p>
+    <p>하이데거는 다리 놓기 자체를 걷어치웁니다. 현존재는 처음부터 공동존재이며, 타인은 내가 만나러 가는 저편의 존재이기 이전에 이미 내 존재의 결입니다. 이미지도 바뀝니다. 헤겔의 그림이 시선과 시선의 맞부딪힘이라면, 하이데거의 그림은 같은 리듬으로 노를 젓는 승조원입니다. 갈등 이전의 공속, 마주 봄 이전의 나란히 있음. 그러나 사르트르는 여기서도 끊긴 다리를 봅니다. 아프리오리한 구조는 '이 사람'의 출현 앞에서 침묵합니다. 인류 일반과의 함께-있음이, 지금 문을 열고 들어서는 단 한 사람의 구체적 현전을 설명하지 못합니다. 존재론적 층위에서 존재적 만남으로 내려오는 길이 지도에 없는 것입니다.</p>
+
+    <h4><span>III</span>뒤집다 — 공통의 전진, 공통의 좌초</h4>
+    <p>세 거인은 함께 전진했습니다. 타인과의 관계를 인식의 문제에서 존재의 문제로 옮겨 놓은 것. 그리고 함께 좌초했습니다. 여전히 나로부터 출발해 타인을 구성하려 했다는 것. 후설은 나의 의미 구성에서, 헤겔은 전체의 관점에서, 하이데거는 나의 존재 구조에서 타인을 도출합니다. 사르트르의 전환은 이 방향 자체를 뒤집는 데 있습니다. 내가 타인에게 가닿는 길을 찾는 대신, 타인이 이미 나를 관통하고 있음을 보는 것.</p>
+
+    <h4><span>IV</span>이상한 고리 — 네 개의 관문</h4>
+    <p>폐허 위에 사르트르는 설계도를 그립니다. 어떤 타자론이든 통과해야 할 네 개의 관문. 하나, 증명을 포기할 것 — 타인의 존재는 가설이기를 그치고, 코기토의 확실성으로, 사실의 필연성으로 주어져야 합니다. 둘, 코기토가 타인을 내어줄 것 — 출발점은 여전히 나의 의식이되, 그 가장 깊은 곳에서 나를 벗어나는 방식으로 타인이 솟아나야 합니다. 셋, 타인은 대상으로 사유되기 이전에 주체로 현전할 것 — 내가 바라보는 사물이기 이전에, 나를 바라보는 자로 와야 합니다. 넷, 관계는 존재와 존재의 관계일 것 — 타인 앞에서 나는 정보를 얻는 대신 다른 존재가 됩니다.</p>
+    <p>그리하여 이상한 고리가 닫힙니다. 나를 확인하려 내면의 바닥까지 내려갔는데, 그 바닥에서 기다리고 있는 것이 타인입니다. 부끄러움이 밀려오는 바로 그 순간, 증명은 이미 끝나 있습니다. 나는 부끄럽다, 그러므로 타인이 있다 — 코기토를 통과해 나온 이 문장이, 다음 절 전체를 여는 열쇠가 됩니다.</p>
+
+    <h4><span>V</span>내려앉다 — 시선의 문턱에서</h4>
+    <p>인식에서 존재로. 타인은 증명의 끝에서 오지 않고, 수치심의 한복판에 이미 와 있습니다. 다음 강의는 이 문장이 살이 되는 장면에서 시작합니다. 열쇠구멍 앞에 웅크린 한 사람, 복도 저편에서 들려오는 발소리 — 시선, le regard.</p>
+  </div>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const progress=document.getElementById('progress');
+const counter=document.getElementById('counter');
+const notes=document.getElementById('notes');
+const notesBtn=document.getElementById('notesBtn');
+const hint=document.getElementById('hint');
+let i=0, notesOpen=false;
+
+function go(n){
+  if(n<0||n>=slides.length) return;
+  slides[i].classList.remove('active');
+  i=n;
+  slides[i].classList.add('active');
+  progress.style.width=((i+1)/slides.length*100)+'%';
+  counter.textContent=(i+1)+' / '+slides.length;
+  document.body.classList.toggle('on-red',slides[i].classList.contains('red'));
+  hint.classList.add('gone');
+}
+go(0);
+setTimeout(()=>hint.classList.add('gone'),7000);
+
+document.addEventListener('keydown',e=>{
+  if(notesOpen){ if(e.key==='Escape') toggleNotes(); return; }
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(i+1);}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1);}
+  if(e.key==='Home')go(0);
+  if(e.key==='End')go(slides.length-1);
+});
+
+document.addEventListener('click',e=>{
+  if(notesOpen||e.target.closest('#notesBtn'))return;
+  (e.clientX<window.innerWidth*0.28)?go(i-1):go(i+1);
+});
+
+let tx=null,ty=null;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',e=>{
+  if(notesOpen||tx===null)return;
+  const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)) (dx<0)?go(i+1):go(i-1);
+  tx=ty=null;
+},{passive:true});
+
+function toggleNotes(){
+  notesOpen=!notesOpen;
+  notes.classList.toggle('open',notesOpen);
+  notesBtn.textContent=notesOpen?'슬라이드로':'강의 노트';
+}
+notesBtn.addEventListener('click',e=>{e.stopPropagation();toggleNotes();});
+</script>
+</body>
+</html>
